@@ -139,6 +139,28 @@ input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px color
 .resolve{font:11.5px/1.5 var(--mono);color:var(--muted);background:var(--panel);border:1px dashed var(--border-strong);border-radius:7px;padding:7px 9px;margin-top:8px}
 .resolve b{color:var(--text);font-weight:600}
 
+
+/* simplified inspector */
+.hint{color:var(--muted);font-size:11.5px;line-height:1.4;margin-top:1px}
+.hint code{font-size:11px}
+.row-h .lbl{font-size:12.5px;flex:1;font-weight:500}
+.chips.feel{grid-template-columns:repeat(3,1fr);margin-top:8px}
+.row.line .hint{padding-right:0}
+.adv{margin:14px 0 0;border-top:1px solid var(--border)}
+.adv>summary{list-style:none;cursor:pointer;padding:10px 0;font-size:12px;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:6px;border-radius:6px}
+.adv>summary::-webkit-details-marker{display:none}
+.adv>summary::before{content:"";width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(-45deg);transition:transform .15s;margin:0 3px 0 2px}
+.adv[open]>summary::before{transform:rotate(45deg)}
+.adv>summary:hover{color:var(--text)}
+.intro{color:var(--muted);font-size:12px;margin:12px 0 4px;line-height:1.5}
+.hv{padding:9px 0;border-bottom:1px solid var(--border)}
+.hv-h{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.hv-h label{font-weight:500;font-size:12.5px}
+.hv-h .sel{max-width:158px;flex:none}
+.hv-t{margin-top:7px}
+.tog{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);cursor:pointer}
+.hide-ann .ann{display:none}
+
 /* ── centre: preview ───────────────────── */
 .stage-h{display:flex;align-items:center;gap:10px;padding:0 16px;height:44px;flex:none;border-bottom:1px solid var(--border);background:var(--panel)}
 .stage-h h2{margin:0;font-size:13px;font-weight:600}
@@ -257,7 +279,6 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
     Cursor Builder <small>data-cursor</small>
   </div>
   <span class="sp"></span>
-  <span class="hint">Everything you see here is driven by the generated code →</span>
   <button class="btn" id="themeBtn" type="button" aria-label="Toggle colour theme">
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"/></svg>
     Theme
@@ -271,13 +292,13 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
 <!-- LEFT · configuration -->
 <aside class="col left" aria-label="Cursor configuration">
   <div class="presets">
-    <p class="sec-t"><span>Presets</span><span class="custom-note" id="customNote" hidden>modified</span></p>
+    <p class="sec-t"><span>Start from a preset</span><span class="custom-note" id="customNote" hidden>modified</span></p>
     <div class="chips" id="presetChips"></div>
   </div>
   <div class="tabs" role="tablist" aria-label="Configuration sections" id="cfgTabs">
-    <button class="tab" role="tab" id="t-cursor" aria-controls="p-cursor" aria-selected="true">Cursor</button>
+    <button class="tab" role="tab" id="t-cursor" aria-controls="p-cursor" aria-selected="true">Look</button>
     <button class="tab" role="tab" id="t-trail" aria-controls="p-trail" aria-selected="false" tabindex="-1">Trail</button>
-    <button class="tab" role="tab" id="t-motion" aria-controls="p-motion" aria-selected="false" tabindex="-1">Motion</button>
+    <button class="tab" role="tab" id="t-motion" aria-controls="p-motion" aria-selected="false" tabindex="-1">Feel</button>
     <button class="tab" role="tab" id="t-states" aria-controls="p-states" aria-selected="false" tabindex="-1">Hover</button>
   </div>
   <div class="scroll">
@@ -292,9 +313,9 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
 <main class="col mid" id="stage-col">
   <div class="stage-h">
     <h2>Live preview</h2>
-    <span class="live">cursor active</span>
+    <span class="live">move your mouse over the page</span>
     <span class="sp"></span>
-    <span class="mono" style="font-size:11px;color:var(--muted)">move your pointer ↓</span>
+    <label class="tog"><span class="switch"><input type="checkbox" id="annToggle" role="switch" checked><i></i></span> Show attributes</label>
   </div>
   <div class="touch-note" role="status"><strong>Mouse or trackpad required.</strong> The live cursor preview is disabled on touch devices. You can still configure the cursor and copy the generated code.</div>
   <div class="stage" id="stage" tabindex="-1">
@@ -396,9 +417,9 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
     </div>
   </div>
   <div class="inspect" id="inspect" aria-label="Resolved cursor state" aria-live="off">
-    <span><span class="k">target</span> <b id="i-el">none</b></span>
-    <span><span class="k">type</span> <b id="i-type">default</b></span>
-    <span><span class="k">behaviours</span> <b id="i-b">none</b></span>
+    <span><span class="k">hovering</span> <b id="i-el">none</b></span>
+    <span><span class="k">treated as</span> <b id="i-type">default</b></span>
+    <span><span class="k">effect</span> <b id="i-b">none</b></span>
     <span><span class="k">size</span> <b id="i-size">–</b></span>
   </div>
 </main>
@@ -710,16 +731,6 @@ const ENGINE = String.raw`/* Custom cursor · generated by Cursor Builder
    2 · Configuration model, presets
    ════════════════════════════════════════════════════════════════ */
 const BEHAVIOURS = ['grow', 'shrink', 'magnetic', 'frame', 'lens', 'label', 'caret', 'hide'];
-const STATE_META = {
-  default:{name:'Default', sel:'nothing special under the pointer', desc:'Applies when the pointer is over empty space or any element without its own state.'},
-  link:   {name:'Link',    sel:'a[href], [role=link]', desc:'Anchors and link-like elements.'},
-  button: {name:'Button',  sel:'button, select, summary, [role=button|tab|switch], checkbox/radio', desc:'Anything that triggers an action.'},
-  text:   {name:'Text',    sel:'p, h1–h6, li, blockquote, pre, dd, dt', desc:'Readable, non-interactive text.'},
-  image:  {name:'Image',   sel:'img, picture, video, canvas', desc:'Media. Great for “View” labels or a lens.'},
-  card:   {name:'Card',    sel:'[data-cursor-type="card"]', desc:'Opt-in container state for cards and tiles.'},
-  input:  {name:'Input',   sel:'input, textarea, [contenteditable]', desc:'Text entry. Try the caret behaviour.'},
-  custom: {name:'Custom',  sel:'[data-cursor-type="custom"]', desc:'Your own state for anything you tag.'},
-};
 const ST = (b, text = '', size = 0) => ({ b, text, size });
 const BASE = {
   type:'dot', size:14, radius:50, color:'#5b5bf0', opacity:1, borderWidth:0, borderColor:'#ffffff', blend:'normal',
@@ -737,13 +748,13 @@ const PRESETS = {
   Minimal:{ desc:'A tiny inverting dot, nothing else.', o:{ size:8, color:'#ffffff', blend:'difference', labelColor:'#000000', ring:false, follow:1, hover:3, press:.7,
     states:{ button:ST(['grow']), image:ST(['grow']), card:ST(['grow']), text:ST([]) } } },
   Smooth:{ desc:'Soft dot with a trailing ring.', o:{} },
-  Magnetic:{ desc:'Springy cursor pulled towards targets.', o:{ size:10, ringSize:52, magnet:.55, easing:'spring', trailEasing:'spring', trailSpeed:.14,
+  Magnetic:{ desc:'Springy cursor pulled towards targets.', o:{ size:10, ringSize:52, magnet:.55, easing:'spring', follow:.7, speed:1.2, trailEasing:'spring', trailSpeed:.14,
     states:{ link:ST(['grow','magnetic']), card:ST(['magnetic','frame']), image:ST(['magnetic','label'],'Open') } } },
-  Editorial:{ desc:'Inverting dot, frames and labels.', o:{ size:10, color:'#ffffff', blend:'difference', labelColor:'#000000', ring:false, follow:.9, easing:'snappy', framePad:6, radius:50,
+  Editorial:{ desc:'Inverting dot, frames and labels.', o:{ size:10, color:'#ffffff', blend:'difference', labelColor:'#000000', ring:false, follow:1, framePad:6, radius:50,
     states:{ link:ST(['frame']), button:ST(['frame','magnetic']), card:ST(['label'],'Read'), image:ST(['label'],'View'), text:ST([]) } } },
-  Lens:{ desc:'A magnifying lens over media.', o:{ size:12, ringSize:34, ringOpacity:.3, lensSize:170, lensBlur:3, speed:1.2,
+  Lens:{ desc:'A magnifying lens over media.', o:{ size:12, ringSize:34, ringOpacity:.3, lensSize:170, lensBlur:3,
     states:{ image:ST(['lens']), card:ST(['lens']), link:ST(['grow']), button:ST(['grow']), custom:ST(['lens']) } } },
-  Playful:{ desc:'Bouncy, stretchy and loud.', o:{ size:16, color:'#ff3d81', ringColor:'#ffb703', ringOpacity:.9, ringSize:40, ringBorder:2, easing:'elastic', trailEasing:'elastic', follow:.7, stretch:1, press:.55, hover:3, shrink:.6, magnet:.6, trailSpeed:.12,
+  Playful:{ desc:'Bouncy, stretchy and loud.', o:{ size:16, color:'#ff3d81', ringColor:'#ffb703', ringOpacity:.9, ringSize:40, ringBorder:2, easing:'elastic', trailEasing:'elastic', follow:.7, speed:1.2, stretch:1, press:.55, hover:3, shrink:.6, magnet:.6, trailSpeed:.12,
     states:{ link:ST(['grow']), button:ST(['grow','magnetic']), image:ST(['label'],'✦ View'), card:ST(['frame','magnetic']), text:ST(['shrink']) } } },
 };
 const clone = (o) => JSON.parse(JSON.stringify(o));
@@ -895,67 +906,37 @@ ${typeCss}
 }
 
 function genHTML(c) {
-  const S = c.states;
-  const list = Object.entries(S).map(([k, s]) => '       ' + k.padEnd(8) + '→ ' + (s.b.join(' ') || '(none)') + (s.text ? '  "' + s.text + '"' : '')).join('\n');
-  return `<\!-- 1 · Add the files to your page (any position; the script waits for <body>) -->
+  const list = Object.entries(c.states).filter(([, s]) => s.b.length).map(([k, s]) => '       ' + k.padEnd(8) + '→ ' + s.b.join(' + ') + (s.text ? '  "' + s.text + '"' : '')).join('\n');
+  return `<\!-- 1 · Add the two files to your page -->
 <link rel="stylesheet" href="cursor.css">
 <script src="cursor.js" defer><\/script>
 
-<\!-- 2 · That's it. Elements react by type, with no JavaScript per element:
-       a[href]            → type "link"
-       button, select …   → type "button"
-       p, h1–h6, li …     → type "text"
-       img, video         → type "image"
-       input, textarea    → type "input"
-     Behaviours currently configured for each type:
+<\!-- 2 · Done. Links, buttons, images, text and inputs already react:
 ${list}
 -->
 
-<\!-- 3 · Override or extend any element with data-* attributes -->
+<\!-- 3 · Optional: change any single element with data-* attributes -->
 
 <\!-- Magnetic: cursor and element are pulled together -->
-<button data-cursor="magnetic" data-cursor-pull="${num(c.magnet)}">
-  Hover me
-</button>
+<button data-cursor="magnetic">Hover me</button>
 
 <\!-- Label: the cursor grows to fit the text -->
-<a href="/project" data-cursor-text="View project">
-  Project
-</a>
+<a href="/project" data-cursor-text="View project">Project</a>
 
-<\!-- Frame + magnetic + label, combined -->
-<div data-cursor="frame magnetic" data-cursor-text="Drag" data-cursor-pad="${num(c.framePad)}">
-  Drag me
-</div>
+<\!-- Combine behaviours -->
+<div data-cursor="frame magnetic" data-cursor-text="Drag">Drag me</div>
 
-<\!-- Lens: a magnifying circle of any size -->
-<img src="photo.jpg" alt="" data-cursor="lens" data-cursor-size="${num(c.lensSize)}">
+<\!-- Lens: a magnifying circle -->
+<img src="photo.jpg" alt="" data-cursor="lens">
 
-<\!-- Custom size for a single element -->
-<div data-cursor-text="Explore" data-cursor-size="96">
-  Large project
-</div>
-
-<\!-- Caret: for text fields -->
+<\!-- Text caret, or give the native cursor back -->
 <input type="text" data-cursor="caret">
+<div data-cursor="hide">Native cursor here</div>
 
-<\!-- Hide: restore the native cursor -->
-<div data-cursor="hide">
-  Native cursor here
-</div>
-${c.ring ? `
-<\!-- Trailing ring: show or hide it per element -->
-<div data-cursor="grow" data-cursor-ring="show">Always ringed</div>
-<div data-cursor-ring="hide">No ring here</div>
-` : ''}
-<\!-- Pick a configured state explicitly -->
-<div data-cursor-type="card">Uses the "card" behaviours</div>
-
-<\!-- Optional: react to cursor changes in your own code
-<script>
-  document.addEventListener('cursorchange', (e) => console.log(e.detail.type, e.detail.behaviours));
-<\/script>
--->
+<\!-- Behaviours: grow shrink magnetic frame lens label caret hide
+     Fine-tuning: data-cursor-size="80"  data-cursor-pad="8"  data-cursor-pull="0.4"
+                  data-cursor-scale="2"  data-cursor-ring="show|hide"
+                  data-cursor-type="link|button|text|image|card|input|custom" -->
 `;
 }
 
@@ -982,74 +963,85 @@ function highlight(src, lang) {
    4 · Control schema → inspector UI
    ════════════════════════════════════════════════════════════════ */
 const R = (k, l, min, max, step, u, tip, en) => ({ k, t:'range', l, min, max, step, u, tip, en });
+const FEELS = {
+  Crisp:{ follow:1, smoothing:0, easing:'smooth', speed:1 },
+  Smooth:{ follow:.85, smoothing:0, easing:'smooth', speed:1 },
+  Bouncy:{ follow:.7, smoothing:0, easing:'spring', speed:1.2 },
+  Elastic:{ follow:.7, smoothing:0, easing:'elastic', speed:1.2 },
+  Floaty:{ follow:.3, smoothing:.3, easing:'smooth', speed:.7 },
+};
 const SCHEMA = {
   cursor:[
-    { h:'Shape' },
-    { k:'type', t:'select', l:'Cursor type', o:[['dot','Dot'],['outline','Outline'],['crosshair','Crosshair']], tip:'Visual style of the resting cursor. Frame, lens, label and caret states always restyle it.' },
-    R('size','Dot size',4,80,1,'px','Resting diameter. Individual elements can override it with data-cursor-size.'),
-    R('radius','Border radius',0,50,1,'%','Percentage of the shorter side. 50 is a circle, 0 a square. Used by the dot and label shapes.', c => c.type !== 'crosshair'),
-    { h:'Colour' },
-    { k:'color', t:'color', l:'Cursor colour' },
-    R('opacity','Opacity',.1,1,.05,'','Overall opacity of the cursor.'),
-    { h:'Border' },
-    R('borderWidth','Border width',0,8,.5,'px','Dot: adds a border. Outline: sets the line thickness.', c => c.type !== 'crosshair'),
-    { k:'borderColor', t:'color', l:'Border colour', en:c => c.type === 'dot' && c.borderWidth > 0, tip:'Only for the Dot type. Outline uses the cursor colour.' },
-    { h:'Compositing' },
-    { k:'blend', t:'select', l:'Blend mode', o:BLENDS.map(b => [b, b]), tip:'mix-blend-mode. “difference” with a white cursor inverts whatever it passes over.' },
-    { h:'Label' },
-    { k:'labelColor', t:'color', l:'Label colour' },
-    R('labelSize','Label size',9,20,1,'px','Font size for text set with data-cursor-text.'),
-    { h:'System' },
-    { k:'hideNative', t:'toggle', l:'Hide native cursor', tip:'Turns the browser cursor off while the custom cursor runs. Per element, data-cursor="hide" brings it back.' },
+    { k:'type', t:'select', l:'Style', o:[['dot','Dot'],['outline','Outline'],['crosshair','Crosshair']], tip:'The look of the cursor when idle.' },
+    R('size','Size',4,80,1,'px','Diameter when idle.'),
+    { k:'color', t:'color', l:'Colour' },
+    R('opacity','Opacity',.1,1,.05,'','How see-through the cursor is.'),
+    { k:'hideNative', t:'toggle', l:'Hide system cursor', tip:'Hides the normal arrow while this cursor is running.' },
+    { adv:'More cursor options' },
+    R('radius','Roundness',0,50,1,'%','50 = circle, 0 = square.', c => c.type !== 'crosshair'),
+    R('borderWidth','Border width',0,8,.5,'px','Adds an edge to the dot, or sets the line thickness of the outline.', c => c.type !== 'crosshair'),
+    { k:'borderColor', t:'color', l:'Border colour', en:c => c.type === 'dot' && c.borderWidth > 0 },
+    { k:'blend', t:'select', l:'Blend mode', o:BLENDS.map(b => [b, b === 'difference' ? 'difference (invert)' : b]), tip:'“difference” with a white cursor inverts whatever is underneath.' },
+    { k:'labelColor', t:'color', l:'Label text colour' },
+    R('labelSize','Label text size',9,20,1,'px',''),
   ],
   trail:[
-    { k:'ring', t:'toggle', l:'Enable trailing cursor', tip:'A second element that follows the dot with its own spring.' },
-    { h:'Appearance' },
-    R('ringSize','Ring size',16,160,1,'px','Resting diameter of the ring.', c => c.ring),
-    { k:'ringColor', t:'color', l:'Ring colour', en:c => c.ring },
-    R('ringOpacity','Ring opacity',0,1,.05,'','', c => c.ring),
-    R('ringBorder','Ring border',0,6,.5,'px','Border thickness. 0 leaves only a faint fill-less shape.', c => c.ring),
-    { h:'Behaviour' },
-    R('trailSpeed','Trail speed',.02,1,.01,'','How fast the ring catches up. 1 locks it to the dot.', c => c.ring),
-    R('trailDelay','Trail delay',0,300,10,'ms','The ring replays the dot’s path this many milliseconds late.', c => c.ring),
-    R('trailSmoothing','Trail smoothing',0,1,.05,'','Higher = heavier damping, less overshoot.', c => c.ring),
-    R('trailScale','Trail scale',.5,3,.05,'×','How much the ring scales on grow / magnetic elements.', c => c.ring),
-    { k:'trailEasing', t:'select', l:'Trail easing', o:Object.keys(EASING).map(e => [e, e]), tip:'Spring character of the ring.', en:c => c.ring },
+    { k:'ring', t:'toggle', l:'Trailing ring', tip:'A ring that follows the dot a moment later.' },
+    R('ringSize','Size',16,160,1,'px','', c => c.ring),
+    { k:'ringColor', t:'color', l:'Colour', en:c => c.ring },
+    R('trailSpeed','Follow speed',.02,1,.01,'','Low = lazy and laggy, high = sticks to the dot.', c => c.ring),
+    { adv:'More ring options' },
+    R('ringOpacity','Opacity',0,1,.05,'','', c => c.ring),
+    R('ringBorder','Border width',0,6,.5,'px','', c => c.ring),
+    R('trailDelay','Delay',0,300,10,'ms','Extra lag behind the dot.', c => c.ring),
+    R('trailSmoothing','Smoothing',0,1,.05,'','Higher = less overshoot.', c => c.ring),
+    R('trailScale','Hover scale',.5,3,.05,'×','How much the ring grows over interactive elements.', c => c.ring),
+    { k:'trailEasing', t:'select', l:'Easing', o:Object.keys(EASING).map(e => [e, e]), tip:'smooth = no bounce, elastic = very bouncy.', en:c => c.ring },
   ],
   motion:[
-    { h:'Cursor spring' },
-    R('follow','Follow speed',.05,1,.01,'','How tightly the cursor follows the pointer. 1 means no lag.'),
-    R('smoothing','Smoothing',0,.9,.01,'','Low-pass filter on pointer input. Adds a glide, at the cost of latency.'),
-    { k:'easing', t:'select', l:'Easing', o:Object.keys(EASING).map(e => [e, e]), tip:'Spring damping. smooth: none, snappy: tiny, spring: bouncy, elastic: very bouncy.' },
-    R('speed','Animation speed',.25,3,.05,'×','Speed of size, shape and radius transitions.'),
-    { h:'Interaction' },
-    R('magnet','Magnetic strength',0,1,.01,'','Default pull for “magnetic”. Override per element with data-cursor-pull.'),
-    R('stretch','Cursor stretch',0,1.5,.05,'','Squash and stretch along the direction of travel.'),
-    R('press','Press scale',.3,1.4,.05,'×','Scale while the mouse button is held.'),
-    R('hover','Hover scale',1,6,.1,'×','Scale for “grow” states.'),
-    R('shrink','Shrink scale',.2,1,.05,'×','Scale for “shrink” states.'),
+    { k:'feel', t:'feel', l:'Feel', tip:'How the cursor moves, from instant to springy. Fine-tune below.' },
+    R('magnet','Magnetic pull',0,1,.01,'','How strongly “magnetic” elements attract the cursor.'),
+    R('hover','Grow amount',1,6,.1,'×','How big the cursor gets when it grows.'),
+    R('stretch','Squash & stretch',0,1.5,.05,'','Stretches the cursor in the direction it moves.'),
+    { adv:'More motion options' },
+    R('follow','Follow speed',.05,1,.01,'','1 = no lag.'),
+    R('smoothing','Smoothing',0,.9,.01,'','Glides the pointer; adds a little delay.'),
+    { k:'easing', t:'select', l:'Easing', o:Object.keys(EASING).map(e => [e, e]), tip:'smooth = no bounce, elastic = very bouncy.' },
+    R('speed','Animation speed',.25,3,.05,'×','Speed of size and shape changes.'),
+    R('press','Press scale',.3,1.4,.05,'×','Size while the mouse button is held.'),
+    R('shrink','Shrink amount',.2,1,.05,'×','How small the cursor gets when it shrinks.'),
+  ],
+  hoverOpts:[
+    { adv:'Effect settings' },
+    R('framePad','Frame padding',0,40,1,'px','Space between element and frame.'),
+    R('lensSize','Lens size',40,320,1,'px',''),
+    R('lensBlur','Lens blur',0,20,.5,'px',''),
   ],
 };
-const STATE_OPTS = [
-  { h:'Behaviour options' },
-  R('framePad','Frame padding',0,40,1,'px','Space between the element and the frame. Override with data-cursor-pad.'),
-  R('lensSize','Lens size',40,320,1,'px','Diameter of the lens. Override with data-cursor-size.'),
-  R('lensBlur','Lens blur',0,20,.5,'px','Backdrop blur inside the lens.'),
+
+const EFFECTS = [
+  ['Nothing',[]], ['Grow',['grow']], ['Shrink',['shrink']], ['Magnetic',['magnetic']], ['Magnetic + grow',['grow','magnetic']],
+  ['Frame the element',['frame']], ['Frame + magnetic',['magnetic','frame']], ['Lens',['lens']],
+  ['Show a label',['label']], ['Magnetic + label',['magnetic','label']], ['Text caret',['caret']], ['Hide custom cursor',['hide']],
+];
+const HOVER_ROWS = [
+  ['link','Links','a[href]'], ['button','Buttons','buttons, tabs, checkboxes, selects'], ['text','Text','paragraphs, headings, lists'],
+  ['image','Images','img, video'], ['card','Cards','data-cursor-type="card"'], ['input','Text fields','inputs, textareas'], ['custom','Custom','data-cursor-type="custom"'],
 ];
 
 const fields = [];            // { def, row, sync() }
 const $ = (s, r = document) => r.querySelector(s);
-let selState = 'link';
 
 function mkRow(def, container) {
+  if (def.t === 'feel') return mkFeel(def, container);
   const id = 'f-' + def.k;
   const row = document.createElement('div');
   row.className = 'row' + (def.t === 'range' ? '' : ' line');
   const head = document.createElement('div'); head.className = 'row-h';
   const lab = document.createElement('label'); lab.htmlFor = id; lab.textContent = def.l;
   head.append(lab);
-  if (def.tip) { const i = document.createElement('span'); i.className = 'info'; i.tabIndex = 0; i.setAttribute('role', 'note'); i.setAttribute('aria-label', def.tip); i.dataset.tip = def.tip; i.textContent = '?'; head.append(i); }
   row.append(head);
+  if (def.tip) { const t = document.createElement('div'); t.className = 'hint'; t.id = id + '-hint'; t.textContent = def.tip; row.append(t); }
   let sync;
   const set = (v) => { cfg[def.k] = v; change(); };
   if (def.t === 'range') {
@@ -1093,11 +1085,27 @@ function mkRow(def, container) {
   container.append(row);
 }
 
+function mkFeel(def, container) {
+  const row = document.createElement('div'); row.className = 'row';
+  row.innerHTML = '<div class="row-h"><span class="lbl" id="feel-l">' + def.l + '</span></div><div class="hint">' + def.tip + '</div>';
+  const box = document.createElement('div'); box.className = 'chips feel'; box.setAttribute('role', 'group'); box.setAttribute('aria-labelledby', 'feel-l');
+  const btns = Object.keys(FEELS).map(n => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = n; b.dataset.cursor = 'grow';
+    b.addEventListener('click', () => { Object.assign(cfg, FEELS[n]); fields.forEach(f => f.sync()); change(); });
+    box.append(b); return b;
+  });
+  row.append(box);
+  const sync = () => { const cur = Object.keys(FEELS).find(n => Object.entries(FEELS[n]).every(([k, v]) => cfg[k] === v)); btns.forEach(b => b.setAttribute('aria-pressed', String(b.textContent === cur))); };
+  fields.push({ def, row, sync }); container.append(row);
+}
+
 function buildPane(id, defs) {
-  const p = $('#' + id);
+  const p = $('#' + id); let box = p;
   defs.forEach(d => {
-    if (d.h) { const g = document.createElement('div'); g.className = 'grp'; g.textContent = d.h; p.append(g); }
-    else mkRow(d, p);
+    if (d.adv) {
+      box = document.createElement('details'); box.className = 'adv';
+      const sm = document.createElement('summary'); sm.textContent = d.adv; sm.dataset.cursor = 'grow'; box.append(sm); p.append(box);
+    } else mkRow(d, box);
   });
 }
 
@@ -1109,67 +1117,32 @@ function refreshEnabled() {
   });
 }
 
-/* ── hover-states editor ─────────────────────────────────────── */
-function buildStates() {
+/* ── hover effects: one dropdown per element kind ───────────── */
+const hoverSync = [];
+function buildHover() {
   const p = $('#p-states');
-  p.innerHTML = '<div class="grp">Element states</div><div class="st-nav" id="stNav" role="group" aria-label="Element state"></div><div class="st-card" id="stCard"></div>';
-  const nav = $('#stNav');
-  Object.entries(STATE_META).forEach(([k, m]) => {
-    const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = m.name; b.dataset.k = k;
-    b.addEventListener('click', () => { selState = k; renderState(); });
-    nav.append(b);
-  });
-  const opts = document.createElement('div'); opts.id = 'stOpts'; p.append(opts);
-  buildPane('stOpts', STATE_OPTS);
-  renderState();
-}
-function describeState(s) {
-  const b = new Set(s.b);
-  if (b.has('hide')) return '<b>hide</b> wins: custom cursor is hidden, the native cursor returns.';
-  const parts = [];
-  if (b.has('caret')) parts.push('<b>caret</b> wins: thin text caret (everything else except label is ignored)');
-  else if (b.has('lens')) parts.push('<b>lens</b> wins over frame' + (b.has('frame') ? ' (frame ignored)' : ''));
-  else if (b.has('frame')) parts.push('<b>frame</b> wraps the element');
-  if (b.has('magnetic') && !b.has('caret')) parts.push('<b>magnetic</b> pulls cursor and element');
-  if (b.has('label') && !b.has('caret')) parts.push('<b>label</b> shows ' + (s.text ? '“' + esc(s.text) + '”' : '<i>(set text below)</i>'));
-  if (b.has('grow') && b.has('shrink')) parts.push('<b>grow</b> wins over shrink');
-  else if (b.has('grow')) parts.push('<b>grow</b> ×' + num(cfg.hover));
-  else if (b.has('shrink')) parts.push('<b>shrink</b> ×' + num(cfg.shrink));
-  if (+s.size) parts.push('base size <b>' + num(s.size) + 'px</b>');
-  return parts.length ? parts.join('<br>') : 'Default cursor: no change.';
-}
-function renderState(focusBeh) {
-  const k = selState, m = STATE_META[k], s = cfg.states[k];
-  document.querySelectorAll('#stNav .chip').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.k === k)));
-  const card = $('#stCard');
-  const hide = s.b.includes('hide'), caret = s.b.includes('caret');
-  card.innerHTML = '<h3>' + m.name + ' <code>' + esc(k === 'card' || k === 'custom' ? 'data-cursor-type="' + k + '"' : k) + '</code></h3><p>' + m.desc + '</p>' +
-    '<div class="beh" role="group" aria-label="Behaviours for ' + m.name + '"></div>' +
-    '<div class="row line" id="stText"><div class="row-h"><label for="st-text">Label text</label></div><input class="txt" id="st-text" type="text" maxlength="40" placeholder="e.g. View" data-cursor="caret"></div>' +
-    '<div class="row line" id="stSize"><div class="row-h"><label for="st-size">Custom size</label><span class="info" tabindex="0" role="note" data-tip="Overrides the resting cursor size for this state. 0 keeps the global size." aria-label="Overrides the resting cursor size for this state. 0 keeps the global size.">?</span><span class="val"><input class="num" id="st-size" data-cursor="caret" type="number" min="0" max="320" step="1" aria-label="Custom size value"><span>px</span></span></div></div>' +
-    '<div class="resolve" id="stRes" aria-live="polite"></div>';
-  const beh = $('.beh', card);
-  BEHAVIOURS.forEach(b => {
-    const btn = document.createElement('button'); btn.type = 'button'; btn.textContent = b;
-    btn.setAttribute('aria-pressed', String(s.b.includes(b)));
-    btn.title = ({ grow:'Scale up', shrink:'Scale down', magnetic:'Pulled towards the element', frame:'Wrap the element', lens:'Large magnifying circle', label:'Show text in the cursor', caret:'Text caret', hide:'Restore the native cursor' })[b];
-    btn.addEventListener('click', () => {
-      const i = s.b.indexOf(b);
-      if (i >= 0) s.b.splice(i, 1); else s.b.push(b);
-      s.b.sort((a, c) => BEHAVIOURS.indexOf(a) - BEHAVIOURS.indexOf(c));
-      renderState(b); change();
+  p.innerHTML = '<p class="intro">Pick what the cursor does over each kind of element. This works automatically, with no attributes needed.</p><div class="hv-list"></div>';
+  const list = $('.hv-list', p);
+  HOVER_ROWS.forEach(([k, name, sub]) => {
+    const row = document.createElement('div'); row.className = 'hv';
+    row.innerHTML = '<div class="hv-h"><div><label for="hv-' + k + '">' + name + '</label><div class="hint"><code>' + esc(sub) + '</code></div></div><select class="sel" id="hv-' + k + '"></select></div>' +
+      '<div class="hv-t" hidden><label class="sr" for="hv-' + k + '-t">Label text for ' + name + '</label><input class="txt" id="hv-' + k + '-t" type="text" maxlength="40" placeholder="Label text, e.g. View" data-cursor="caret"></div>';
+    const sel = $('select', row), txt = $('input', row), tw = $('.hv-t', row);
+    EFFECTS.forEach(([n, b]) => sel.add(new Option(n, b.join(','))));
+    sel.addEventListener('change', () => {
+      cfg.states[k].b = sel.value ? sel.value.split(',') : [];
+      tw.hidden = !cfg.states[k].b.includes('label'); change();
     });
-    beh.append(btn);
-    if (b === focusBeh) queueMicrotask(() => btn.focus());
+    txt.addEventListener('input', () => { cfg.states[k].text = txt.value; change(); });
+    hoverSync.push(() => {
+      const s = cfg.states[k], v = s.b.join(',');
+      sel.querySelectorAll('.x').forEach(o => o.remove());
+      if (![...sel.options].some(o => o.value === v)) { const o = new Option('Custom: ' + s.b.join(' + '), v); o.className = 'x'; sel.add(o); }
+      sel.value = v; txt.value = s.text; tw.hidden = !s.b.includes('label');
+    });
+    list.append(row);
   });
-  const t = $('#st-text'), sz = $('#st-size');
-  t.value = s.text; sz.value = s.size;
-  const textOn = s.b.includes('label') && !hide && !caret;
-  $('#stText').classList.toggle('off', !textOn); t.disabled = !textOn;
-  t.addEventListener('input', () => { s.text = t.value; $('#stRes').innerHTML = describeState(s); change(); });
-  sz.addEventListener('input', () => { s.size = Math.max(0, +sz.value || 0); $('#stRes').innerHTML = describeState(s); change(); });
-  $('#stRes').innerHTML = describeState(s);
-  card.querySelectorAll('button,.info').forEach(n => { if (n.tagName === 'BUTTON') n.dataset.cursor = 'grow'; });
+  buildPane('p-states', SCHEMA.hoverOpts);
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -1199,12 +1172,13 @@ function flush() {
   runCursor();
   renderCode();
   refreshEnabled();
+  fields.forEach(f => f.def.t === 'feel' && f.sync());
   const preset = Object.keys(PRESETS).find(n => sameCfg(fromPreset(PRESETS[n].o), cfg));
   document.querySelectorAll('#presetChips .chip').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.k === preset)));
   $('#customNote').hidden = !!preset;
 }
 function change() { if (!queued) { queued = true; requestAnimationFrame(flush); } }
-function syncAll() { fields.forEach(f => f.sync()); renderState(); change(); }
+function syncAll() { fields.forEach(f => f.sync()); hoverSync.forEach(f => f()); change(); }
 
 document.addEventListener('pointermove', (e) => { if (e.isTrusted && e.pointerType !== 'touch') ptr = { x:e.clientX, y:e.clientY }; }, { capture:true, passive:true });
 document.documentElement.addEventListener('pointerleave', () => { ptr = null; });
@@ -1265,6 +1239,8 @@ $('#copyAll').addEventListener('click', async () => {
   flash($('#copyAll'), 'Copied ✓', await copyText(all));
 });
 
+$('#annToggle').addEventListener('change', (e) => { $('#stage').classList.toggle('hide-ann', !e.target.checked); });
+
 /* ── theme ───────────────────────────────────────────────────── */
 $('#themeBtn').addEventListener('click', () => {
   const r = document.documentElement;
@@ -1297,10 +1273,11 @@ document.querySelectorAll('img[data-art]').forEach(i => { i.src = art(...ARTS[+i
 buildPane('p-cursor', SCHEMA.cursor);
 buildPane('p-trail', SCHEMA.trail);
 buildPane('p-motion', SCHEMA.motion);
-buildStates();
+buildHover();
 
 // Builder chrome uses the same cursor system: controls simply opt in to "grow".
-document.querySelectorAll('.top button,.tab,.chip,.switch input,.sel,input[type=color]').forEach(n => { if (!n.dataset.cursor) n.dataset.cursor = 'grow'; });
+document.querySelectorAll('.tog .switch input').forEach(n => { n.dataset.cursor = 'grow'; });
+document.querySelectorAll('.top button,.tab,.chip,.switch input,.sel,input[type=color],summary').forEach(n => { if (!n.dataset.cursor) n.dataset.cursor = 'grow'; });
 document.querySelectorAll('.num,.txt,.hex').forEach(n => { n.dataset.cursor = 'caret'; });
 document.querySelectorAll('.code-h button,.code-f button').forEach(n => { n.dataset.cursor = 'grow'; });
 document.querySelector('.code-wrap').dataset.cursorType = 'text';
