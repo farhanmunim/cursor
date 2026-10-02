@@ -159,6 +159,7 @@ input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px color
 .hint{color:var(--muted);font-size:11.5px;line-height:1.4;margin-top:1px}
 .hint code{font-size:11px}
 .row-h .lbl{font-size:12.5px;flex:1;font-weight:500}
+.chips.kinds{grid-template-columns:repeat(4,1fr);margin:12px 0}
 .chips.feel{grid-template-columns:repeat(3,1fr);margin-top:8px}
 .row.line .hint{padding-right:0}
 .adv{margin:14px 0 0;border-top:1px solid var(--border)}
@@ -174,7 +175,6 @@ input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px color
 .hv-h .sel{max-width:158px;flex:none}
 .hv-t{margin-top:7px}
 .tog{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);cursor:pointer}
-.hide-ann .ann{display:none}
 
 /* ── centre: preview ───────────────────── */
 .stage-h{display:flex;align-items:center;gap:10px;padding:0 16px;height:44px;flex:none;border-bottom:1px solid var(--border);background:var(--panel)}
@@ -186,76 +186,44 @@ input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px color
 .no-mouse .touch-note{display:block}
 .no-mouse .live{display:none}
 .stage-h h2{white-space:nowrap}
-.stage{flex:1;min-height:0;overflow:auto;padding:20px}
-.site{max-width:860px;margin:0 auto;background:var(--panel);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
-.chrome-bar{display:flex;align-items:center;gap:6px;padding:9px 12px;border-bottom:1px solid var(--border);background:var(--panel-2)}
-.chrome-bar i{width:9px;height:9px;border-radius:50%;background:var(--border-strong)}
-.chrome-bar span{margin-left:10px;font:11px var(--mono);color:var(--muted);background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:2px 10px;flex:1;max-width:280px}
-.sect{padding:28px 32px;border-bottom:1px solid var(--border);position:relative}
-.sect:last-child{border-bottom:0}
-.demo{position:relative}
-.ann{position:absolute;right:6px;top:-9px;z-index:3;pointer-events:none;font:10.5px/1 var(--mono);color:var(--muted);background:var(--panel);border:1px solid var(--border-strong);padding:3px 6px;border-radius:5px;white-space:nowrap;max-width:calc(100% - 12px);overflow:hidden;text-overflow:ellipsis}
-.ann.inside{top:8px;right:8px}
-.ann b{color:var(--accent);font-weight:500}
-.is-target{outline:1.5px dashed var(--accent);outline-offset:4px}
-.s-nav{display:flex;align-items:center;gap:22px;padding:14px 32px;border-bottom:1px solid var(--border)}
-.s-nav .logo{font-weight:700;font-size:15px;letter-spacing:-.02em;color:var(--text);text-decoration:none}
-.s-nav nav{display:flex;gap:18px;flex:1}
-.s-nav nav a,.lnk{color:var(--muted);text-decoration:none;font-weight:500;padding:2px 0;border-bottom:1px solid transparent;transition:color .12s,border-color .12s}
-.s-nav nav a:hover,.lnk:hover{color:var(--text);border-color:var(--text)}
-.s-nav nav a[aria-current]{color:var(--text)}
+.box-wrap{flex:1;min-height:0;padding:16px;display:flex}
+.box{position:relative;flex:1;min-height:360px;overflow:hidden;border:1px solid var(--border-strong);border-radius:14px;background:var(--panel-2);background-image:radial-gradient(var(--border) 1px,transparent 1px);background-size:16px 16px}
+.box:hover{border-color:var(--faint)}
+.scene{position:absolute;inset:0;overflow:auto;padding:16px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-content:start}
+.tile{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:34px 14px 14px;border:1px solid var(--border);border-radius:12px;background:var(--panel);transition:border-color .15s,box-shadow .15s}
+.tile.is-edit{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.tl{position:absolute;left:12px;top:9px;right:12px;font:11px var(--mono);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile.is-edit .tl{color:var(--accent)}
+.span3{grid-column:1/-1}.span2{grid-column:span 2}
+.open-msg{width:100%;min-height:64px;display:grid;place-items:center;text-align:center;color:var(--muted);font-size:13px;line-height:1.5}
+.tile p.sm{margin:0;font-size:14px;line-height:1.6;color:var(--text)}
+.is-target{outline:1.5px dashed var(--accent);outline-offset:3px}
+.lnk{color:var(--text);text-decoration:none;font-weight:600;font-size:15px;border-bottom:1px solid var(--border-strong);padding:1px 0;transition:border-color .12s,color .12s}
+.lnk:hover{color:var(--accent);border-color:var(--accent)}
+.btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .ibtn{width:34px;height:34px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--border-strong);background:var(--panel);cursor:pointer;transition:background .12s}
 .ibtn:hover{background:var(--hover)}
 .ibtn svg{width:16px;height:16px}
-.eyebrow{font:500 11px var(--mono);color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin:0 0 10px}
-.hero .hl{font-size:40px;line-height:1.05;letter-spacing:-.035em;margin:0 0 12px;max-width:560px}
-.hero p{color:var(--muted);font-size:15px;line-height:1.6;max-width:520px;margin:0 0 22px}
-.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.pbtn,.sbtn{height:38px;padding:0 18px;border-radius:9px;font-weight:600;cursor:pointer;border:1px solid transparent;transition:background .15s,border-color .15s}
+.pbtn,.sbtn{height:36px;padding:0 16px;border-radius:9px;font-weight:600;cursor:pointer;border:1px solid transparent;transition:background .15s,border-color .15s}
 .pbtn{background:var(--text);color:var(--bg)}
 .pbtn:hover{background:color-mix(in srgb,var(--text) 82%,var(--bg))}
 .sbtn{background:var(--panel);border-color:var(--border-strong);color:var(--text)}
 .sbtn:hover{background:var(--hover)}
-.row-flex{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
-.seg{display:inline-flex;padding:3px;background:var(--hover);border-radius:9px;gap:2px}
-.seg button{border:0;background:none;padding:6px 14px;border-radius:7px;font-weight:500;color:var(--muted);cursor:pointer;transition:background .12s,color .12s}
-.seg button[aria-selected="true"]{background:var(--panel);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.12)}
-.seg button:hover{color:var(--text)}
-.chk{display:inline-flex;align-items:center;gap:8px;cursor:pointer}
-.chk input{width:16px;height:16px;margin:0;accent-color:var(--accent)}
-.h3{display:block;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 14px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.card{border:1px solid var(--border);border-radius:12px;background:var(--panel);position:relative}
-.card img{border-radius:11px 11px 0 0;display:block;width:100%;aspect-ratio:16/10;object-fit:cover}
-.card .body{padding:14px 16px 16px}
-.card h4{margin:0 0 3px;font-size:15px;letter-spacing:-.01em}
-.card p{margin:0;color:var(--muted);font-size:13px}
-.drag{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;min-height:196px;background:var(--hover);border:1px dashed var(--border-strong);border-radius:12px;text-align:center;padding:20px;position:relative}
-.drag strong{font-size:15px}.drag span{color:var(--muted);font-size:13px}
-.lens-zone{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
-.lens-zone img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover}
-.lens-zone .over{position:absolute;inset:auto 0 0 0;padding:20px 16px 12px;background:linear-gradient(transparent,rgba(0,0,0,.55));color:#fff;font-weight:600;font-size:13px;pointer-events:none}
-.lens-zone .tiny{position:absolute;left:16px;top:14px;font:600 24px/1 var(--sans);color:#fff;letter-spacing:-.03em;text-shadow:0 1px 8px rgba(0,0,0,.25);pointer-events:none}
-.feature{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--border)}
-.feature img{display:block;width:100%;aspect-ratio:21/9;object-fit:cover}
-.feature .cap{position:absolute;left:20px;bottom:16px;color:#fff;pointer-events:none}
-.feature .cap h3{margin:0;font-size:22px;letter-spacing:-.02em}.feature .cap p{margin:2px 0 0;font-size:13px;opacity:.85}
-.form{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px}
-.form .full{grid-column:1/-1}
-.fld{display:flex;flex-direction:column;gap:5px}
-.fld>label{font-weight:500;font-size:12.5px}
-.in{height:38px;border:1px solid var(--border-strong);background:var(--panel);border-radius:8px;padding:0 12px;font-size:14px;width:100%;transition:border-color .12s,box-shadow .12s}
-textarea.in{height:84px;padding:10px 12px;resize:vertical;line-height:1.5}
+.tile img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:8px}
+.card{width:100%;border:1px solid var(--border);border-radius:10px;background:var(--panel-2);padding:14px}
+.card .ct{display:block;font-size:15px;letter-spacing:-.01em}
+.card p{margin:3px 0 0;color:var(--muted);font-size:13px}
+.in{height:36px;border:1px solid var(--border-strong);background:var(--panel);border-radius:8px;padding:0 12px;font-size:14px;width:100%;transition:border-color .12s,box-shadow .12s}
+textarea.in{height:64px;padding:8px 12px;resize:none;line-height:1.5}
 .in:hover{border-color:var(--faint)}
 .in:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent)}
-.native{display:flex;align-items:center;justify-content:center;min-height:84px;border:1px dashed var(--border-strong);border-radius:10px;color:var(--muted);text-align:center;padding:12px;background:repeating-linear-gradient(135deg,transparent 0 8px,var(--hover) 8px 16px)}
-.idx{list-style:none;margin:0;padding:0}
-.idx a{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);color:var(--text);text-decoration:none;font-size:24px;font-weight:600;letter-spacing:-.02em;transition:color .15s,padding .2s}
+.custom{width:100%;min-height:96px;display:grid;place-items:center;text-align:center;border-radius:10px;padding:12px;font-size:13px;color:#fff;background:linear-gradient(135deg,#5b5bf0,#ec4899);font-weight:600}
+.custom code{font-weight:400;opacity:.85}
+.idx{list-style:none;margin:0;padding:0;width:100%}
+.idx a{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:12px 0;border-bottom:1px solid var(--border);color:var(--text);text-decoration:none;font-size:19px;font-weight:600;letter-spacing:-.02em;transition:color .15s,padding .2s}
 .idx li:first-child a{border-top:1px solid var(--border)}
 .idx a:hover{color:var(--accent);padding-left:8px}
 .idx .m{font:12px var(--mono);color:var(--muted);letter-spacing:0;font-weight:400}
-.lede{font-size:15px;line-height:1.7;max-width:60ch;margin:0}
-.lede mark{background:color-mix(in srgb,var(--accent) 22%,transparent);color:inherit;padding:0 2px;border-radius:3px}
 
 /* inspector bar */
 .inspect{flex:none;display:flex;gap:6px 14px;flex-wrap:wrap;align-items:center;padding:8px 16px;border-top:1px solid var(--border);background:var(--panel);font:11.5px var(--mono);color:var(--muted);min-height:38px}
@@ -277,18 +245,19 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
   .col{overflow:visible}
   .mid{order:1}.left{order:2;border-right:0;border-top:1px solid var(--border)}.right{order:3;border-left:0;border-top:1px solid var(--border)}
   .scroll{overflow:visible}
-  .stage{overflow:visible}
+  .box{min-height:640px}
   .code-wrap{max-height:70vh}
   .top .hint{display:none}
 }
 @media (max-width:640px){
   .live{display:none}
   .brand{white-space:nowrap}.brand small{display:none}
-  .stage{padding:10px}.sect{padding:20px 16px}.s-nav{padding:12px 16px;gap:12px}.hero .hl{font-size:30px}
-  .grid2,.form{grid-template-columns:1fr}
-  .s-nav nav{gap:12px;overflow:auto}
+  .box-wrap{padding:10px}.scene{grid-template-columns:1fr}.span2{grid-column:auto}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* the cursor lives inside the preview box only */
+#box.cc-on{cursor:none}
+#box .cc-dot,#box .cc-ring,#box .cc-pv{position:absolute}
 </style>
 <style id="cc-style"></style>
 <script defer src="https://mochi.farhan.app/script.js" data-website-id="15e53223-2206-4b9a-99d2-28dc855a10b0"></script>
@@ -340,118 +309,69 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
 <main class="col mid" id="stage-col" aria-labelledby="live-h">
   <div class="stage-h">
     <h2 id="live-h">Live preview</h2>
-    <span class="live">move your mouse over the page</span>
-    <span class="sp"></span>
-    <label class="tog"><span class="switch"><input type="checkbox" id="annToggle" role="switch" checked><i></i></span> Show attributes</label>
+    <span class="live">move your mouse inside the box</span>
   </div>
   <div class="touch-note" role="status"><strong>Mouse or trackpad required.</strong> The live cursor preview is disabled on touch devices. You can still configure the cursor and copy the generated code.</div>
-  <div class="stage" id="stage" tabindex="-1">
-    <div class="site" role="region" aria-label="Demo website for testing the cursor">
-      <div class="chrome-bar" aria-hidden="true"><i></i><i></i><i></i><span>northwind.studio</span></div>
+  <div class="box-wrap">
+    <div class="box" id="box">
+      <div class="scene" id="stage" tabindex="-1" role="region" aria-label="Cursor test area">
 
-      <div class="s-nav demo">
-        <a class="logo" href="#stage" onclick="return false">Northwind</a>
-        <nav aria-label="Demo navigation">
-          <a href="#stage" aria-current="page" onclick="return false">Work</a>
-          <a href="#stage" onclick="return false">Studio</a>
-          <a href="#stage" onclick="return false">Journal</a>
-          <a href="#stage" onclick="return false">Contact</a>
-        </nav>
-        <button class="ibtn" type="button" aria-label="Search" data-cursor="magnetic" data-cursor-pull="0.6"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg></button>
-        <button class="ibtn" type="button" aria-label="Menu" data-cursor="magnetic" data-cursor-pull="0.6"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M2 5h12M2 11h12"/></svg></button>
-        <span aria-hidden="true" class="ann">links → <b>type: link</b> · icon buttons → <b>data-cursor="magnetic"</b></span>
+        <div class="tile span3" data-kind="open">
+          <span class="tl">Open area</span>
+          <div class="open-msg">Move around in here to feel the cursor, the trailing ring and the motion.<br>Pick an element below to see what happens when you hover it.</div>
+        </div>
+
+        <div class="tile" data-kind="link">
+          <span class="tl">Links · a[href]</span>
+          <a class="lnk" href="#stage" onclick="return false">Read the case study →</a>
+          <a class="lnk" href="#stage" onclick="return false">Visit the journal</a>
+        </div>
+
+        <div class="tile" data-kind="button">
+          <span class="tl">Buttons</span>
+          <div class="btns">
+            <button class="pbtn" type="button">Get started</button>
+            <button class="sbtn" type="button">Learn more</button>
+            <button class="ibtn" type="button" aria-label="Search"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg></button>
+          </div>
+        </div>
+
+        <div class="tile" data-kind="text">
+          <span class="tl">Text · p, h1–h6</span>
+          <p class="sm">Good cursors are quiet until they matter. Hover this paragraph to see how text is treated.</p>
+        </div>
+
+        <div class="tile" data-kind="image">
+          <span class="tl">Images · img</span>
+          <img data-art="0" alt="Abstract gradient artwork">
+        </div>
+
+        <div class="tile" data-kind="card">
+          <span class="tl">Cards · data-cursor-type="card"</span>
+          <article class="card" data-cursor-type="card"><strong class="ct">Aurora Bank</strong><p>Mobile banking redesign</p></article>
+        </div>
+
+        <div class="tile" data-kind="input">
+          <span class="tl">Fields · input, textarea</span>
+          <input class="in" type="text" aria-label="Your name" placeholder="Type here…" autocomplete="off">
+          <textarea class="in" aria-label="Your message" placeholder="A longer message…"></textarea>
+        </div>
+
+        <div class="tile" data-kind="custom">
+          <span class="tl">Custom · data-cursor-type="custom"</span>
+          <div class="custom" data-cursor-type="custom">Anything you tag<br><code>data-cursor-type="custom"</code></div>
+        </div>
+
+        <div class="tile span2" data-kind="preview">
+          <span class="tl">Image preview · data-cursor-image</span>
+          <ul class="idx">
+            <li><a href="#stage" onclick="return false" data-art="1"><span>Fieldnotes</span><span class="m">Editorial</span></a></li>
+            <li><a href="#stage" onclick="return false" data-art="2"><span>Evergreen</span><span class="m">Brand</span></a></li>
+            <li><a href="#stage" onclick="return false" data-art="3"><span>Meridian Atlas</span><span class="m">Data viz</span></a></li>
+          </ul>
+        </div>
+
       </div>
-
-      <section class="sect hero demo" aria-label="Hero">
-        <p class="eyebrow">Independent design studio</p>
-        <h3 class="hl">Interfaces that feel as good as they look.</h3>
-        <p>Northwind designs brands, products and websites. Hover this paragraph, then the controls below: every element reacts through plain <code class="mono">data-cursor</code> attributes.</p>
-        <div class="actions">
-          <button class="pbtn" type="button" data-cursor="magnetic grow">Start a project</button>
-          <button class="sbtn" type="button">View showreel</button>
-          <a class="lnk" href="#stage" onclick="return false">Read the case studies →</a>
-        </div>
-        <span aria-hidden="true" class="ann">headings / p → <b>type: text</b> · primary → <b>data-cursor="magnetic grow"</b> · secondary → <b>type: button</b></span>
-      </section>
-
-      <section class="sect demo" aria-label="Tabs and toggles">
-        <h3 class="h3">Controls</h3>
-        <div class="row-flex">
-          <div class="seg" role="tablist" aria-label="Demo tabs" id="demoTabs">
-            <button type="button" role="tab" aria-selected="true">Overview</button>
-            <button type="button" role="tab" aria-selected="false" tabindex="-1">Process</button>
-            <button type="button" role="tab" aria-selected="false" tabindex="-1">Pricing</button>
-          </div>
-          <label class="chk" data-cursor-type="button"><input type="checkbox" checked> Case studies</label>
-          <label class="chk" data-cursor-type="button"><span class="switch"><input type="checkbox" role="switch" aria-label="Email updates" checked><i></i></span> Email updates</label>
-          <button class="ibtn" type="button" aria-label="Like" data-cursor="magnetic grow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M8 13.5S2 10 2 6a3 3 0 0 1 6-1 3 3 0 0 1 6 1c0 4-6 7.500-6 7.500z"/></svg></button>
-        </div>
-        <span aria-hidden="true" class="ann">tabs, checkbox, switch → <b>type: button</b> · icon → <b>data-cursor="magnetic grow"</b></span>
-      </section>
-
-      <section class="sect demo" aria-label="Projects">
-        <h3 class="h3">Selected work</h3>
-        <div class="grid2">
-          <article class="card demo" data-cursor-text="View project">
-            <img data-art="0" alt="Abstract gradient artwork for project Aurora">
-            <div class="body"><h4>Aurora Bank</h4><p>Mobile banking redesign</p></div>
-            <span aria-hidden="true" class="ann"><b>data-cursor-text="View project"</b></span>
-          </article>
-          <article class="card demo" data-cursor-type="card">
-            <img data-art="1" alt="Abstract gradient artwork for project Fieldnotes">
-            <div class="body"><h4>Fieldnotes</h4><p>Editorial platform</p></div>
-            <span aria-hidden="true" class="ann"><b>data-cursor-type="card"</b></span>
-          </article>
-          <div class="drag demo" data-cursor="frame magnetic" data-cursor-text="Drag" data-cursor-pull="0.5">
-            <strong>Drag to reorder</strong><span>Frame + magnetic + label</span>
-            <span aria-hidden="true" class="ann"><b>data-cursor="frame magnetic"</b> data-cursor-text="Drag"</span>
-          </div>
-          <div class="lens-zone demo" data-cursor="lens">
-            <img data-art="2" alt="Abstract gradient artwork for the lens demo">
-            <span class="tiny">Small print, sharp detail</span>
-            <span class="over">Move here to magnify</span>
-            <span aria-hidden="true" class="ann inside"><b>data-cursor="lens"</b></span>
-          </div>
-        </div>
-      </section>
-
-      <section class="sect demo" aria-label="Project index">
-        <h3 class="h3">Project index</h3>
-        <ul class="idx">
-          <li><a href="#stage" onclick="return false" data-art="0"><span>Aurora Bank</span><span class="m">Product · 2025</span></a></li>
-          <li><a href="#stage" onclick="return false" data-art="1"><span>Fieldnotes</span><span class="m">Editorial · 2025</span></a></li>
-          <li><a href="#stage" onclick="return false" data-art="2"><span>Evergreen</span><span class="m">Brand · 2024</span></a></li>
-          <li><a href="#stage" onclick="return false" data-art="3"><span>Meridian Atlas</span><span class="m">Data viz · 2024</span></a></li>
-        </ul>
-        <span aria-hidden="true" class="ann"><b>data-cursor-image="…"</b></span>
-      </section>
-
-      <section class="sect demo" aria-label="Featured project">
-        <div class="feature" data-cursor-text="Explore" data-cursor-size="96">
-          <img data-art="3" alt="Large abstract gradient artwork for the featured project">
-          <div class="cap"><h3>Meridian Atlas</h3><p>Interactive map of the world's shipping lanes</p></div>
-        </div>
-        <span aria-hidden="true" class="ann"><b>data-cursor-text="Explore"</b> data-cursor-size="96"</span>
-      </section>
-
-      <section class="sect demo" aria-label="Form">
-        <h3 class="h3">Say hello</h3>
-        <form class="form" onsubmit="return false">
-          <div class="fld"><label for="f-name">Name</label><input class="in" id="f-name" type="text" placeholder="Ada Lovelace" autocomplete="off"></div>
-          <div class="fld"><label for="f-mail">Email</label><input class="in" id="f-mail" type="email" placeholder="ada@example.com" autocomplete="off"></div>
-          <div class="fld"><label for="f-sel">Budget</label><select class="in" id="f-sel"><option>€10k – €25k</option><option>€25k – €50k</option><option>€50k+</option></select></div>
-          <div class="fld"><label for="f-url">Project link</label><input class="in" id="f-url" type="url" placeholder="https://" autocomplete="off"></div>
-          <div class="fld full"><label for="f-msg">Message</label><textarea class="in" id="f-msg" placeholder="Tell us about the project…"></textarea></div>
-          <div class="fld full"><div class="native demo" data-cursor="hide"><span>Native cursor zone: the custom cursor steps aside here.</span><span aria-hidden="true" class="ann"><b>data-cursor="hide"</b></span></div></div>
-          <div class="full actions"><button class="pbtn" type="submit">Send message</button><button class="sbtn" type="reset">Clear</button></div>
-        </form>
-        <span aria-hidden="true" class="ann">inputs / textarea → <b>type: input</b> · select → <b>type: button</b></span>
-      </section>
-
-      <section class="sect" aria-label="Text">
-        <h3 class="h3">Reading</h3>
-        <p class="lede">Good cursors are <mark>quiet until they matter</mark>. They confirm what is clickable, tell you what will happen next, and never get in the way of reading. Select this text: the cursor shrinks to stay out of the way.</p>
-      </section>
     </div>
   </div>
   <div class="inspect" id="inspect" aria-label="Resolved cursor state" aria-live="off">
@@ -494,18 +414,22 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
 const ENGINE = String.raw`/* Custom cursor · generated by Cursor Builder
  *
  * Attributes (all optional, usable on any element):
- *   data-cursor="grow shrink magnetic frame lens label caret hide"   space-separated behaviours
+ *   data-cursor="magnetic frame lens label caret hide"   space-separated behaviours
  *   data-cursor-type="link|button|text|image|card|input|custom"      borrow a configured state
  *   data-cursor-text="View"     label shown inside the cursor
  *   data-cursor-size="80"       resting size in px (lens diameter for "lens")
  *   data-cursor-pad="8"         frame padding in px
  *   data-cursor-pull="0.4"      magnetic strength, 0 to 1
- *   data-cursor-scale="2"       grow / shrink factor
+ *   data-cursor-scale="2"       cursor size on hover (1 = resting size)
+ *   data-cursor-ring-scale="1.5"  trailing ring size on hover
  *   data-cursor-ring="show|hide"
  *   data-cursor-image="photo.jpg"   thumbnail that follows the cursor while hovering
  *
+ * Optional: set root: '#box' in the config to keep the cursor inside one element
+ * (give it position:relative; overflow:hidden and make .cc-dot/.cc-ring position:absolute).
+ *
  * Conflicts resolve as: hide > caret > lens > frame.
- * label, grow/shrink and magnetic combine with whatever wins.
+ * label and magnetic combine with whatever wins.
  * A data-cursor attribute replaces the behaviours of the element's type.
  */
 (() => {
@@ -517,7 +441,8 @@ const ENGINE = String.raw`/* Custom cursor · generated by Cursor Builder
   if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
   const rm = matchMedia('(prefers-reduced-motion: reduce)');
-  const root = document.documentElement;
+  const scoped = C.root && document.querySelector(C.root);
+  const root = scoped || document.documentElement;       // where events and the cursor live
   const ac = new AbortController();
   const on = (t, type, fn, o) => t.addEventListener(type, fn, { passive: true, signal: ac.signal, ...o });
   const mags = new Map();   // elements currently pulled towards the pointer
@@ -538,7 +463,7 @@ const ENGINE = String.raw`/* Custom cursor · generated by Cursor Builder
     const mk = (cls) => {
       const n = document.createElement('div');
       n.className = cls; n.setAttribute('aria-hidden', 'true');
-      document.body.append(n); return n;
+      (scoped || document.body).append(n); return n;
     };
     //[preview
     pv = mk('cc-pv cc-hide');
@@ -553,7 +478,7 @@ const ENGINE = String.raw`/* Custom cursor · generated by Cursor Builder
     label.className = 'cc-label'; dot.append(label);
 
     // ── element selection ────────────────────────────────────────
-    const ATTR = '[data-cursor],[data-cursor-text],[data-cursor-size],[data-cursor-type]';
+    const ATTR = '[data-cursor],[data-cursor-text],[data-cursor-size],[data-cursor-scale],[data-cursor-type]';
     const CTRL = 'a[href],button,summary,select,textarea,input,[role=button],[role=link],[role=tab],[role=switch],[contenteditable]:not([contenteditable=false])';
     const FIELD = 'textarea,[contenteditable],input:not([type=checkbox],[type=radio],[type=range],[type=button],[type=submit],[type=reset],[type=color],[type=file])';
     const MEDIA = 'img,picture,video,canvas';
@@ -586,13 +511,11 @@ const ENGINE = String.raw`/* Custom cursor · generated by Cursor Builder
     //]preview
 
     // ── state ────────────────────────────────────────────────────
+    let ox = 0, oy = 0, bw = innerWidth, bh = innerHeight;   // origin and size of the area (viewport, or the scoped box)
     let mx = 0, my = 0, px = 0, py = 0;                       // raw and smoothed pointer
     let el = null, seen = undefined, type = 'default';
     let shown = false, hidden = false, pressed = false, dirty = true, rescan = false, last = 0;
     let rect = null, cx = 0, cy = 0, mag = false, shift = false, pull = 0, plain = true, framed = false;
-    //[delay
-    const hist = [];
-    //]delay
 
     const vis = () => {
       const off = !shown || hidden;
@@ -620,6 +543,7 @@ const ENGINE = String.raw`/* Custom cursor · generated by Cursor Builder
 
     // Resolve the hovered element into targets. Runs only when something changed.
     const measure = () => {
+      if (scoped) { const q = scoped.getBoundingClientRect(); ox = q.left; oy = q.top; bw = q.width; bh = q.height; }
       const d = el ? el.dataset : {};
       const own = d.cursor != null;
       type = el ? typeOf(el) : 'default';
@@ -633,7 +557,7 @@ const ENGINE = String.raw`/* Custom cursor · generated by Cursor Builder
       mag = !hide && !caret && !!el && m.has('magnetic');
       shift = mag && !el.matches('input,textarea,select,[contenteditable]');
       pull = +(d.cursorPull ?? C.magnet);
-      const scale = +d.cursorScale || (m.has('grow') ? C.hover : m.has('shrink') ? C.shrink : 1);
+      const scale = +d.cursorScale || S.scale || 1;
       const base = +d.cursorSize || (own ? 0 : S.size) || C.size;
       const press = pressed ? C.press : 1;
 
@@ -671,7 +595,7 @@ const ENGINE = String.raw`/* Custom cursor · generated by Cursor Builder
       //[ring
       const show = d.cursorRing ? d.cursorRing === 'show' : !(hide || caret || lens || frame || text);
       ring.classList.toggle('cc-off', !show);
-      RS.t = C.ring.size * (m.has('grow') || mag ? C.ring.scale : 1) * (pressed ? 0.85 : 1);
+      RS.t = C.ring.size * (+d.cursorRingScale || S.ringScale || 1) * (pressed ? 0.85 : 1);
       //]ring
       //[preview
       const src = !hide && pvEl ? pvEl.dataset.cursorImage : '';
@@ -684,7 +608,7 @@ const ENGINE = String.raw`/* Custom cursor · generated by Cursor Builder
       vis();
       if (el !== seen) {                                       // optional hook for your own UI
         seen = el;
-        const used = [hide && 'hide', caret && 'caret', lens && 'lens', frame && 'frame', text && 'label', mag && 'magnetic', scale > 1 && 'grow', scale < 1 && 'shrink'].filter(Boolean);
+        const used = [hide && 'hide', caret && 'caret', lens && 'lens', frame && 'frame', text && 'label', mag && 'magnetic', scale > 1 && 'bigger', scale < 1 && 'smaller'].filter(Boolean);
         document.dispatchEvent(new CustomEvent('cursorchange', { detail: { el, type, behaviours: used, width: w, height: h } }));
       }
     };
@@ -733,23 +657,17 @@ const ENGINE = String.raw`/* Custom cursor · generated by Cursor Builder
         if (k > 0.01) sq = ' rotate(' + Math.atan2(Y.v, X.v).toFixed(3) + 'rad) scale(' + (1 + k).toFixed(3) + ',' + (1 - k * 0.6).toFixed(3) + ')';
       }
       //]stretch
-      dot.style.transform = 'translate3d(' + X.x.toFixed(2) + 'px,' + Y.x.toFixed(2) + 'px,0) translate(-50%,-50%)' + sq;
+      dot.style.transform = 'translate3d(' + (X.x - ox).toFixed(2) + 'px,' + (Y.x - oy).toFixed(2) + 'px,0) translate(-50%,-50%)' + sq;
       dot.style.width = Math.max(W.x, 0).toFixed(2) + 'px';
       dot.style.height = Math.max(H.x, 0).toFixed(2) + 'px';
       dot.style.borderRadius = Math.max(R.x, 0).toFixed(2) + 'px';
 
       //[ring
       let rx = tx, ry = ty;
-      //[delay
-      const l = hist[hist.length - 1];
-      if (!l || l[1] !== tx || l[2] !== ty) hist.push([now, tx, ty]);
-      while (hist.length > 1 && hist[1][0] <= now - C.ring.delay) hist.shift();
-      rx = hist[0][1]; ry = hist[0][2];
-      //]delay
       RX.t = rx; RY.t = ry;
       if (still || C.ring.follow >= 1) { RX.x = rx; RY.x = ry; RS.x = RS.t; RX.v = RY.v = RS.v = 0; }
       else { const w = omega(C.ring.follow); advance(RX, w, C.ring.damping, dt); advance(RY, w, C.ring.damping, dt); advance(RS, ws, z, dt); }
-      ring.style.transform = 'translate3d(' + RX.x.toFixed(2) + 'px,' + RY.x.toFixed(2) + 'px,0) translate(-50%,-50%)';
+      ring.style.transform = 'translate3d(' + (RX.x - ox).toFixed(2) + 'px,' + (RY.x - oy).toFixed(2) + 'px,0) translate(-50%,-50%)';
       ring.style.width = ring.style.height = Math.max(RS.x, 0).toFixed(2) + 'px';
       //]ring
 
@@ -759,8 +677,8 @@ const ENGINE = String.raw`/* Custom cursor · generated by Cursor Builder
         let qx = px, qy = py;
         if (P.beside) {
           qx += P.gap + w / 2; qy += P.gap + h / 2;
-          if (qx + w / 2 > innerWidth - 8) qx = px - P.gap - w / 2;
-          if (qy + h / 2 > innerHeight - 8) qy = py - P.gap - h / 2;
+          if (qx + w / 2 > ox + bw - 8) qx = px - P.gap - w / 2;
+          if (qy + h / 2 > oy + bh - 8) qy = py - P.gap - h / 2;
         }
         PX.t = qx; PY.t = qy;
         if (pvSnap) { pvSnap = false; PX.x = qx; PY.x = qy; PX.v = PY.v = 0; }
@@ -770,21 +688,18 @@ const ENGINE = String.raw`/* Custom cursor · generated by Cursor Builder
           advance(PX, w2, 0.9, dt); advance(PY, w2, 0.9, dt);
           PR.t = clamp(PX.v * P.tilt * 0.006, 14); advance(PR, 14, 0.8, dt);
         }
-        pv.style.transform = 'translate3d(' + PX.x.toFixed(2) + 'px,' + PY.x.toFixed(2) + 'px,0) translate(-50%,-50%) rotate(' + PR.x.toFixed(2) + 'deg)';
+        pv.style.transform = 'translate3d(' + (PX.x - ox).toFixed(2) + 'px,' + (PY.x - oy).toFixed(2) + 'px,0) translate(-50%,-50%) rotate(' + PR.x.toFixed(2) + 'deg)';
       }
       //]preview
 
       let busy = mx !== px || my !== py || mags.size > 0 || dirty || rescan;
-      //[delay
-      busy = busy || hist.length > 1;
-      //]delay
       for (const s of all) if (!rest(s)) busy = true;
       if (busy) raf = requestAnimationFrame(tick);
     };
     const wake = () => { if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick); } };
 
     // ── events (delegated on document, nothing per element) ──────
-    on(document, 'pointermove', (e) => {
+    on(root, 'pointermove', (e) => {
       if (e.pointerType === 'touch') return;
       mx = e.clientX; my = e.clientY;
       pick(e.target);
@@ -798,18 +713,15 @@ const ENGINE = String.raw`/* Custom cursor · generated by Cursor Builder
         //[preview
         PX.x = PX.t = mx; PY.x = PY.t = my;
         //]preview
-        //[delay
-        hist.length = 0;
-        //]delay
         vis(); cancelAnimationFrame(raf); last = performance.now(); tick(last);
       } else wake();
     });
-    on(document, 'pointerdown', (e) => { if (e.button === 0) { pressed = true; dirty = true; wake(); } });
+    on(root, 'pointerdown', (e) => { if (e.button === 0) { pressed = true; dirty = true; wake(); } });
     on(window, 'pointerup', () => { if (pressed) { pressed = false; dirty = true; wake(); } });
     on(window, 'blur', () => { pressed = false; dirty = true; wake(); });
     on(window, 'scroll', () => { rescan = true; dirty = true; wake(); }, { capture: true });
     on(window, 'resize', () => { dirty = true; wake(); });
-    on(document.documentElement, 'pointerleave', () => { shown = false; vis(); });
+    on(root, 'pointerleave', () => { shown = false; vis(); });
     on(rm, 'change', wake);
 
     root.classList.add('cc-on');
@@ -821,33 +733,30 @@ const ENGINE = String.raw`/* Custom cursor · generated by Cursor Builder
 /* ════════════════════════════════════════════════════════════════
    2 · Configuration model, presets
    ════════════════════════════════════════════════════════════════ */
-const BEHAVIOURS = ['grow', 'shrink', 'magnetic', 'frame', 'lens', 'label', 'caret', 'hide'];
-const ST = (b, text = '', size = 0) => ({ b, text, size });
+const BEHAVIOURS = ['magnetic', 'frame', 'lens', 'label', 'caret', 'hide'];
+const ST = (b, text = '', scale = 1, ringScale = 1) => ({ b, text, scale, ringScale });
 const BASE = {
-  type:'dot', size:14, radius:50, color:'#5b5bf0', opacity:1, borderWidth:0, borderColor:'#ffffff', blend:'normal',
-  labelColor:'#ffffff', labelSize:12, hideNative:true,
-  ring:true, ringSize:44, ringColor:'#5b5bf0', ringOpacity:.45, ringBorder:1.5,
-  trailDelay:0, trailSpeed:.16, trailSmoothing:.5, trailScale:1.5, trailEasing:'smooth',
-  follow:.85, smoothing:0, speed:1, easing:'smooth', magnet:.4, stretch:0, press:.8, hover:2, shrink:.5,
-  framePad:8, lensSize:130, lensBlur:2,
-  preview:true, previewSize:160, previewRatio:'4/3', previewRadius:10, previewPos:'beside', previewFollow:.14, previewTilt:.6,
+  type:'dot', size:14, color:'#5b5bf0', opacity:1, invert:false, hideNative:true,
+  ring:true, ringSize:44, ringColor:'#5b5bf0', ringOpacity:.45, trailSpeed:.16,
+  follow:.85, smoothing:0, speed:1, easing:'smooth', magnet:.4, stretch:0, press:.8,
+  preview:true, previewSize:160, previewRatio:'4/3', previewPos:'beside',
   states:{
-    default:ST([]), link:ST(['grow']), button:ST(['grow','magnetic']), text:ST(['shrink']),
+    default:ST([]), link:ST([], '', 2, 1.6), button:ST(['magnetic'], '', 2, 1.6), text:ST([], '', .5),
     image:ST(['label'], 'View'), card:ST(['frame']), input:ST(['caret']), custom:ST(['lens']),
   },
 };
 const PRESETS = {
-  Minimal:{ desc:'A tiny inverting dot, nothing else.', o:{ size:8, color:'#ffffff', blend:'difference', labelColor:'#000000', ring:false, follow:1, hover:3, press:.7, preview:false,
-    states:{ button:ST(['grow']), image:ST(['grow']), card:ST(['grow']), text:ST([]) } } },
+  Minimal:{ desc:'A tiny inverting dot, nothing else.', o:{ size:8, color:'#ffffff', invert:true, ring:false, follow:1, press:.7, preview:false,
+    states:{ link:ST([], '', 3), button:ST([], '', 3), image:ST([], '', 3), card:ST([], '', 3), text:ST([]) } } },
   Smooth:{ desc:'Soft dot with a trailing ring.', o:{} },
-  Magnetic:{ desc:'Springy cursor pulled towards targets.', o:{ size:10, ringSize:52, magnet:.55, easing:'spring', follow:.7, speed:1.2, trailEasing:'spring', trailSpeed:.14,
-    states:{ link:ST(['grow','magnetic']), card:ST(['magnetic','frame']), image:ST(['magnetic','label'],'Open') } } },
-  Editorial:{ desc:'Inverting dot, frames and labels.', o:{ size:10, color:'#ffffff', blend:'difference', labelColor:'#000000', ring:false, follow:1, framePad:6, radius:50, previewPos:'center', previewRatio:'3/4', previewRadius:2, previewSize:150, previewTilt:0,
-    states:{ link:ST(['frame']), button:ST(['frame','magnetic']), card:ST(['label'],'Read'), image:ST(['label'],'View'), text:ST([]) } } },
-  Lens:{ desc:'A magnifying lens over media.', o:{ size:12, ringSize:34, ringOpacity:.3, lensSize:170, lensBlur:3, previewSize:140, previewRatio:'1/1', previewRadius:70,
-    states:{ image:ST(['lens']), card:ST(['lens']), link:ST(['grow']), button:ST(['grow']), custom:ST(['lens']) } } },
-  Playful:{ desc:'Bouncy, stretchy and loud.', o:{ size:16, color:'#ff3d81', ringColor:'#ffb703', ringOpacity:.9, ringSize:40, ringBorder:2, easing:'elastic', trailEasing:'elastic', follow:.7, speed:1.2, stretch:1, press:.55, hover:3, shrink:.6, magnet:.6, trailSpeed:.12, previewRadius:28, previewTilt:1.2, previewFollow:.1, previewPos:'center',
-    states:{ link:ST(['grow']), button:ST(['grow','magnetic']), image:ST(['label'],'✦ View'), card:ST(['frame','magnetic']), text:ST(['shrink']) } } },
+  Magnetic:{ desc:'Springy cursor pulled towards targets.', o:{ size:10, ringSize:52, magnet:.55, easing:'spring', follow:.7, speed:1.2, trailSpeed:.14,
+    states:{ link:ST(['magnetic'], '', 2, 1.6), card:ST(['magnetic','frame']), image:ST(['magnetic','label'], 'Open') } } },
+  Editorial:{ desc:'Inverting dot, frames and labels.', o:{ size:10, color:'#ffffff', invert:true, ring:false, follow:1, previewPos:'center', previewRatio:'3/4', previewSize:150,
+    states:{ link:ST(['frame']), button:ST(['magnetic','frame']), card:ST(['label'], 'Read'), image:ST(['label'], 'View'), text:ST([]) } } },
+  Lens:{ desc:'A magnifying lens over media.', o:{ size:12, ringSize:34, ringOpacity:.3, previewSize:140, previewRatio:'circle',
+    states:{ image:ST(['lens'], '', 1.4), card:ST(['lens'], '', 1.4), link:ST([], '', 2, 1.6), button:ST([], '', 2, 1.6), custom:ST(['lens']) } } },
+  Playful:{ desc:'Bouncy, stretchy and loud.', o:{ size:16, color:'#ff3d81', ringColor:'#ffb703', ringOpacity:.9, ringSize:40, easing:'elastic', follow:.7, speed:1.2, stretch:1, press:.55, magnet:.6, trailSpeed:.12, previewPos:'center',
+    states:{ link:ST([], '', 3, 1.6), button:ST(['magnetic'], '', 3, 1.6), image:ST(['label'], '✦ View'), card:ST(['magnetic','frame']), text:ST([], '', .6) } } },
 };
 const clone = (o) => JSON.parse(JSON.stringify(o));
 const fromPreset = (o) => {
@@ -860,7 +769,6 @@ const sameCfg = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 let cfg = fromPreset(PRESETS.Smooth.o);
 
 const EASING = { smooth:1, snappy:.8, spring:.58, elastic:.34 };
-const BLENDS = ['normal','difference','exclusion','multiply','screen','overlay','soft-light','hard-light'];
 
 /* ════════════════════════════════════════════════════════════════
    3 · Code generation
@@ -880,65 +788,60 @@ function preprocess(src, flags) {
   return out.join('\n');
 }
 
+const RADIUS = { dot:50, outline:50, square:22, crosshair:0 };
+const onColour = (hex) => {                      // readable label colour for a background
+  const [r, g, b] = [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16) / 255);
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b > 0.6 ? '#000000' : '#ffffff';
+};
+const ratioOf = (c) => c.previewRatio === 'circle' ? 1 : c.previewRatio.split('/')[1] / c.previewRatio.split('/')[0];
+
 function genJS(c) {
   const states = Object.entries(c.states).map(([k, s]) => {
     const f = [];
     if (s.b.length) f.push("b: '" + s.b.join(' ') + "'");
     if (s.text) f.push('text: ' + JSON.stringify(s.text));
-    if (+s.size) f.push('size: ' + num(s.size));
+    if (+s.scale !== 1) f.push('scale: ' + num(s.scale));
+    if (c.ring && +s.ringScale !== 1) f.push('ringScale: ' + num(s.ringScale));
     return f.length ? '      ' + k + ': { ' + f.join(', ') + ' },' : '';
   }).filter(Boolean).join('\n');
   const lines = [
     '{',
     '    size: ' + num(c.size) + ',  // resting size, px',
-    '    radius: ' + num(c.radius) + ',  // % of the shorter side (50 = circle)',
+    '    radius: ' + RADIUS[c.type] + ',  // % of the shorter side (50 = circle)',
     '    follow: ' + num(c.follow) + ',  // follow speed, 0-1 (1 = locked to the pointer)',
     '    smooth: ' + num(c.smoothing) + ',  // input smoothing, 0-0.9',
     '    speed: ' + num(c.speed) + ',  // shape animation speed multiplier',
     '    damping: ' + num(EASING[c.easing]) + ',  // spring damping: ' + c.easing + ' (below 1 overshoots)',
-    '    hover: ' + num(c.hover) + ',  // "grow" scale',
-    '    shrink: ' + num(c.shrink) + ',  // "shrink" scale',
     '    press: ' + num(c.press) + ',  // scale while the button is held',
     '    magnet: ' + num(c.magnet) + ',  // default magnetic pull, 0-1',
-    '    pad: ' + num(c.framePad) + ',  // "frame" padding, px',
-    '    lens: ' + num(c.lensSize) + ',  // "lens" diameter, px',
+    '    pad: 8,  // "frame" padding, px',
+    '    lens: 120,  // "lens" diameter, px',
   ];
-  if (c.preview) {
-    const [rw, rh] = c.previewRatio.split('/').map(Number);
-    lines.push('    preview: {',
-      '      width: ' + num(c.previewSize) + ',  // px',
-      '      height: ' + num(c.previewSize * rh / rw) + ',',
-      '      follow: ' + num(c.previewFollow) + ',  // 0-1, lower = floatier',
-      '      tilt: ' + num(c.previewTilt) + ',  // swing with movement',
-      '      beside: ' + (c.previewPos === 'beside') + ',  // false = centred on the cursor',
-      '      gap: 20,',
-      '    },');
-  }
   if (+c.stretch) lines.push('    stretch: ' + num(c.stretch) + ',  // velocity stretch');
-  if (c.ring) {
-    lines.push('    ring: {',
-      '      size: ' + num(c.ringSize) + ',  // px',
-      '      scale: ' + num(c.trailScale) + ',  // multiplier on grow / magnetic',
-      '      follow: ' + num(c.trailSpeed) + ',  // trail speed, 0-1',
-      '      damping: ' + num(Math.min(EASING[c.trailEasing] * (0.5 + c.trailSmoothing), 2)) + ',  // ' + c.trailEasing + ', smoothing ' + num(c.trailSmoothing),
-      ...(+c.trailDelay ? ['      delay: ' + num(c.trailDelay) + ',  // ms behind the dot'] : []),
-      '    },');
-  }
-  lines.push('    // Behaviours per element type (see data-cursor-type)', '    states: {', states, '    },', '  }');
+  if (c.ring) lines.push('    ring: {', '      size: ' + num(c.ringSize) + ',  // px', '      follow: ' + num(c.trailSpeed) + ',  // trail speed, 0-1', '      damping: ' + num(EASING[c.easing]) + ',', '    },');
+  if (c.preview) lines.push('    preview: {',
+    '      width: ' + num(c.previewSize) + ',  // px',
+    '      height: ' + num(c.previewSize * ratioOf(c)) + ',',
+    '      follow: 0.14,  // 0-1, lower = floatier',
+    '      tilt: 0.6,  // swing with movement',
+    '      beside: ' + (c.previewPos === 'beside') + ',  // false = centred on the cursor',
+    '      gap: 20,',
+    '    },');
+  lines.push('    // What the cursor does per element type (see data-cursor-type)', '    states: {', states, '    },', '  }');
   const cfgText = lines.join('\n');
-  return preprocess(ENGINE, { preview: c.preview, ring: c.ring, delay: c.ring && +c.trailDelay > 0, stretch: +c.stretch > 0 }).replace('%CFG%', () => cfgText);
+  return preprocess(ENGINE, { preview: c.preview, ring: c.ring, stretch: +c.stretch > 0 }).replace('%CFG%', () => cfgText);
 }
 
 function genCSS(c) {
   const ringCss = c.ring ? `
 .cc-ring{
-  border:${pxv(c.ringBorder)} solid var(--cc-ring-color);
+  border:1.5px solid var(--cc-ring-color);
   border-radius:50%;
   opacity:var(--cc-ring-opacity);
 }` : '';
   const typeCss = c.type === 'outline' ? `
-.cc-dot{background:transparent;border:max(var(--cc-border),2px) solid var(--cc-color)}` : c.type === 'crosshair' ? `
-.cc-dot{background:none;border:0}
+.cc-dot{background:transparent;border:2px solid var(--cc-color)}` : c.type === 'crosshair' ? `
+.cc-dot{background:none}
 .cc-dot:not([data-mode]){border-radius:0!important}
 .cc-dot::before,.cc-dot::after{content:"";position:absolute;background:var(--cc-color)}
 .cc-dot::before{left:calc(50% - .75px);top:0;bottom:0;width:1.5px}
@@ -949,20 +852,17 @@ function genCSS(c) {
 :root{
   --cc-color:${c.color};
   --cc-opacity:${num(c.opacity)};
-  --cc-border:${pxv(c.borderWidth)};
-  --cc-border-color:${c.borderColor};
-  --cc-blend:${c.blend};
-  --cc-label:${c.labelColor};
-  --cc-label-size:${pxv(c.labelSize)};${c.ring ? `
+  --cc-blend:${c.invert ? 'difference' : 'normal'};
+  --cc-label:${onColour(c.color)};${c.ring ? `
   --cc-ring-color:${c.ringColor};
   --cc-ring-opacity:${num(c.ringOpacity)};` : ''}
 }
 ${c.hideNative ? `
 /* Hide the native cursor while the custom one is running */
-html.cc-on,html.cc-on *{cursor:none!important}
+[class~="cc-on"],[class~="cc-on"] *{cursor:none!important}
 /* data-cursor="hide" hands control back to the browser */
-html.cc-on.cc-native,html.cc-on.cc-native *{cursor:revert!important}
-` : `/* Native cursor stays visible. Add html.cc-on{cursor:none} rules if you want it hidden. */
+[class~="cc-on"][class~="cc-native"],[class~="cc-on"][class~="cc-native"] *{cursor:revert!important}
+` : `/* Native cursor stays visible. Add .cc-on{cursor:none} rules if you want it hidden. */
 `}
 .cc-dot,.cc-ring{
   position:fixed;left:0;top:0;z-index:2147483647;
@@ -973,7 +873,6 @@ html.cc-on.cc-native,html.cc-on.cc-native *{cursor:revert!important}
 .cc-dot{
   display:block;overflow:hidden;
   background:var(--cc-color);
-  border:var(--cc-border) solid var(--cc-border-color);
   opacity:var(--cc-opacity);
 }${ringCss}
 .cc-hide,.cc-off{opacity:0!important}
@@ -981,10 +880,10 @@ ${typeCss}
 /* Label */
 .cc-label{
   position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-  font:600 var(--cc-label-size)/1 system-ui,sans-serif;white-space:nowrap;
+  font:600 12px/1 system-ui,sans-serif;white-space:nowrap;
   color:var(--cc-label);opacity:0;transition:opacity .15s;
 }
-.cc-dot[data-mode~="label"]{background:var(--cc-color);border:var(--cc-border) solid var(--cc-border-color);mix-blend-mode:normal}
+.cc-dot[data-mode~="label"]{background:var(--cc-color);border:0;mix-blend-mode:normal}
 .cc-dot[data-mode~="label"] .cc-label{opacity:1}
 
 /* Frame wraps the hovered element */
@@ -996,8 +895,8 @@ ${typeCss}
 .cc-dot[data-mode~="lens"]{
   background:color-mix(in srgb,var(--cc-color) 8%,transparent);
   border:1px solid color-mix(in srgb,var(--cc-color) 40%,transparent);
-  -webkit-backdrop-filter:blur(${pxv(c.lensBlur)}) saturate(1.5);
-  backdrop-filter:blur(${pxv(c.lensBlur)}) saturate(1.5);
+  -webkit-backdrop-filter:blur(2px) saturate(1.5);
+  backdrop-filter:blur(2px) saturate(1.5);
 }
 .cc-dot[data-mode~="frame"] .cc-label,.cc-dot[data-mode~="lens"] .cc-label{color:var(--cc-color)}
 /* Caret replaces the cursor over text fields */
@@ -1009,12 +908,12 @@ ${c.preview ? `
 /* Image preview that follows the cursor (data-cursor-image) */
 .cc-pv{
   position:fixed;left:0;top:0;z-index:2147483646;pointer-events:none;
-  width:${pxv(c.previewSize)};height:${pxv(c.previewSize * c.previewRatio.split('/')[1] / c.previewRatio.split('/')[0])};
+  width:${pxv(c.previewSize)};height:${pxv(c.previewSize * ratioOf(c))};
   will-change:transform;
 }
 .cc-pv img{
   display:block;width:100%;height:100%;object-fit:cover;
-  border-radius:${pxv(c.previewRadius)};box-shadow:0 14px 34px rgba(0,0,0,.28);
+  border-radius:${c.previewRatio === 'circle' ? '50%' : '12px'};box-shadow:0 14px 34px rgba(0,0,0,.28);
   opacity:0;transform:scale(.7);
   transition:opacity .2s ease,transform .28s cubic-bezier(.2,.8,.2,1);
 }
@@ -1025,7 +924,11 @@ ${c.preview ? `
 }
 
 function genHTML(c) {
-  const list = Object.entries(c.states).filter(([, s]) => s.b.length).map(([k, s]) => '       ' + k.padEnd(8) + '→ ' + s.b.join(' + ') + (s.text ? '  "' + s.text + '"' : '')).join('\n');
+  const list = Object.entries(c.states).filter(([, s]) => s.b.length || +s.scale !== 1).map(([k, s]) => {
+    const parts = [...s.b]; if (s.text) parts[parts.indexOf('label')] = 'label "' + s.text + '"';
+    if (+s.scale !== 1) parts.push('size ×' + num(s.scale));
+    return '       ' + k.padEnd(8) + '→ ' + parts.join(' + ');
+  }).join('\n');
   return `<\!-- 1 · Add the two files to your page -->
 <link rel="stylesheet" href="cursor.css">
 <script src="cursor.js" defer><\/script>
@@ -1042,8 +945,11 @@ ${list}
 <\!-- Label: the cursor grows to fit the text -->
 <a href="/project" data-cursor-text="View project">Project</a>
 
-<\!-- Combine behaviours -->
+<\!-- Combine effects -->
 <div data-cursor="frame magnetic" data-cursor-text="Drag">Drag me</div>
+
+<\!-- Bigger cursor${c.ring ? ' and ring' : ''} on hover -->
+<a href="/buy" data-cursor-scale="2.5"${c.ring ? ' data-cursor-ring-scale="1.8"' : ''}>Buy now</a>
 
 <\!-- Lens: a magnifying circle -->
 <img src="photo.jpg" alt="" data-cursor="lens">
@@ -1052,12 +958,12 @@ ${c.preview ? `<\!-- Image preview: a thumbnail follows the cursor -->
 <a href="/work/aurora" data-cursor-image="aurora.jpg">Aurora Bank</a>
 
 ` : ''}<\!-- Text caret, or give the native cursor back -->
-<input type="text" data-cursor="caret">
+<input type="text">
 <div data-cursor="hide">Native cursor here</div>
 
-<\!-- Behaviours: grow shrink magnetic frame lens label caret hide
+<\!-- Effects: magnetic frame lens label caret hide
      Fine-tuning: data-cursor-size="80"  data-cursor-pad="8"  data-cursor-pull="0.4"
-                  data-cursor-scale="2"  data-cursor-ring="show|hide"
+                  data-cursor-ring="show|hide"
                   data-cursor-type="link|button|text|image|card|input|custom"
                   data-cursor-image="photo.jpg" -->
 `;
@@ -1095,71 +1001,33 @@ const FEELS = {
 };
 const SCHEMA = {
   cursor:[
-    { k:'type', t:'select', l:'Style', o:[['dot','Dot'],['outline','Outline'],['crosshair','Crosshair']], tip:'The look of the cursor when idle.' },
+    { k:'type', t:'select', l:'Style', o:[['dot','Dot'],['square','Rounded square'],['outline','Outline'],['crosshair','Crosshair']], tip:'The look of the cursor when idle.' },
     R('size','Size',4,80,1,'px','Diameter when idle.'),
     { k:'color', t:'color', l:'Colour' },
     R('opacity','Opacity',.1,1,.05,'','How see-through the cursor is.'),
+    { k:'invert', t:'toggle', l:'Invert colours', tip:'Inverts whatever is under the cursor. Works best with a white cursor.' },
     { k:'hideNative', t:'toggle', l:'Hide system cursor', tip:'Hides the normal arrow while this cursor is running.' },
-    { adv:'More cursor options' },
-    R('radius','Roundness',0,50,1,'%','50 = circle, 0 = square.', c => c.type !== 'crosshair'),
-    R('borderWidth','Border width',0,8,.5,'px','Adds an edge to the dot, or sets the line thickness of the outline.', c => c.type !== 'crosshair'),
-    { k:'borderColor', t:'color', l:'Border colour', en:c => c.type === 'dot' && c.borderWidth > 0 },
-    { k:'blend', t:'select', l:'Blend mode', o:BLENDS.map(b => [b, b === 'difference' ? 'difference (invert)' : b]), tip:'“difference” with a white cursor inverts whatever is underneath.' },
-    { k:'labelColor', t:'color', l:'Label text colour' },
-    R('labelSize','Label text size',9,20,1,'px',''),
   ],
   trail:[
     { k:'ring', t:'toggle', l:'Trailing ring', tip:'A ring that follows the dot a moment later.' },
     R('ringSize','Size',16,160,1,'px','', c => c.ring),
     { k:'ringColor', t:'color', l:'Colour', en:c => c.ring },
-    R('trailSpeed','Follow speed',.02,1,.01,'','Low = lazy and laggy, high = sticks to the dot.', c => c.ring),
-    { adv:'More ring options' },
     R('ringOpacity','Opacity',0,1,.05,'','', c => c.ring),
-    R('ringBorder','Border width',0,6,.5,'px','', c => c.ring),
-    R('trailDelay','Delay',0,300,10,'ms','Extra lag behind the dot.', c => c.ring),
-    R('trailSmoothing','Smoothing',0,1,.05,'','Higher = less overshoot.', c => c.ring),
-    R('trailScale','Hover scale',.5,3,.05,'×','How much the ring grows over interactive elements.', c => c.ring),
-    { k:'trailEasing', t:'select', l:'Easing', o:Object.keys(EASING).map(e => [e, e]), tip:'smooth = no bounce, elastic = very bouncy.', en:c => c.ring },
+    R('trailSpeed','Follow speed',.02,1,.01,'','Low = lazy and laggy, high = sticks to the dot.', c => c.ring),
   ],
   motion:[
-    { k:'feel', t:'feel', l:'Feel', tip:'How the cursor moves, from instant to springy. Fine-tune below.' },
+    { k:'feel', t:'feel', l:'Feel', tip:'How the cursor moves, from instant to springy.' },
     R('magnet','Magnetic pull',0,1,.01,'','How strongly “magnetic” elements attract the cursor.'),
-    R('hover','Grow amount',1,6,.1,'×','How big the cursor gets when it grows.'),
     R('stretch','Squash & stretch',0,1.5,.05,'','Stretches the cursor in the direction it moves.'),
-    { adv:'More motion options' },
-    R('follow','Follow speed',.05,1,.01,'','1 = no lag.'),
-    R('smoothing','Smoothing',0,.9,.01,'','Glides the pointer; adds a little delay.'),
-    { k:'easing', t:'select', l:'Easing', o:Object.keys(EASING).map(e => [e, e]), tip:'smooth = no bounce, elastic = very bouncy.' },
-    R('speed','Animation speed',.25,3,.05,'×','Speed of size and shape changes.'),
-    R('press','Press scale',.3,1.4,.05,'×','Size while the mouse button is held.'),
-    R('shrink','Shrink amount',.2,1,.05,'×','How small the cursor gets when it shrinks.'),
+    R('press','Click squeeze',.3,1.4,.05,'×','Cursor size while the mouse button is held.'),
   ],
   preview:[
     { k:'preview', t:'toggle', l:'Image preview', tip:'Show a thumbnail that follows the cursor over elements with data-cursor-image.' },
     R('previewSize','Width',60,360,2,'px','', c => c.preview),
-    { k:'previewRatio', t:'select', l:'Shape', o:[['4/3','Landscape 4:3'],['16/9','Wide 16:9'],['1/1','Square'],['3/4','Portrait 3:4']], en:c => c.preview },
+    { k:'previewRatio', t:'select', l:'Shape', o:[['4/3','Landscape 4:3'],['16/9','Wide 16:9'],['1/1','Square'],['3/4','Portrait 3:4'],['circle','Circle']], en:c => c.preview },
     { k:'previewPos', t:'select', l:'Position', o:[['beside','Beside the cursor'],['center','Centred on the cursor']], en:c => c.preview },
-    R('previewRadius','Roundness',0,100,1,'px','', c => c.preview),
-    R('previewFollow','Follow speed',.03,1,.01,'','Low = floaty, drags behind the cursor.', c => c.preview),
-    R('previewTilt','Tilt',0,1.5,.05,'','Swings with the direction of movement.', c => c.preview),
-  ],
-  hoverOpts:[
-    { adv:'Effect settings' },
-    R('framePad','Frame padding',0,40,1,'px','Space between element and frame.'),
-    R('lensSize','Lens size',40,320,1,'px',''),
-    R('lensBlur','Lens blur',0,20,.5,'px',''),
   ],
 };
-
-const EFFECTS = [
-  ['Nothing',[]], ['Grow',['grow']], ['Shrink',['shrink']], ['Magnetic',['magnetic']], ['Magnetic + grow',['grow','magnetic']],
-  ['Frame the element',['frame']], ['Frame + magnetic',['magnetic','frame']], ['Lens',['lens']],
-  ['Show a label',['label']], ['Magnetic + label',['magnetic','label']], ['Text caret',['caret']], ['Hide custom cursor',['hide']],
-];
-const HOVER_ROWS = [
-  ['link','Links','a[href]'], ['button','Buttons','buttons, tabs, checkboxes, selects'], ['text','Text','paragraphs, headings, lists'],
-  ['image','Images','img, video'], ['card','Cards','data-cursor-type="card"'], ['input','Text fields','inputs, textareas'], ['custom','Custom','data-cursor-type="custom"'],
-];
 
 const fields = [];            // { def, row, sync() }
 const $ = (s, r = document) => r.querySelector(s);
@@ -1189,8 +1057,7 @@ function mkRow(def, container) {
     rng.addEventListener('input', () => { n.value = (+rng.value).toFixed(dec); paint(); set(+rng.value); });
     n.addEventListener('input', () => { if (n.value === '' || isNaN(+n.value)) return; const v = Math.min(def.max, Math.max(def.min, +n.value)); rng.value = v; paint(); set(v); });
     n.addEventListener('blur', () => { n.value = (+rng.value).toFixed(dec); });
-    sync = () => { rng.value = cfg[def.k]; n.value = (+cfg[def.k]).toFixed(dec); paint(); };
-    rng.dataset.cursor = 'grow'; describe(rng);
+    sync = () => { rng.value = cfg[def.k]; n.value = (+cfg[def.k]).toFixed(dec); paint(); }; describe(rng);
   } else if (def.t === 'select') {
     const s = document.createElement('select'); s.id = id; s.className = 'sel';
     def.o.forEach(([v, t]) => s.add(new Option(t, v)));
@@ -1211,7 +1078,7 @@ function mkRow(def, container) {
     h.addEventListener('blur', () => { h.value = cfg[def.k]; });
     w.append(c, h); head.append(w);
     sync = () => { c.value = cfg[def.k]; h.value = cfg[def.k]; };
-    h.dataset.cursor = 'caret';
+   
   }
   const f = { def, row, sync };
   fields.push(f);
@@ -1221,13 +1088,13 @@ function mkRow(def, container) {
 function mkFeel(def, container) {
   const row = document.createElement('div'); row.className = 'row';
   row.innerHTML = '<div class="row-h"><span class="lbl" id="feel-l">' + def.l + '</span></div><div class="hint">' + def.tip + '</div>';
-  const box = document.createElement('div'); box.className = 'chips feel'; box.setAttribute('role', 'group'); box.setAttribute('aria-labelledby', 'feel-l');
+  const grp = document.createElement('div'); grp.className = 'chips feel'; grp.setAttribute('role', 'group'); grp.setAttribute('aria-labelledby', 'feel-l');
   const btns = Object.keys(FEELS).map(n => {
-    const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = n; b.dataset.cursor = 'grow';
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = n;
     b.addEventListener('click', () => { Object.assign(cfg, FEELS[n]); fields.forEach(f => f.sync()); change(); });
-    box.append(b); return b;
+    grp.append(b); return b;
   });
-  row.append(box);
+  row.append(grp);
   const sync = () => { const cur = Object.keys(FEELS).find(n => Object.entries(FEELS[n]).every(([k, v]) => cfg[k] === v)); btns.forEach(b => b.setAttribute('aria-pressed', String(b.textContent === cur))); };
   fields.push({ def, row, sync }); container.append(row);
 }
@@ -1237,7 +1104,7 @@ function buildPane(id, defs) {
   defs.forEach(d => {
     if (d.adv) {
       box = document.createElement('details'); box.className = 'adv';
-      const sm = document.createElement('summary'); sm.textContent = d.adv; sm.dataset.cursor = 'grow'; box.append(sm); p.append(box);
+      const sm = document.createElement('summary'); sm.textContent = d.adv; box.append(sm); p.append(box);
     } else mkRow(d, box);
   });
 }
@@ -1250,32 +1117,68 @@ function refreshEnabled() {
   });
 }
 
-/* ── hover effects: one dropdown per element kind ───────────── */
+/* ── hover: pick an element kind, then set what the cursor does over it ── */
+const KINDS = [
+  ['link','Links','a[href]'], ['button','Buttons','buttons, tabs, checkboxes, selects'], ['text','Text','paragraphs, headings, lists'],
+  ['image','Images','img, video'], ['card','Cards','data-cursor-type="card"'], ['input','Fields','inputs, textareas'], ['custom','Custom','data-cursor-type="custom"'],
+];
+const FX = [['none','Nothing extra'], ['frame','Frame the element'], ['lens','Magnifying lens'], ['label','Show a label'], ['caret','Text caret'], ['hide','Hide custom cursor']];
+const fxOf = (s) => ['hide','caret','lens','frame','label'].find(x => s.b.includes(x)) || 'none';
+let kind = 'link';
 const hoverSync = [];
+
+function stateRange(id, label, min, max, step, onInput) {
+  const row = document.createElement('div'); row.className = 'row';
+  row.innerHTML = '<div class="row-h"><label for="' + id + '">' + label + '</label><span class="val"><input class="num" type="number" step="' + step + '" min="' + min + '" max="' + max + '" aria-label="' + label + ' value"><span>×</span></span></div><div class="hint"></div><input type="range" id="' + id + '" min="' + min + '" max="' + max + '" step="' + step + '">';
+  const rng = $('input[type=range]', row), n = $('.num', row), hint = $('.hint', row);
+  rng.setAttribute('aria-describedby', id + '-h'); hint.id = id + '-h';
+  const paint = () => rng.style.setProperty('--p', ((rng.value - min) / (max - min) * 100) + '%');
+  rng.addEventListener('input', () => { n.value = (+rng.value).toFixed(2); paint(); onInput(+rng.value); });
+  n.addEventListener('input', () => { if (n.value === '' || isNaN(+n.value)) return; const v = Math.min(max, Math.max(min, +n.value)); rng.value = v; paint(); onInput(v); });
+  n.addEventListener('blur', () => { n.value = (+rng.value).toFixed(2); });
+  return { row, rng, n, hint, set(v) { rng.value = v; n.value = (+v).toFixed(2); paint(); }, enable(on, why) { row.classList.toggle('off', !on); rng.disabled = n.disabled = !on; if (why) hint.textContent = why; } };
+}
+
 function buildHover() {
   const p = $('#p-states');
-  p.innerHTML = '<p class="intro">Pick what the cursor does over each kind of element. This works automatically, with no attributes needed.</p><div class="hv-list"></div>';
-  const list = $('.hv-list', p);
-  HOVER_ROWS.forEach(([k, name, sub]) => {
-    const row = document.createElement('div'); row.className = 'hv';
-    row.innerHTML = '<div class="hv-h"><div><label for="hv-' + k + '">' + name + '</label><div class="hint"><code>' + esc(sub) + '</code></div></div><select class="sel" id="hv-' + k + '"></select></div>' +
-      '<div class="hv-t" hidden><label class="sr" for="hv-' + k + '-t">Label text for ' + name + '</label><input class="txt" id="hv-' + k + '-t" type="text" maxlength="40" placeholder="Label text, e.g. View" data-cursor="caret"></div>';
-    const sel = $('select', row), txt = $('input', row), tw = $('.hv-t', row);
-    EFFECTS.forEach(([n, b]) => sel.add(new Option(n, b.join(','))));
-    sel.addEventListener('change', () => {
-      cfg.states[k].b = sel.value ? sel.value.split(',') : [];
-      tw.hidden = !cfg.states[k].b.includes('label'); change();
-    });
-    txt.addEventListener('input', () => { cfg.states[k].text = txt.value; change(); });
-    hoverSync.push(() => {
-      const s = cfg.states[k], v = s.b.join(',');
-      sel.querySelectorAll('.x').forEach(o => o.remove());
-      if (![...sel.options].some(o => o.value === v)) { const o = new Option('Custom: ' + s.b.join(' + '), v); o.className = 'x'; sel.add(o); }
-      sel.value = v; txt.value = s.text; tw.hidden = !s.b.includes('label');
-    });
-    list.append(row);
+  p.innerHTML = '<p class="intro">Pick a kind of element, then choose what the cursor and trailing ring do while hovering it. This works automatically, with no attributes needed.</p>' +
+    '<div class="chips kinds" role="group" aria-label="Kind of element"></div>' +
+    '<div class="st-card"><h3 id="hv-t"></h3><p class="hint" id="hv-s"></p>' +
+    '<div class="row line"><div class="row-h"><label for="hv-fx">Effect</label><select class="sel" id="hv-fx"></select></div></div>' +
+    '<div class="row line" id="hv-mg"><div class="row-h"><label for="hv-m">Magnetic</label><span class="switch"><input type="checkbox" role="switch" id="hv-m"><i></i></span></div><div class="hint">Cursor and element pull towards each other.</div></div>' +
+    '<div class="row line" id="hv-tx" hidden><div class="row-h"><label for="hv-txt">Label text</label></div><input class="txt" id="hv-txt" type="text" maxlength="40" placeholder="e.g. View"></div>' +
+    '<div id="hv-ranges"></div></div>';
+  const box = $('.kinds', p), fx = $('#hv-fx'), mag = $('#hv-m'), txt = $('#hv-txt');
+  FX.forEach(([v, t]) => fx.add(new Option(t, v)));
+  const chips = KINDS.map(([k, name]) => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = name; b.dataset.cursorScale = '2'; b.dataset.k = k;
+    b.addEventListener('click', () => { kind = k; sync(); }); box.append(b); return b;
   });
-  buildPane('p-states', SCHEMA.hoverOpts);
+  const S = () => cfg.states[kind];
+  const sc = stateRange('hv-sc', 'Cursor size on hover', .25, 4, .05, v => { S().scale = v; change(); });
+  const rs = stateRange('hv-rs', 'Trail size on hover', .25, 4, .05, v => { S().ringScale = v; change(); });
+  $('#hv-ranges').append(sc.row, rs.row);
+  const write = () => {
+    const f = fx.value, b = f === 'none' ? [] : [f];
+    if (mag.checked && f !== 'caret' && f !== 'hide') b.push('magnetic');
+    S().b = b.sort((a, c) => BEHAVIOURS.indexOf(a) - BEHAVIOURS.indexOf(c)); sync(); change();
+  };
+  fx.addEventListener('change', write); mag.addEventListener('change', write);
+  txt.addEventListener('input', () => { S().text = txt.value; change(); });
+  function sync() {
+    const s = S(), f = fxOf(s), [, name, sub] = KINDS.find(x => x[0] === kind);
+    chips.forEach(c => c.setAttribute('aria-pressed', String(c.dataset.k === kind)));
+    markTile();
+    $('#hv-t').textContent = name; $('#hv-s').innerHTML = 'Applies to <code>' + esc(sub) + '</code>';
+    fx.value = f; mag.checked = s.b.includes('magnetic');
+    const noMag = f === 'caret' || f === 'hide';
+    $('#hv-mg').classList.toggle('off', noMag); mag.disabled = noMag;
+    $('#hv-tx').hidden = f !== 'label'; txt.value = s.text;
+    sc.set(s.scale); rs.set(s.ringScale);
+    sc.enable(f === 'none' || f === 'lens', f === 'lens' ? 'Size of the magnifying lens (1 = 120px).' : f === 'none' ? '1 = resting size, 2 = twice as big, 0.5 = half.' : 'This effect sizes itself to the element.');
+    rs.enable(cfg.ring && f === 'none', !cfg.ring ? 'Turn on the trailing ring in the Trail tab first.' : f === 'none' ? '1 = resting ring size.' : 'The ring hides during this effect.');
+  }
+  hoverSync.push(sync);
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -1292,10 +1195,10 @@ function renderCode() {
   $('#codeMeta').textContent = NAMES[codeTab] + ' · ' + out[codeTab].split('\n').length + ' lines · ' + (bytes(out[codeTab]) / 1024).toFixed(1) + ' KB';
 }
 function runCursor() {
-  try { new Function(out.js)(); } catch (e) { console.error('Cursor failed to start', e); }
+  try { new Function(out.js.replace('const C = {', "const C = {\n    root: '#box',"))(); } catch (e) { console.error('Cursor failed to start', e); }
   if (ptr) {                       // keep the cursor where the pointer is
-    const t = document.elementFromPoint(ptr.x, ptr.y) || document.body;
-    t.dispatchEvent(new PointerEvent('pointermove', { bubbles:true, clientX:ptr.x, clientY:ptr.y, pointerType:'mouse' }));
+    const t = document.elementFromPoint(ptr.x, ptr.y);
+    if (t && $('#box').contains(t)) t.dispatchEvent(new PointerEvent('pointermove', { bubbles:true, clientX:ptr.x, clientY:ptr.y, pointerType:'mouse' }));
   }
 }
 function flush() {
@@ -1305,6 +1208,7 @@ function flush() {
   runCursor();
   renderCode();
   refreshEnabled();
+  hoverSync.forEach(f => f());
   fields.forEach(f => f.def.t === 'feel' && f.sync());
   const preset = Object.keys(PRESETS).find(n => sameCfg(fromPreset(PRESETS[n].o), cfg));
   document.querySelectorAll('#presetChips .chip').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.k === preset)));
@@ -1314,7 +1218,7 @@ function change() { if (!queued) { queued = true; requestAnimationFrame(flush); 
 function syncAll() { fields.forEach(f => f.sync()); hoverSync.forEach(f => f()); change(); }
 
 document.addEventListener('pointermove', (e) => { if (e.isTrusted && e.pointerType !== 'touch') ptr = { x:e.clientX, y:e.clientY }; }, { capture:true, passive:true });
-document.documentElement.addEventListener('pointerleave', () => { ptr = null; });
+$('#box').addEventListener('pointerleave', () => { ptr = null; });
 
 /* ── presets / reset ─────────────────────────────────────────── */
 const chips = $('#presetChips');
@@ -1345,9 +1249,21 @@ function tablist(root, onSelect) {
 }
 tablist($('#cfgTabs'), (t) => {
   document.querySelectorAll('.pane').forEach(p => { p.hidden = p.id !== t.getAttribute('aria-controls'); });
+  markTile();
 });
+/* Highlight (and scroll to) the part of the preview that the open settings affect. */
+function markTile() {
+  const tab = $('#cfgTabs [aria-selected=true]').id.slice(2);
+  const key = tab === 'states' ? kind : tab === 'preview' ? 'preview' : 'open';
+  let hit = null;
+  document.querySelectorAll('.tile').forEach(t => { const on = t.dataset.kind === key; t.classList.toggle('is-edit', on); if (on) hit = t; });
+  const sc = $('#stage');
+  if (hit && sc.scrollHeight > sc.clientHeight) {
+    const r = hit.getBoundingClientRect(), q = sc.getBoundingClientRect();
+    if (r.top < q.top) sc.scrollTop -= q.top - r.top + 16; else if (r.bottom > q.bottom) sc.scrollTop += r.bottom - q.bottom + 16;
+  }
+}
 tablist($('#codeTabs'), (t) => { codeTab = t.id.slice(2); $('#codeView').setAttribute('aria-labelledby', t.id); renderCode(); $('#codeView').scrollTop = 0; });
-tablist($('#demoTabs'), () => {});
 
 /* ── copy ────────────────────────────────────────────────────── */
 const live = $('#live');
@@ -1372,8 +1288,6 @@ $('#copyAll').addEventListener('click', async () => {
   flash($('#copyAll'), 'Copied ✓', await copyText(all));
 });
 
-$('#annToggle').addEventListener('change', (e) => { $('#stage').classList.toggle('hide-ann', !e.target.checked); });
-
 /* ── theme ───────────────────────────────────────────────────── */
 $('#themeBtn').addEventListener('click', () => {
   const r = document.documentElement;
@@ -1382,12 +1296,12 @@ $('#themeBtn').addEventListener('click', () => {
 });
 
 /* ── live inspector + preview highlight ──────────────────────── */
-const stage = $('#stage');
+const box = $('#box');
 let marked = null;
 document.addEventListener('cursorchange', (e) => {
   const { el, type, behaviours, width, height } = e.detail;
   if (marked) marked.classList.remove('is-target');
-  marked = el && stage.contains(el) ? el : null;
+  marked = el && box.contains(el) ? el : null;
   if (marked) marked.classList.add('is-target');
   $('#i-el').textContent = el ? '<' + el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + '>' : 'none';
   $('#i-type').textContent = type;
@@ -1402,7 +1316,7 @@ const art = (a, b, c) => 'data:image/svg+xml;utf8,' + encodeURIComponent(
   "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 260' preserveAspectRatio='xMidYMid slice'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='" + a + "'/><stop offset='1' stop-color='" + b + "'/></linearGradient></defs><rect width='420' height='260' fill='url(#g)'/><circle cx='320' cy='70' r='86' fill='" + c + "' opacity='.4'/><circle cx='80' cy='220' r='120' fill='#fff' opacity='.12'/><path d='M0 200 Q110 140 210 190 T420 160 V260 H0Z' fill='#000' opacity='.12'/></svg>");
 const ARTS = [['#5b5bf0','#22d3ee','#f0abfc'], ['#f97316','#ec4899','#fde68a'], ['#0f766e','#14b8a6','#fef08a'], ['#1e1b4b','#7c3aed','#38bdf8']];
 document.querySelectorAll('img[data-art]').forEach(i => { i.src = art(...ARTS[+i.dataset.art]); });
-document.querySelectorAll('a[data-art]').forEach(a => { a.dataset.cursorImage = art(...ARTS[+a.dataset.art]); });
+document.querySelectorAll('.tile a[data-art]').forEach(a => { a.dataset.cursorImage = art(...ARTS[+a.dataset.art]); });
 
 buildPane('p-cursor', SCHEMA.cursor);
 buildPane('p-trail', SCHEMA.trail);
@@ -1411,12 +1325,6 @@ buildPane('p-preview', SCHEMA.preview);
 $('#p-preview').insertAdjacentHTML('afterbegin', '<p class="intro">Show a thumbnail that follows the cursor. Add <code>data-cursor-image="photo.jpg"</code> to any element, such as the project list in the preview.</p>');
 buildHover();
 
-// Builder chrome uses the same cursor system: controls simply opt in to "grow".
-document.querySelectorAll('.tog .switch input').forEach(n => { n.dataset.cursor = 'grow'; });
-document.querySelectorAll('.top button,.tab,.chip,.switch input,.sel,input[type=color],summary').forEach(n => { if (!n.dataset.cursor) n.dataset.cursor = 'grow'; });
-document.querySelectorAll('.num,.txt,.hex').forEach(n => { n.dataset.cursor = 'caret'; });
-document.querySelectorAll('.code-h button,.code-f button').forEach(n => { n.dataset.cursor = 'grow'; });
-document.querySelector('.code-wrap').dataset.cursorType = 'text';
 
 const noMouse = matchMedia('(hover: none), (pointer: coarse)');
 const setMouse = () => document.documentElement.classList.toggle('no-mouse', noMouse.matches);
