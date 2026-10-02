@@ -1,0 +1,1315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cursor Builder</title>
+<meta name="description" content="Design a custom website cursor visually, then copy the generated HTML, CSS and JavaScript.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%235b5bf0'/%3E%3Cpath d='M10 7l13 7.5-5.6 1.7L15 22z' fill='%23fff'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#f5f5f4;--panel:#fff;--panel-2:#fafafa;--border:#e4e4e7;--border-strong:#d4d4d8;
+  --text:#18181b;--muted:#71717a;--faint:#a1a1aa;--accent:#5b5bf0;--accent-soft:#eeeefe;--on-accent:#fff;
+  --code-bg:#fbfbfa;--hover:#f4f4f5;--ok:#16a34a;
+  --t-c:#8b8b94;--t-s:#0b7a4b;--t-k:#7c3aed;--t-n:#b45309;--t-f:#0b62c4;--t-p:#0550ae;--t-t:#b91c5c;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#09090b;--panel:#111113;--panel-2:#161618;--border:#27272a;--border-strong:#3f3f46;
+    --text:#fafafa;--muted:#a1a1aa;--faint:#71717a;--accent:#8080ff;--accent-soft:#1e1e3a;--on-accent:#0b0b1a;
+    --code-bg:#0c0c0e;--hover:#1c1c1f;
+    --t-c:#71717a;--t-s:#7ee2a8;--t-k:#c4a7ff;--t-n:#ffb86b;--t-f:#79c0ff;--t-p:#9ecbff;--t-t:#ff8fb8;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#09090b;--panel:#111113;--panel-2:#161618;--border:#27272a;--border-strong:#3f3f46;
+  --text:#fafafa;--muted:#a1a1aa;--faint:#71717a;--accent:#8080ff;--accent-soft:#1e1e3a;--on-accent:#0b0b1a;
+  --code-bg:#0c0c0e;--hover:#1c1c1f;
+  --t-c:#71717a;--t-s:#7ee2a8;--t-k:#c4a7ff;--t-n:#ffb86b;--t-f:#79c0ff;--t-p:#9ecbff;--t-t:#ff8fb8;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font:13px/1.45 var(--sans);-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:8px;top:-40px;background:var(--accent);color:var(--on-accent);padding:6px 10px;border-radius:6px;z-index:100}
+.skip:focus{top:8px}
+code,.mono{font-family:var(--mono)}
+
+/* ── app shell ─────────────────────────── */
+.app{display:grid;grid-template-columns:316px minmax(0,1fr) minmax(360px,420px);grid-template-rows:48px minmax(0,1fr);height:100vh}
+.top{grid-column:1/-1;display:flex;align-items:center;gap:12px;padding:0 14px;background:var(--panel);border-bottom:1px solid var(--border)}
+.brand{display:flex;align-items:center;gap:9px;font-weight:600;letter-spacing:-.01em}
+.brand svg{display:block}
+.brand small{font:500 11px var(--mono);color:var(--muted);border:1px solid var(--border);padding:1px 6px;border-radius:5px}
+.top .sp{flex:1}
+.top .hint{color:var(--muted);font-size:12px}
+.col{background:var(--panel);min-height:0;display:flex;flex-direction:column}
+.left{border-right:1px solid var(--border)}
+.right{border-left:1px solid var(--border)}
+.scroll{overflow:auto;flex:1;min-height:0}
+.mid{background:var(--bg);min-width:0}
+
+.btn{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border:1px solid var(--border-strong);background:var(--panel);border-radius:7px;cursor:pointer;font-weight:500;font-size:12px;transition:background .12s,border-color .12s,color .12s}
+.btn:hover{background:var(--hover);border-color:var(--faint)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.primary:hover{filter:brightness(1.08);background:var(--accent)}
+.btn.lg{height:30px;padding:0 14px}
+.btn svg{width:14px;height:14px;flex:none}
+.btn.icon{width:28px;padding:0;justify-content:center}
+
+/* tabs */
+.tabs{display:flex;gap:2px;padding:0 8px;border-bottom:1px solid var(--border);background:var(--panel);flex:none}
+.tab{position:relative;height:36px;padding:0 10px;border:0;background:none;color:var(--muted);cursor:pointer;font-weight:500;font-size:12.5px;border-radius:6px 6px 0 0;transition:color .12s,background .12s}
+.tab:hover{color:var(--text);background:var(--hover)}
+.tab[aria-selected="true"]{color:var(--text)}
+.tab[aria-selected="true"]::after{content:"";position:absolute;left:8px;right:8px;bottom:-1px;height:2px;background:var(--accent);border-radius:2px}
+.tab .n{font:11px var(--mono);color:var(--faint);margin-left:5px}
+
+/* presets */
+.presets{padding:12px 14px;border-bottom:1px solid var(--border);flex:none}
+.sec-t{display:flex;align-items:center;justify-content:space-between;font:600 11px var(--sans);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 8px}
+.chips{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.chip{height:28px;border:1px solid var(--border);background:var(--panel-2);border-radius:7px;cursor:pointer;font-size:12px;font-weight:500;transition:background .12s,border-color .12s}
+.chip:hover{border-color:var(--faint);background:var(--hover)}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.custom-note{font:11px var(--mono);color:var(--faint)}
+
+/* control rows */
+.pane{padding:4px 14px 24px}
+.pane[hidden]{display:none}
+.grp{margin:16px 0 4px;font:600 11px var(--sans);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);display:flex;align-items:center;gap:8px}
+.grp::after{content:"";flex:1;height:1px;background:var(--border)}
+.row{position:relative;padding:7px 0}
+.row-h{display:flex;align-items:center;gap:6px;min-height:24px}
+.row-h label{font-size:12.5px;cursor:pointer;flex:1}
+.row.off{opacity:.42}
+.row.off *{cursor:not-allowed}
+.info{width:14px;height:14px;border-radius:50%;border:1px solid var(--border-strong);color:var(--faint);font:600 9px/12px var(--sans);text-align:center;cursor:help;flex:none}
+.info:hover,.info:focus-visible{color:var(--text);border-color:var(--faint)}
+.info::after{content:attr(data-tip);display:none;position:absolute;left:0;right:0;top:100%;z-index:20;margin-top:2px;padding:8px 10px;background:var(--text);color:var(--bg);border-radius:7px;font:400 11.5px/1.4 var(--sans);text-align:left;box-shadow:0 6px 20px rgba(0,0,0,.2)}
+.info:hover::after,.info:focus-visible::after{display:block}
+.val{display:flex;align-items:center;gap:4px;font:12px var(--mono);color:var(--muted)}
+.num,.txt,.sel,.hex{height:26px;border:1px solid var(--border-strong);background:var(--panel);border-radius:6px;padding:0 7px;font:12px var(--mono);transition:border-color .12s,box-shadow .12s}
+.num{width:62px;text-align:right}
+.num::-webkit-inner-spin-button{opacity:.5}
+.txt{width:100%;font-family:var(--sans);font-size:12.5px}
+.sel{font-family:var(--sans);font-size:12.5px;padding-right:4px;cursor:pointer;max-width:150px}
+.hex{width:78px}
+.num:hover,.txt:hover,.sel:hover,.hex:hover{border-color:var(--faint)}
+.num:focus-visible,.txt:focus-visible,.hex:focus-visible,.sel:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
+input[type=color]{width:28px;height:26px;padding:2px;border:1px solid var(--border-strong);background:var(--panel);border-radius:6px;cursor:pointer}
+.inline{display:flex;gap:6px;align-items:center}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:18px;background:transparent;margin:4px 0 0;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:4px;background:linear-gradient(to right,var(--accent) var(--p,0%),var(--border) var(--p,0%))}
+input[type=range]::-moz-range-track{height:4px;border-radius:4px;background:var(--border)}
+input[type=range]::-moz-range-progress{height:4px;border-radius:4px;background:var(--accent)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;margin-top:-5px;border-radius:50%;background:var(--panel);border:2px solid var(--accent);box-shadow:0 1px 3px rgba(0,0,0,.2);transition:transform .12s}
+input[type=range]::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:var(--panel);border:2px solid var(--accent)}
+input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.15)}
+input[type=range]:focus-visible{outline:none}
+input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 30%,transparent)}
+.row.line .row-h{min-height:28px}
+.switch{position:relative;width:32px;height:18px;flex:none}
+.switch input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;z-index:1}
+.switch i{position:absolute;inset:0;background:var(--border-strong);border-radius:99px;transition:background .15s;pointer-events:none}
+.switch i::after{content:"";position:absolute;left:2px;top:2px;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .15s}
+.switch input:checked+i{background:var(--accent)}
+.switch input:checked+i::after{transform:translateX(14px)}
+.switch input:focus-visible+i{outline:2px solid var(--accent);outline-offset:2px}
+
+/* states editor */
+.st-nav{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0}
+.st-nav .chip{height:30px;font-size:12px}
+.st-card{border:1px solid var(--border);border-radius:9px;background:var(--panel-2);padding:12px}
+.st-card h3{margin:0 0 2px;font-size:13px;display:flex;justify-content:space-between;align-items:center}
+.st-card h3 code{font-size:11px;color:var(--muted);font-weight:400}
+.st-card p{margin:0 0 10px;color:var(--muted);font-size:12px}
+.beh{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.beh button{height:26px;padding:0 9px;border:1px solid var(--border-strong);background:var(--panel);border-radius:99px;font:12px var(--mono);cursor:pointer;transition:background .12s,border-color .12s}
+.beh button:hover{border-color:var(--faint)}
+.beh button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.beh button:disabled{opacity:.4;cursor:not-allowed}
+.resolve{font:11.5px/1.5 var(--mono);color:var(--muted);background:var(--panel);border:1px dashed var(--border-strong);border-radius:7px;padding:7px 9px;margin-top:8px}
+.resolve b{color:var(--text);font-weight:600}
+
+/* ── centre: preview ───────────────────── */
+.stage-h{display:flex;align-items:center;gap:10px;padding:0 16px;height:44px;flex:none;border-bottom:1px solid var(--border);background:var(--panel)}
+.stage-h h2{margin:0;font-size:13px;font-weight:600}
+.live{display:inline-flex;align-items:center;gap:6px;font:11px var(--mono);color:var(--muted)}
+.live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px color-mix(in srgb,var(--ok) 20%,transparent)}
+.stage-h .sp{flex:1}
+.touch-note{display:none;margin:12px 16px 0;padding:10px 12px;border:1px solid var(--border-strong);background:var(--panel);border-radius:8px;font-size:12.5px}
+.no-mouse .touch-note{display:block}
+.stage{flex:1;min-height:0;overflow:auto;padding:20px}
+.site{max-width:860px;margin:0 auto;background:var(--panel);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+.chrome-bar{display:flex;align-items:center;gap:6px;padding:9px 12px;border-bottom:1px solid var(--border);background:var(--panel-2)}
+.chrome-bar i{width:9px;height:9px;border-radius:50%;background:var(--border-strong)}
+.chrome-bar span{margin-left:10px;font:11px var(--mono);color:var(--muted);background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:2px 10px;flex:1;max-width:280px}
+.sect{padding:28px 32px;border-bottom:1px solid var(--border);position:relative}
+.sect:last-child{border-bottom:0}
+.demo{position:relative}
+.ann{position:absolute;right:6px;top:-9px;z-index:3;pointer-events:none;font:10.5px/1 var(--mono);color:var(--muted);background:var(--panel);border:1px solid var(--border-strong);padding:3px 6px;border-radius:5px;white-space:nowrap;max-width:calc(100% - 12px);overflow:hidden;text-overflow:ellipsis}
+.ann.inside{top:8px;right:8px}
+.ann b{color:var(--accent);font-weight:500}
+.is-target{outline:1.5px dashed var(--accent);outline-offset:4px}
+.s-nav{display:flex;align-items:center;gap:22px;padding:14px 32px;border-bottom:1px solid var(--border)}
+.s-nav .logo{font-weight:700;font-size:15px;letter-spacing:-.02em;color:var(--text);text-decoration:none}
+.s-nav nav{display:flex;gap:18px;flex:1}
+.s-nav nav a,.lnk{color:var(--muted);text-decoration:none;font-weight:500;padding:2px 0;border-bottom:1px solid transparent;transition:color .12s,border-color .12s}
+.s-nav nav a:hover,.lnk:hover{color:var(--text);border-color:var(--text)}
+.s-nav nav a[aria-current]{color:var(--text)}
+.ibtn{width:34px;height:34px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--border-strong);background:var(--panel);cursor:pointer;transition:background .12s}
+.ibtn:hover{background:var(--hover)}
+.ibtn svg{width:16px;height:16px}
+.eyebrow{font:500 11px var(--mono);color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin:0 0 10px}
+.hero h1{font-size:40px;line-height:1.05;letter-spacing:-.035em;margin:0 0 12px;max-width:560px}
+.hero p{color:var(--muted);font-size:15px;line-height:1.6;max-width:520px;margin:0 0 22px}
+.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.pbtn,.sbtn{height:38px;padding:0 18px;border-radius:9px;font-weight:600;cursor:pointer;border:1px solid transparent;transition:background .15s,border-color .15s}
+.pbtn{background:var(--text);color:var(--bg)}
+.pbtn:hover{background:color-mix(in srgb,var(--text) 82%,var(--bg))}
+.sbtn{background:var(--panel);border-color:var(--border-strong);color:var(--text)}
+.sbtn:hover{background:var(--hover)}
+.row-flex{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.seg{display:inline-flex;padding:3px;background:var(--hover);border-radius:9px;gap:2px}
+.seg button{border:0;background:none;padding:6px 14px;border-radius:7px;font-weight:500;color:var(--muted);cursor:pointer;transition:background .12s,color .12s}
+.seg button[aria-selected="true"]{background:var(--panel);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.seg button:hover{color:var(--text)}
+.chk{display:inline-flex;align-items:center;gap:8px;cursor:pointer}
+.chk input{width:16px;height:16px;margin:0;accent-color:var(--accent)}
+.h3{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.card{border:1px solid var(--border);border-radius:12px;background:var(--panel);position:relative}
+.card img{border-radius:11px 11px 0 0;display:block;width:100%;aspect-ratio:16/10;object-fit:cover}
+.card .body{padding:14px 16px 16px}
+.card h4{margin:0 0 3px;font-size:15px;letter-spacing:-.01em}
+.card p{margin:0;color:var(--muted);font-size:13px}
+.drag{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;min-height:196px;background:var(--hover);border:1px dashed var(--border-strong);border-radius:12px;text-align:center;padding:20px;position:relative}
+.drag strong{font-size:15px}.drag span{color:var(--muted);font-size:13px}
+.lens-zone{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
+.lens-zone img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover}
+.lens-zone .over{position:absolute;inset:auto 0 0 0;padding:20px 16px 12px;background:linear-gradient(transparent,rgba(0,0,0,.55));color:#fff;font-weight:600;font-size:13px;pointer-events:none}
+.lens-zone .tiny{position:absolute;left:16px;top:14px;font:600 24px/1 var(--sans);color:#fff;letter-spacing:-.03em;text-shadow:0 1px 8px rgba(0,0,0,.25);pointer-events:none}
+.feature{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--border)}
+.feature img{display:block;width:100%;aspect-ratio:21/9;object-fit:cover}
+.feature .cap{position:absolute;left:20px;bottom:16px;color:#fff;pointer-events:none}
+.feature .cap h4{margin:0;font-size:22px;letter-spacing:-.02em}.feature .cap p{margin:2px 0 0;font-size:13px;opacity:.85}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px}
+.form .full{grid-column:1/-1}
+.fld{display:flex;flex-direction:column;gap:5px}
+.fld>label{font-weight:500;font-size:12.5px}
+.in{height:38px;border:1px solid var(--border-strong);background:var(--panel);border-radius:8px;padding:0 12px;font-size:14px;width:100%;transition:border-color .12s,box-shadow .12s}
+textarea.in{height:84px;padding:10px 12px;resize:vertical;line-height:1.5}
+.in:hover{border-color:var(--faint)}
+.in:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent)}
+.native{display:flex;align-items:center;justify-content:center;min-height:84px;border:1px dashed var(--border-strong);border-radius:10px;color:var(--muted);text-align:center;padding:12px;background:repeating-linear-gradient(135deg,transparent 0 8px,var(--hover) 8px 16px)}
+.lede{font-size:15px;line-height:1.7;max-width:60ch;margin:0}
+.lede mark{background:color-mix(in srgb,var(--accent) 22%,transparent);color:inherit;padding:0 2px;border-radius:3px}
+
+/* inspector bar */
+.inspect{flex:none;display:flex;gap:6px 14px;flex-wrap:wrap;align-items:center;padding:8px 16px;border-top:1px solid var(--border);background:var(--panel);font:11.5px var(--mono);color:var(--muted);min-height:38px}
+.inspect b{color:var(--text);font-weight:500}
+.inspect .k{color:var(--faint)}
+
+/* ── right: code ───────────────────────── */
+.code-h{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--border);flex:none}
+.code-h .sp{flex:1}
+.code-wrap{flex:1;min-height:0;overflow:auto;background:var(--code-bg)}
+pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-space:pre;color:var(--text)}
+.t-c{color:var(--t-c);font-style:italic}.t-s{color:var(--t-s)}.t-k{color:var(--t-k)}.t-n{color:var(--t-n)}.t-f{color:var(--t-f)}.t-p{color:var(--t-p)}.t-t{color:var(--t-t)}
+.code-f{flex:none;display:flex;justify-content:space-between;gap:10px;padding:7px 12px;border-top:1px solid var(--border);font:11px var(--mono);color:var(--muted);background:var(--panel)}
+
+/* ── responsive ────────────────────────── */
+@media (max-width:1180px){
+  .app{display:flex;flex-direction:column;height:auto}
+  .top{position:sticky;top:0;z-index:50;min-height:48px}
+  .col{overflow:visible}
+  .mid{order:1}.left{order:2;border-right:0;border-top:1px solid var(--border)}.right{order:3;border-left:0;border-top:1px solid var(--border)}
+  .scroll{overflow:visible}
+  .stage{overflow:visible}
+  .code-wrap{max-height:70vh}
+  .top .hint{display:none}
+}
+@media (max-width:640px){
+  .brand{white-space:nowrap}.brand small{display:none}
+  .stage{padding:10px}.sect{padding:20px 16px}.s-nav{padding:12px 16px;gap:12px}.hero h1{font-size:30px}
+  .grid2,.form{grid-template-columns:1fr}
+  .s-nav nav{gap:12px;overflow:auto}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<style id="cc-style"></style>
+</head>
+<body>
+<a class="skip" href="#stage">Skip to preview</a>
+<div class="app">
+
+<header class="top">
+  <div class="brand">
+    <svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M10 7l13 7.5-5.6 1.7L15 22z" fill="#fff"/></svg>
+    Cursor Builder <small>data-cursor</small>
+  </div>
+  <span class="sp"></span>
+  <span class="hint">Everything you see here is driven by the generated code →</span>
+  <button class="btn" id="themeBtn" type="button" aria-label="Toggle colour theme">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"/></svg>
+    Theme
+  </button>
+  <button class="btn" id="resetBtn" type="button">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2.5 8a5.5 5.5 0 1 0 1.8-4.1M2.5 2.5v3h3"/></svg>
+    Reset
+  </button>
+</header>
+
+<!-- LEFT · configuration -->
+<aside class="col left" aria-label="Cursor configuration">
+  <div class="presets">
+    <p class="sec-t"><span>Presets</span><span class="custom-note" id="customNote" hidden>modified</span></p>
+    <div class="chips" id="presetChips"></div>
+  </div>
+  <div class="tabs" role="tablist" aria-label="Configuration sections" id="cfgTabs">
+    <button class="tab" role="tab" id="t-cursor" aria-controls="p-cursor" aria-selected="true">Cursor</button>
+    <button class="tab" role="tab" id="t-trail" aria-controls="p-trail" aria-selected="false" tabindex="-1">Trail</button>
+    <button class="tab" role="tab" id="t-motion" aria-controls="p-motion" aria-selected="false" tabindex="-1">Motion</button>
+    <button class="tab" role="tab" id="t-states" aria-controls="p-states" aria-selected="false" tabindex="-1">Hover</button>
+  </div>
+  <div class="scroll">
+    <div class="pane" id="p-cursor" role="tabpanel" aria-labelledby="t-cursor"></div>
+    <div class="pane" id="p-trail" role="tabpanel" aria-labelledby="t-trail" hidden></div>
+    <div class="pane" id="p-motion" role="tabpanel" aria-labelledby="t-motion" hidden></div>
+    <div class="pane" id="p-states" role="tabpanel" aria-labelledby="t-states" hidden></div>
+  </div>
+</aside>
+
+<!-- CENTRE · live preview -->
+<main class="col mid" id="stage-col">
+  <div class="stage-h">
+    <h2>Live preview</h2>
+    <span class="live">cursor active</span>
+    <span class="sp"></span>
+    <span class="mono" style="font-size:11px;color:var(--muted)">move your pointer ↓</span>
+  </div>
+  <div class="touch-note" role="status"><strong>Mouse or trackpad required.</strong> The live cursor preview is disabled on touch devices. You can still configure the cursor and copy the generated code.</div>
+  <div class="stage" id="stage" tabindex="-1">
+    <div class="site">
+      <div class="chrome-bar" aria-hidden="true"><i></i><i></i><i></i><span>northwind.studio</span></div>
+
+      <div class="s-nav demo">
+        <a class="logo" href="#stage" onclick="return false">Northwind</a>
+        <nav aria-label="Demo navigation">
+          <a href="#stage" aria-current="page" onclick="return false">Work</a>
+          <a href="#stage" onclick="return false">Studio</a>
+          <a href="#stage" onclick="return false">Journal</a>
+          <a href="#stage" onclick="return false">Contact</a>
+        </nav>
+        <button class="ibtn" type="button" aria-label="Search" data-cursor="magnetic" data-cursor-pull="0.6"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg></button>
+        <button class="ibtn" type="button" aria-label="Menu" data-cursor="magnetic" data-cursor-pull="0.6"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 5h12M2 11h12"/></svg></button>
+        <span class="ann">links → <b>type: link</b> · icon buttons → <b>data-cursor="magnetic"</b></span>
+      </div>
+
+      <section class="sect hero demo" aria-label="Hero">
+        <p class="eyebrow">Independent design studio</p>
+        <h1>Interfaces that feel as good as they look.</h1>
+        <p>Northwind designs brands, products and websites. Hover this paragraph, then the controls below: every element reacts through plain <code class="mono">data-cursor</code> attributes.</p>
+        <div class="actions">
+          <button class="pbtn" type="button" data-cursor="magnetic grow">Start a project</button>
+          <button class="sbtn" type="button">View showreel</button>
+          <a class="lnk" href="#stage" onclick="return false">Read the case studies →</a>
+        </div>
+        <span class="ann">h1 / p → <b>type: text</b> · primary → <b>data-cursor="magnetic grow"</b> · secondary → <b>type: button</b></span>
+      </section>
+
+      <section class="sect demo" aria-label="Tabs and toggles">
+        <p class="h3">Controls</p>
+        <div class="row-flex">
+          <div class="seg" role="tablist" aria-label="Demo tabs" id="demoTabs">
+            <button type="button" role="tab" aria-selected="true">Overview</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1">Process</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1">Pricing</button>
+          </div>
+          <label class="chk" data-cursor-type="button"><input type="checkbox" checked> Case studies</label>
+          <label class="chk" data-cursor-type="button"><span class="switch"><input type="checkbox" role="switch" aria-label="Email updates" checked><i></i></span> Email updates</label>
+          <button class="ibtn" type="button" aria-label="Like" data-cursor="magnetic grow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 13.5S2 10 2 6a3 3 0 0 1 6-1 3 3 0 0 1 6 1c0 4-6 7.500-6 7.500z"/></svg></button>
+        </div>
+        <span class="ann">tabs, checkbox, switch → <b>type: button</b> · icon → <b>data-cursor="magnetic grow"</b></span>
+      </section>
+
+      <section class="sect demo" aria-label="Projects">
+        <p class="h3">Selected work</p>
+        <div class="grid2">
+          <article class="card demo" data-cursor-text="View project">
+            <img data-art="0" alt="Abstract gradient artwork for project Aurora">
+            <div class="body"><h4>Aurora Bank</h4><p>Mobile banking redesign</p></div>
+            <span class="ann"><b>data-cursor-text="View project"</b></span>
+          </article>
+          <article class="card demo" data-cursor-type="card">
+            <img data-art="1" alt="Abstract gradient artwork for project Fieldnotes">
+            <div class="body"><h4>Fieldnotes</h4><p>Editorial platform</p></div>
+            <span class="ann"><b>data-cursor-type="card"</b></span>
+          </article>
+          <div class="drag demo" data-cursor="frame magnetic" data-cursor-text="Drag" data-cursor-pull="0.5">
+            <strong>Drag to reorder</strong><span>Frame + magnetic + label</span>
+            <span class="ann"><b>data-cursor="frame magnetic"</b> data-cursor-text="Drag"</span>
+          </div>
+          <div class="lens-zone demo" data-cursor="lens">
+            <img data-art="2" alt="Abstract gradient artwork for the lens demo">
+            <span class="tiny">Small print, sharp detail</span>
+            <span class="over">Move here to magnify</span>
+            <span class="ann inside"><b>data-cursor="lens"</b></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="sect demo" aria-label="Featured project">
+        <div class="feature" data-cursor-text="Explore" data-cursor-size="96">
+          <img data-art="3" alt="Large abstract gradient artwork for the featured project">
+          <div class="cap"><h4>Meridian Atlas</h4><p>Interactive map of the world's shipping lanes</p></div>
+        </div>
+        <span class="ann"><b>data-cursor-text="Explore"</b> data-cursor-size="96"</span>
+      </section>
+
+      <section class="sect demo" aria-label="Form">
+        <p class="h3">Say hello</p>
+        <form class="form" onsubmit="return false">
+          <div class="fld"><label for="f-name">Name</label><input class="in" id="f-name" type="text" placeholder="Ada Lovelace" autocomplete="off"></div>
+          <div class="fld"><label for="f-mail">Email</label><input class="in" id="f-mail" type="email" placeholder="ada@example.com" autocomplete="off"></div>
+          <div class="fld"><label for="f-sel">Budget</label><select class="in" id="f-sel"><option>€10k – €25k</option><option>€25k – €50k</option><option>€50k+</option></select></div>
+          <div class="fld"><label for="f-url">Project link</label><input class="in" id="f-url" type="url" placeholder="https://" autocomplete="off"></div>
+          <div class="fld full"><label for="f-msg">Message</label><textarea class="in" id="f-msg" placeholder="Tell us about the project…"></textarea></div>
+          <div class="fld full"><div class="native demo" data-cursor="hide"><span>Native cursor zone: the custom cursor steps aside here.</span><span class="ann"><b>data-cursor="hide"</b></span></div></div>
+          <div class="full actions"><button class="pbtn" type="submit">Send message</button><button class="sbtn" type="reset">Clear</button></div>
+        </form>
+        <span class="ann">inputs / textarea → <b>type: input</b> · select → <b>type: button</b></span>
+      </section>
+
+      <section class="sect" aria-label="Text">
+        <p class="h3">Reading</p>
+        <p class="lede">Good cursors are <mark>quiet until they matter</mark>. They confirm what is clickable, tell you what will happen next, and never get in the way of reading. Select this text: the cursor shrinks to stay out of the way.</p>
+      </section>
+    </div>
+  </div>
+  <div class="inspect" id="inspect" aria-label="Resolved cursor state" aria-live="off">
+    <span><span class="k">target</span> <b id="i-el">none</b></span>
+    <span><span class="k">type</span> <b id="i-type">default</b></span>
+    <span><span class="k">behaviours</span> <b id="i-b">none</b></span>
+    <span><span class="k">size</span> <b id="i-size">–</b></span>
+  </div>
+</main>
+
+<!-- RIGHT · generated code -->
+<aside class="col right" aria-label="Generated code">
+  <div class="code-h">
+    <div class="tabs" role="tablist" aria-label="Generated files" id="codeTabs" style="border:0;padding:0;flex:1">
+      <button class="tab" role="tab" id="c-html" aria-selected="true" aria-controls="codeView">HTML</button>
+      <button class="tab" role="tab" id="c-css" aria-selected="false" tabindex="-1" aria-controls="codeView">CSS</button>
+      <button class="tab" role="tab" id="c-js" aria-selected="false" tabindex="-1" aria-controls="codeView">JavaScript</button>
+    </div>
+    <button class="btn lg primary" id="copyBtn" type="button">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="5" y="5" width="8.500" height="8.500" rx="1.500"/><path d="M3 10.500V3.500A1 1 0 0 1 4 2.500h7"/></svg>
+      <span id="copyLabel">Copy</span>
+    </button>
+  </div>
+  <div class="code-wrap" id="codeView" role="tabpanel" tabindex="0" aria-label="Generated code"><pre><code id="code"></code></pre></div>
+  <div class="code-f"><span id="codeMeta">–</span><button class="btn" id="copyAll" type="button" style="height:22px;font-size:11px">Copy all three</button></div>
+</aside>
+</div>
+<div class="sr" role="status" aria-live="polite" id="live"></div>
+
+<script>
+'use strict';
+/* ════════════════════════════════════════════════════════════════
+   1 · The cursor engine, as source text.
+   The builder runs exactly this code (after filling in the config),
+   so the live preview is the generated implementation, not a mock.
+   Lines between //[name … //]name are kept only when that feature is on.
+   ════════════════════════════════════════════════════════════════ */
+const ENGINE = String.raw`/* Custom cursor · generated by Cursor Builder
+ *
+ * Attributes (all optional, usable on any element):
+ *   data-cursor="grow shrink magnetic frame lens label caret hide"   space-separated behaviours
+ *   data-cursor-type="link|button|text|image|card|input|custom"      borrow a configured state
+ *   data-cursor-text="View"     label shown inside the cursor
+ *   data-cursor-size="80"       resting size in px (lens diameter for "lens")
+ *   data-cursor-pad="8"         frame padding in px
+ *   data-cursor-pull="0.4"      magnetic strength, 0 to 1
+ *   data-cursor-scale="2"       grow / shrink factor
+ *   data-cursor-ring="show|hide"
+ *
+ * Conflicts resolve as: hide > caret > lens > frame.
+ * label, grow/shrink and magnetic combine with whatever wins.
+ * A data-cursor attribute replaces the behaviours of the element's type.
+ */
+(() => {
+  'use strict';
+  window.CustomCursor?.destroy();
+  const C = %CFG%;
+
+  // Touch-only devices keep the native cursor.
+  if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+  const rm = matchMedia('(prefers-reduced-motion: reduce)');
+  const root = document.documentElement;
+  const ac = new AbortController();
+  const on = (t, type, fn, o) => t.addEventListener(type, fn, { passive: true, signal: ac.signal, ...o });
+  const mags = new Map();   // elements currently pulled towards the pointer
+  let dot, ring, raf = 0;
+
+  window.CustomCursor = {
+    destroy() {
+      ac.abort(); cancelAnimationFrame(raf);
+      mags.forEach((m, n) => (n.style.translate = ''));
+      dot?.remove(); ring?.remove();
+      root.classList.remove('cc-on', 'cc-native');
+      delete window.CustomCursor;
+    },
+  };
+
+  const start = () => {
+    if (ac.signal.aborted) return;
+    const mk = (cls) => {
+      const n = document.createElement('div');
+      n.className = cls; n.setAttribute('aria-hidden', 'true');
+      document.body.append(n); return n;
+    };
+    //[ring
+    ring = mk('cc-ring cc-hide');
+    //]ring
+    dot = mk('cc-dot cc-hide');
+    const label = document.createElement('span');
+    label.className = 'cc-label'; dot.append(label);
+
+    // ── element selection ────────────────────────────────────────
+    const ATTR = '[data-cursor],[data-cursor-text],[data-cursor-size],[data-cursor-type]';
+    const CTRL = 'a[href],button,summary,select,textarea,input,[role=button],[role=link],[role=tab],[role=switch],[contenteditable]:not([contenteditable=false])';
+    const FIELD = 'textarea,[contenteditable],input:not([type=checkbox],[type=radio],[type=range],[type=button],[type=submit],[type=reset],[type=color],[type=file])';
+    const MEDIA = 'img,picture,video,canvas';
+    const TEXT = 'p,h1,h2,h3,h4,h5,h6,li,blockquote,figcaption,pre,dd,dt';
+    const typeOf = (n) => n.dataset.cursorType || (
+      n.matches(FIELD) ? 'input' : n.matches(MEDIA) ? 'image' :
+      n.matches('a[href],[role=link]') ? 'link' : n.matches(CTRL) ? 'button' :
+      n.matches(TEXT) ? 'text' : 'default');
+
+    // ── springs ──────────────────────────────────────────────────
+    const spring = (v) => ({ x: v, v: 0, t: v });
+    const X = spring(0), Y = spring(0), W = spring(C.size), H = spring(C.size), R = spring(C.size / 2);
+    const shape = [W, H, R], all = [X, Y, W, H, R];
+    //[ring
+    const RX = spring(0), RY = spring(0), RS = spring(C.ring.size);
+    all.push(RX, RY, RS);
+    //]ring
+    const omega = (f) => 4 + 56 * Math.pow(f, 1.3);          // follow speed 0-1 → natural frequency
+    const advance = (s, w, z, dt) => {                        // damped spring, sub-stepped for stability
+      const n = Math.ceil(dt / 0.008), h = dt / n;
+      for (let i = 0; i < n; i++) { s.v += (w * w * (s.t - s.x) - 2 * z * w * s.v) * h; s.x += s.v * h; }
+    };
+    const rest = (s) => Math.abs(s.t - s.x) < 0.1 && Math.abs(s.v) < 0.3;
+    const clamp = (v, m) => Math.max(-m, Math.min(m, v));
+
+    // ── state ────────────────────────────────────────────────────
+    let mx = 0, my = 0, px = 0, py = 0;                       // raw and smoothed pointer
+    let el = null, seen = undefined, type = 'default';
+    let shown = false, hidden = false, pressed = false, dirty = true, rescan = false, last = 0;
+    let rect = null, cx = 0, cy = 0, mag = false, shift = false, pull = 0, plain = true, framed = false;
+    //[delay
+    const hist = [];
+    //]delay
+
+    const vis = () => {
+      const off = !shown || hidden;
+      dot.classList.toggle('cc-hide', off);
+      //[ring
+      ring.classList.toggle('cc-hide', off);
+      //]ring
+    };
+
+    const pick = (t) => {
+      let n = null;
+      if (t instanceof Element) {
+        const a = t.closest(ATTR), c = t.closest(CTRL);
+        n = c && (!a || a.contains(c)) ? c : a || t.closest(MEDIA) || t.closest(TEXT);
+      }
+      if (n !== el) { el = n; dirty = true; }
+    };
+
+    // Resolve the hovered element into targets. Runs only when something changed.
+    const measure = () => {
+      const d = el ? el.dataset : {};
+      const own = d.cursor != null;
+      type = el ? typeOf(el) : 'default';
+      const S = C.states[type] || {};
+      const m = new Set((own ? d.cursor : S.b || '').split(/\s+/).filter(Boolean));
+      const hide = m.has('hide');
+      const caret = !hide && m.has('caret');
+      const lens = !hide && !caret && m.has('lens');
+      const frame = !hide && !caret && !lens && !!el && m.has('frame');
+      const text = (!hide && !caret && (d.cursorText ?? (m.has('label') ? S.text : ''))) || '';
+      mag = !hide && !caret && !!el && m.has('magnetic');
+      shift = mag && !el.matches('input,textarea,select,[contenteditable]');
+      pull = +(d.cursorPull ?? C.magnet);
+      const scale = +d.cursorScale || (m.has('grow') ? C.hover : m.has('shrink') ? C.shrink : 1);
+      const base = +d.cursorSize || (own ? 0 : S.size) || C.size;
+      const press = pressed ? C.press : 1;
+
+      rect = el && (frame || mag) ? el.getBoundingClientRect() : null;
+      if (rect) {
+        const o = mags.get(el);                                // ignore our own magnetic offset
+        cx = rect.left + rect.width / 2 - (o ? o.x.x : 0);
+        cy = rect.top + rect.height / 2 - (o ? o.y.x : 0);
+      }
+
+      let w, h, r = null;
+      if (caret) { w = 2; h = (parseFloat(getComputedStyle(el).fontSize) || 16) * 1.3; r = 1; }
+      else if (lens) { w = h = (+d.cursorSize || C.lens) * press; r = w / 2; }
+      else if (frame) {
+        const p = +(d.cursorPad ?? C.pad), br = getComputedStyle(el).borderTopLeftRadius;
+        w = rect.width + p * 2; h = rect.height + p * 2;
+        r = (br.includes('%') ? Math.min(rect.width, rect.height) * parseFloat(br) / 100 : parseFloat(br) || 0) + p;
+      } else w = h = base * scale * press;
+      label.textContent = text;
+      if (text) {                                              // grow to fit the label
+        const lw = label.offsetWidth + 28;
+        w = Math.max(w, lw);
+        if (!frame) h = Math.max(h, lw < 84 ? lw : 34);
+      }
+      if (r == null) r = Math.min(w, h) * C.radius / 100;
+      W.t = w; H.t = h; R.t = Math.min(r, Math.min(w, h) / 2);
+
+      const modes = [frame && 'frame', lens && 'lens', caret && 'caret', text && 'label'].filter(Boolean).join(' ');
+      if (modes) dot.dataset.mode = modes; else delete dot.dataset.mode;
+      dot.dataset.type = type;
+      plain = !modes;
+      framed = frame;
+      hidden = hide;
+      root.classList.toggle('cc-native', hide);
+      //[ring
+      const show = d.cursorRing ? d.cursorRing === 'show' : !(hide || caret || lens || frame || text);
+      ring.classList.toggle('cc-off', !show);
+      RS.t = C.ring.size * (m.has('grow') || mag ? C.ring.scale : 1) * (pressed ? 0.85 : 1);
+      //]ring
+      vis();
+      if (el !== seen) {                                       // optional hook for your own UI
+        seen = el;
+        const used = [hide && 'hide', caret && 'caret', lens && 'lens', frame && 'frame', text && 'label', mag && 'magnetic', scale > 1 && 'grow', scale < 1 && 'shrink'].filter(Boolean);
+        document.dispatchEvent(new CustomEvent('cursorchange', { detail: { el, type, behaviours: used, width: w, height: h } }));
+      }
+    };
+
+    // ── frame loop (sleeps when everything has settled) ──────────
+    const tick = (now) => {
+      raf = 0;
+      const dt = Math.max(Math.min((now - last) / 1000, 1 / 30), 0.001);
+      last = now;
+      const still = rm.matches;
+      if (rescan) { rescan = false; pick(document.elementFromPoint(mx, my)); }
+      if (dirty) { dirty = false; measure(); }
+
+      const a = still ? 1 : 1 - Math.pow(C.smooth, dt * 60);
+      px += (mx - px) * a; py += (my - py) * a;
+      if (Math.abs(mx - px) < 0.05 && Math.abs(my - py) < 0.05) { px = mx; py = my; }
+
+      // Target position: pointer, pulled towards the element centre, or snapped to its frame.
+      let tx = px, ty = py;
+      if (rect) {
+        const g = framed ? 0.9 : pull;
+        tx = px + (cx - px) * g; ty = py + (cy - py) * g;
+      }
+      X.t = tx; Y.t = ty;
+
+      const z = C.damping, ws = 18 * C.speed;
+      if (still || C.follow >= 1) { X.x = tx; Y.x = ty; X.v = Y.v = 0; }
+      else { const w = omega(C.follow); advance(X, w, z, dt); advance(Y, w, z, dt); }
+      for (const s of shape) { if (still) { s.x = s.t; s.v = 0; } else advance(s, ws, z, dt); }
+
+      // Magnetic elements drift towards the pointer, then settle back.
+      if (shift && !still && !mags.has(el)) mags.set(el, { x: spring(0), y: spring(0) });
+      for (const [n, m] of mags) {
+        const on = n === el && shift;
+        m.x.t = on ? clamp((px - cx) * pull * 0.5, 12) : 0;
+        m.y.t = on ? clamp((py - cy) * pull * 0.5, 12) : 0;
+        if (still) { m.x.x = m.y.x = 0; m.x.v = m.y.v = 0; } else { advance(m.x, 14, 0.7, dt); advance(m.y, 14, 0.7, dt); }
+        n.style.translate = m.x.x.toFixed(2) + 'px ' + m.y.x.toFixed(2) + 'px';
+        if (!on && rest(m.x) && rest(m.y)) { n.style.translate = ''; mags.delete(n); }
+      }
+
+      let sq = '';
+      //[stretch
+      if (plain && !still) {
+        const k = Math.min(Math.hypot(X.v, Y.v) * C.stretch * 0.0007, 0.5);
+        if (k > 0.01) sq = ' rotate(' + Math.atan2(Y.v, X.v).toFixed(3) + 'rad) scale(' + (1 + k).toFixed(3) + ',' + (1 - k * 0.6).toFixed(3) + ')';
+      }
+      //]stretch
+      dot.style.transform = 'translate3d(' + X.x.toFixed(2) + 'px,' + Y.x.toFixed(2) + 'px,0) translate(-50%,-50%)' + sq;
+      dot.style.width = Math.max(W.x, 0).toFixed(2) + 'px';
+      dot.style.height = Math.max(H.x, 0).toFixed(2) + 'px';
+      dot.style.borderRadius = Math.max(R.x, 0).toFixed(2) + 'px';
+
+      //[ring
+      let rx = tx, ry = ty;
+      //[delay
+      const l = hist[hist.length - 1];
+      if (!l || l[1] !== tx || l[2] !== ty) hist.push([now, tx, ty]);
+      while (hist.length > 1 && hist[1][0] <= now - C.ring.delay) hist.shift();
+      rx = hist[0][1]; ry = hist[0][2];
+      //]delay
+      RX.t = rx; RY.t = ry;
+      if (still || C.ring.follow >= 1) { RX.x = rx; RY.x = ry; RS.x = RS.t; RX.v = RY.v = RS.v = 0; }
+      else { const w = omega(C.ring.follow); advance(RX, w, C.ring.damping, dt); advance(RY, w, C.ring.damping, dt); advance(RS, ws, z, dt); }
+      ring.style.transform = 'translate3d(' + RX.x.toFixed(2) + 'px,' + RY.x.toFixed(2) + 'px,0) translate(-50%,-50%)';
+      ring.style.width = ring.style.height = Math.max(RS.x, 0).toFixed(2) + 'px';
+      //]ring
+
+      let busy = mx !== px || my !== py || mags.size > 0 || dirty || rescan;
+      //[delay
+      busy = busy || hist.length > 1;
+      //]delay
+      for (const s of all) if (!rest(s)) busy = true;
+      if (busy) raf = requestAnimationFrame(tick);
+    };
+    const wake = () => { if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick); } };
+
+    // ── events (delegated on document, nothing per element) ──────
+    on(document, 'pointermove', (e) => {
+      if (e.pointerType === 'touch') return;
+      mx = e.clientX; my = e.clientY;
+      pick(e.target);
+      if (!shown) {                                            // first move: appear in place, no fly-in
+        shown = true; px = mx; py = my;
+        for (const s of all) { s.x = s.t; s.v = 0; }
+        X.x = X.t = mx; Y.x = Y.t = my;
+        //[ring
+        RX.x = RX.t = mx; RY.x = RY.t = my;
+        //]ring
+        //[delay
+        hist.length = 0;
+        //]delay
+        vis(); cancelAnimationFrame(raf); last = performance.now(); tick(last);
+      } else wake();
+    });
+    on(document, 'pointerdown', (e) => { if (e.button === 0) { pressed = true; dirty = true; wake(); } });
+    on(window, 'pointerup', () => { if (pressed) { pressed = false; dirty = true; wake(); } });
+    on(window, 'blur', () => { pressed = false; dirty = true; wake(); });
+    on(window, 'scroll', () => { rescan = true; dirty = true; wake(); }, { capture: true });
+    on(window, 'resize', () => { dirty = true; wake(); });
+    on(document.documentElement, 'pointerleave', () => { shown = false; vis(); });
+    on(rm, 'change', wake);
+
+    root.classList.add('cc-on');
+  };
+  document.body ? start() : on(document, 'DOMContentLoaded', start, { once: true });
+})();
+`;
+
+/* ════════════════════════════════════════════════════════════════
+   2 · Configuration model, presets
+   ════════════════════════════════════════════════════════════════ */
+const BEHAVIOURS = ['grow', 'shrink', 'magnetic', 'frame', 'lens', 'label', 'caret', 'hide'];
+const STATE_META = {
+  default:{name:'Default', sel:'nothing special under the pointer', desc:'Applies when the pointer is over empty space or any element without its own state.'},
+  link:   {name:'Link',    sel:'a[href], [role=link]', desc:'Anchors and link-like elements.'},
+  button: {name:'Button',  sel:'button, select, summary, [role=button|tab|switch], checkbox/radio', desc:'Anything that triggers an action.'},
+  text:   {name:'Text',    sel:'p, h1–h6, li, blockquote, pre, dd, dt', desc:'Readable, non-interactive text.'},
+  image:  {name:'Image',   sel:'img, picture, video, canvas', desc:'Media. Great for “View” labels or a lens.'},
+  card:   {name:'Card',    sel:'[data-cursor-type="card"]', desc:'Opt-in container state for cards and tiles.'},
+  input:  {name:'Input',   sel:'input, textarea, [contenteditable]', desc:'Text entry. Try the caret behaviour.'},
+  custom: {name:'Custom',  sel:'[data-cursor-type="custom"]', desc:'Your own state for anything you tag.'},
+};
+const ST = (b, text = '', size = 0) => ({ b, text, size });
+const BASE = {
+  type:'dot', size:14, radius:50, color:'#5b5bf0', opacity:1, borderWidth:0, borderColor:'#ffffff', blend:'normal',
+  labelColor:'#ffffff', labelSize:12, hideNative:true,
+  ring:true, ringSize:44, ringColor:'#5b5bf0', ringOpacity:.45, ringBorder:1.5,
+  trailDelay:0, trailSpeed:.16, trailSmoothing:.5, trailScale:1.5, trailEasing:'smooth',
+  follow:.85, smoothing:0, speed:1, easing:'smooth', magnet:.4, stretch:0, press:.8, hover:2, shrink:.5,
+  framePad:8, lensSize:130, lensBlur:2,
+  states:{
+    default:ST([]), link:ST(['grow']), button:ST(['grow','magnetic']), text:ST(['shrink']),
+    image:ST(['label'], 'View'), card:ST(['frame']), input:ST(['caret']), custom:ST(['lens']),
+  },
+};
+const PRESETS = {
+  Minimal:{ desc:'A tiny inverting dot, nothing else.', o:{ size:8, color:'#ffffff', blend:'difference', labelColor:'#000000', ring:false, follow:1, hover:3, press:.7,
+    states:{ button:ST(['grow']), image:ST(['grow']), card:ST(['grow']), text:ST([]) } } },
+  Smooth:{ desc:'Soft dot with a trailing ring.', o:{} },
+  Magnetic:{ desc:'Springy cursor pulled towards targets.', o:{ size:10, ringSize:52, magnet:.55, easing:'spring', trailEasing:'spring', trailSpeed:.14,
+    states:{ link:ST(['grow','magnetic']), card:ST(['magnetic','frame']), image:ST(['magnetic','label'],'Open') } } },
+  Editorial:{ desc:'Inverting dot, frames and labels.', o:{ size:10, color:'#ffffff', blend:'difference', labelColor:'#000000', ring:false, follow:.9, easing:'snappy', framePad:6, radius:50,
+    states:{ link:ST(['frame']), button:ST(['frame','magnetic']), card:ST(['label'],'Read'), image:ST(['label'],'View'), text:ST([]) } } },
+  Lens:{ desc:'A magnifying lens over media.', o:{ size:12, ringSize:34, ringOpacity:.3, lensSize:170, lensBlur:3, speed:1.2,
+    states:{ image:ST(['lens']), card:ST(['lens']), link:ST(['grow']), button:ST(['grow']), custom:ST(['lens']) } } },
+  Playful:{ desc:'Bouncy, stretchy and loud.', o:{ size:16, color:'#ff3d81', ringColor:'#ffb703', ringOpacity:.9, ringSize:40, ringBorder:2, easing:'elastic', trailEasing:'elastic', follow:.7, stretch:1, press:.55, hover:3, shrink:.6, magnet:.6, trailSpeed:.12,
+    states:{ link:ST(['grow']), button:ST(['grow','magnetic']), image:ST(['label'],'✦ View'), card:ST(['frame','magnetic']), text:ST(['shrink']) } } },
+};
+const clone = (o) => JSON.parse(JSON.stringify(o));
+const fromPreset = (o) => {
+  const c = clone(BASE); const { states, ...rest } = o; Object.assign(c, rest);
+  if (states) for (const k in states) c.states[k] = clone(states[k]);
+  for (const k in c.states) c.states[k].b.sort((a, b) => BEHAVIOURS.indexOf(a) - BEHAVIOURS.indexOf(b));
+  return c;
+};
+const sameCfg = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+let cfg = fromPreset(PRESETS.Smooth.o);
+
+const EASING = { smooth:1, snappy:.8, spring:.58, elastic:.34 };
+const BLENDS = ['normal','difference','exclusion','multiply','screen','overlay','soft-light','hard-light'];
+
+/* ════════════════════════════════════════════════════════════════
+   3 · Code generation
+   ════════════════════════════════════════════════════════════════ */
+const num = (v) => String(+(+v).toFixed(3));
+const pxv = (v) => num(v) + 'px';
+
+function preprocess(src, flags) {
+  const out = [], skip = [];
+  for (const line of src.split('\n')) {
+    const t = line.trim();
+    let m;
+    if ((m = t.match(/^\/\/\[(\w+)$/))) { skip.push(!flags[m[1]]); continue; }
+    if (/^\/\/\](\w+)$/.test(t)) { skip.pop(); continue; }
+    if (!skip.includes(true)) out.push(line);
+  }
+  return out.join('\n');
+}
+
+function genJS(c) {
+  const states = Object.entries(c.states).map(([k, s]) => {
+    const f = [];
+    if (s.b.length) f.push("b: '" + s.b.join(' ') + "'");
+    if (s.text) f.push('text: ' + JSON.stringify(s.text));
+    if (+s.size) f.push('size: ' + num(s.size));
+    return f.length ? '      ' + k + ': { ' + f.join(', ') + ' },' : '';
+  }).filter(Boolean).join('\n');
+  const lines = [
+    '{',
+    '    size: ' + num(c.size) + ',  // resting size, px',
+    '    radius: ' + num(c.radius) + ',  // % of the shorter side (50 = circle)',
+    '    follow: ' + num(c.follow) + ',  // follow speed, 0-1 (1 = locked to the pointer)',
+    '    smooth: ' + num(c.smoothing) + ',  // input smoothing, 0-0.9',
+    '    speed: ' + num(c.speed) + ',  // shape animation speed multiplier',
+    '    damping: ' + num(EASING[c.easing]) + ',  // spring damping: ' + c.easing + ' (below 1 overshoots)',
+    '    hover: ' + num(c.hover) + ',  // "grow" scale',
+    '    shrink: ' + num(c.shrink) + ',  // "shrink" scale',
+    '    press: ' + num(c.press) + ',  // scale while the button is held',
+    '    magnet: ' + num(c.magnet) + ',  // default magnetic pull, 0-1',
+    '    pad: ' + num(c.framePad) + ',  // "frame" padding, px',
+    '    lens: ' + num(c.lensSize) + ',  // "lens" diameter, px',
+  ];
+  if (+c.stretch) lines.push('    stretch: ' + num(c.stretch) + ',  // velocity stretch');
+  if (c.ring) {
+    lines.push('    ring: {',
+      '      size: ' + num(c.ringSize) + ',  // px',
+      '      scale: ' + num(c.trailScale) + ',  // multiplier on grow / magnetic',
+      '      follow: ' + num(c.trailSpeed) + ',  // trail speed, 0-1',
+      '      damping: ' + num(Math.min(EASING[c.trailEasing] * (0.5 + c.trailSmoothing), 2)) + ',  // ' + c.trailEasing + ', smoothing ' + num(c.trailSmoothing),
+      ...(+c.trailDelay ? ['      delay: ' + num(c.trailDelay) + ',  // ms behind the dot'] : []),
+      '    },');
+  }
+  lines.push('    // Behaviours per element type (see data-cursor-type)', '    states: {', states, '    },', '  }');
+  const cfgText = lines.join('\n');
+  return preprocess(ENGINE, { ring: c.ring, delay: c.ring && +c.trailDelay > 0, stretch: +c.stretch > 0 }).replace('%CFG%', () => cfgText);
+}
+
+function genCSS(c) {
+  const ringCss = c.ring ? `
+.cc-ring{
+  border:${pxv(c.ringBorder)} solid var(--cc-ring-color);
+  border-radius:50%;
+  opacity:var(--cc-ring-opacity);
+}` : '';
+  const typeCss = c.type === 'outline' ? `
+.cc-dot{background:transparent;border:max(var(--cc-border),2px) solid var(--cc-color)}` : c.type === 'crosshair' ? `
+.cc-dot{background:none;border:0}
+.cc-dot:not([data-mode]){border-radius:0!important}
+.cc-dot::before,.cc-dot::after{content:"";position:absolute;background:var(--cc-color)}
+.cc-dot::before{left:calc(50% - .75px);top:0;bottom:0;width:1.5px}
+.cc-dot::after{top:calc(50% - .75px);left:0;right:0;height:1.5px}
+.cc-dot[data-mode]::before,.cc-dot[data-mode]::after{display:none}` : '';
+  const fade = num(0.15 / Math.max(c.speed, .25));
+  return `/* Custom cursor · generated by Cursor Builder */
+:root{
+  --cc-color:${c.color};
+  --cc-opacity:${num(c.opacity)};
+  --cc-border:${pxv(c.borderWidth)};
+  --cc-border-color:${c.borderColor};
+  --cc-blend:${c.blend};
+  --cc-label:${c.labelColor};
+  --cc-label-size:${pxv(c.labelSize)};${c.ring ? `
+  --cc-ring-color:${c.ringColor};
+  --cc-ring-opacity:${num(c.ringOpacity)};` : ''}
+}
+${c.hideNative ? `
+/* Hide the native cursor while the custom one is running */
+html.cc-on,html.cc-on *{cursor:none!important}
+/* data-cursor="hide" hands control back to the browser */
+html.cc-on.cc-native,html.cc-on.cc-native *{cursor:revert!important}
+` : `/* Native cursor stays visible. Add html.cc-on{cursor:none} rules if you want it hidden. */
+`}
+.cc-dot,.cc-ring{
+  position:fixed;left:0;top:0;z-index:2147483647;
+  box-sizing:border-box;pointer-events:none;
+  mix-blend-mode:var(--cc-blend);will-change:transform;
+  transition:opacity ${fade}s ease;
+}
+.cc-dot{
+  display:block;overflow:hidden;
+  background:var(--cc-color);
+  border:var(--cc-border) solid var(--cc-border-color);
+  opacity:var(--cc-opacity);
+}${ringCss}
+.cc-hide,.cc-off{opacity:0!important}
+${typeCss}
+/* Label */
+.cc-label{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  font:600 var(--cc-label-size)/1 system-ui,sans-serif;white-space:nowrap;
+  color:var(--cc-label);opacity:0;transition:opacity .15s;
+}
+.cc-dot[data-mode~="label"]{background:var(--cc-color);border:var(--cc-border) solid var(--cc-border-color);mix-blend-mode:normal}
+.cc-dot[data-mode~="label"] .cc-label{opacity:1}
+
+/* Frame wraps the hovered element */
+.cc-dot[data-mode~="frame"]{
+  background:color-mix(in srgb,var(--cc-color) 12%,transparent);
+  border:1.5px solid var(--cc-color);
+}
+/* Lens magnifies what is underneath */
+.cc-dot[data-mode~="lens"]{
+  background:color-mix(in srgb,var(--cc-color) 8%,transparent);
+  border:1px solid color-mix(in srgb,var(--cc-color) 40%,transparent);
+  -webkit-backdrop-filter:blur(${pxv(c.lensBlur)}) saturate(1.5);
+  backdrop-filter:blur(${pxv(c.lensBlur)}) saturate(1.5);
+}
+.cc-dot[data-mode~="frame"] .cc-label,.cc-dot[data-mode~="lens"] .cc-label{color:var(--cc-color)}
+/* Caret replaces the cursor over text fields */
+.cc-dot[data-mode~="caret"]{background:var(--cc-color);border:0}
+
+@media (prefers-reduced-motion:reduce){.cc-dot,.cc-ring{transition:none}}
+@media (hover:none),(pointer:coarse){.cc-dot,.cc-ring{display:none}}
+`.replace(/\n{3,}/g, '\n\n');
+}
+
+function genHTML(c) {
+  const S = c.states;
+  const list = Object.entries(S).map(([k, s]) => '       ' + k.padEnd(8) + '→ ' + (s.b.join(' ') || '(none)') + (s.text ? '  "' + s.text + '"' : '')).join('\n');
+  return `<\!-- 1 · Add the files to your page (any position; the script waits for <body>) -->
+<link rel="stylesheet" href="cursor.css">
+<script src="cursor.js" defer><\/script>
+
+<\!-- 2 · That's it. Elements react by type, with no JavaScript per element:
+       a[href]            → type "link"
+       button, select …   → type "button"
+       p, h1–h6, li …     → type "text"
+       img, video         → type "image"
+       input, textarea    → type "input"
+     Behaviours currently configured for each type:
+${list}
+-->
+
+<\!-- 3 · Override or extend any element with data-* attributes -->
+
+<\!-- Magnetic: cursor and element are pulled together -->
+<button data-cursor="magnetic" data-cursor-pull="${num(c.magnet)}">
+  Hover me
+</button>
+
+<\!-- Label: the cursor grows to fit the text -->
+<a href="/project" data-cursor-text="View project">
+  Project
+</a>
+
+<\!-- Frame + magnetic + label, combined -->
+<div data-cursor="frame magnetic" data-cursor-text="Drag" data-cursor-pad="${num(c.framePad)}">
+  Drag me
+</div>
+
+<\!-- Lens: a magnifying circle of any size -->
+<img src="photo.jpg" alt="" data-cursor="lens" data-cursor-size="${num(c.lensSize)}">
+
+<\!-- Custom size for a single element -->
+<div data-cursor-text="Explore" data-cursor-size="96">
+  Large project
+</div>
+
+<\!-- Caret: for text fields -->
+<input type="text" data-cursor="caret">
+
+<\!-- Hide: restore the native cursor -->
+<div data-cursor="hide">
+  Native cursor here
+</div>
+${c.ring ? `
+<\!-- Trailing ring: show or hide it per element -->
+<div data-cursor="grow" data-cursor-ring="show">Always ringed</div>
+<div data-cursor-ring="hide">No ring here</div>
+` : ''}
+<\!-- Pick a configured state explicitly -->
+<div data-cursor-type="card">Uses the "card" behaviours</div>
+
+<\!-- Optional: react to cursor changes in your own code
+<script>
+  document.addEventListener('cursorchange', (e) => console.log(e.detail.type, e.detail.behaviours));
+<\/script>
+-->
+`;
+}
+
+/* ── tiny syntax highlighter ─────────────────────────────────── */
+const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const LANG = {
+  js:{ re:/(\/\*[\s\S]*?\*\/|\/\/[^\n]*)|('(?:\\.|[^'\\\n])*'|"(?:\\.|[^"\\\n])*")|\b(const|let|var|function|return|if|else|for|of|in|new|true|false|null|undefined|typeof|delete|this|instanceof|break|continue)\b|((?<![\w.$])\d+\.?\d*)|\b([A-Za-z_$][\w$]*)(?=\()/g, c:['c','s','k','n','f'] },
+  css:{ re:/(\/\*[\s\S]*?\*\/)|("[^"\n]*"|'[^'\n]*')|(@[\w-]+)|(--[\w-]+|(?<=[{;\s])[a-z-]+(?=\s*:))|(#[0-9a-fA-F]{3,8}\b)|((?<![\w#-])-?\d*\.?\d+(?:px|%|ms|s|rem|em)?)/g, c:['c','s','k','p','n','n'] },
+  html:{ re:/(<\!--[\s\S]*?-->)|("[^"\n]*")|(<\/?[\w-]+)|((?<=\s)[\w:-]+(?==))/g, c:['c','s','t','p'] },
+};
+function highlight(src, lang) {
+  const { re, c } = LANG[lang];
+  let out = '', i = 0;
+  for (const m of src.matchAll(re)) {
+    out += esc(src.slice(i, m.index));
+    const g = m.findIndex((v, n) => n > 0 && v !== undefined);
+    out += '<span class="t-' + c[g - 1] + '">' + esc(m[0]) + '</span>';
+    i = m.index + m[0].length;
+  }
+  return out + esc(src.slice(i));
+}
+
+/* ════════════════════════════════════════════════════════════════
+   4 · Control schema → inspector UI
+   ════════════════════════════════════════════════════════════════ */
+const R = (k, l, min, max, step, u, tip, en) => ({ k, t:'range', l, min, max, step, u, tip, en });
+const SCHEMA = {
+  cursor:[
+    { h:'Shape' },
+    { k:'type', t:'select', l:'Cursor type', o:[['dot','Dot'],['outline','Outline'],['crosshair','Crosshair']], tip:'Visual style of the resting cursor. Frame, lens, label and caret states always restyle it.' },
+    R('size','Dot size',4,80,1,'px','Resting diameter. Individual elements can override it with data-cursor-size.'),
+    R('radius','Border radius',0,50,1,'%','Percentage of the shorter side. 50 is a circle, 0 a square. Used by the dot and label shapes.', c => c.type !== 'crosshair'),
+    { h:'Colour' },
+    { k:'color', t:'color', l:'Cursor colour' },
+    R('opacity','Opacity',.1,1,.05,'','Overall opacity of the cursor.'),
+    { h:'Border' },
+    R('borderWidth','Border width',0,8,.5,'px','Dot: adds a border. Outline: sets the line thickness.', c => c.type !== 'crosshair'),
+    { k:'borderColor', t:'color', l:'Border colour', en:c => c.type === 'dot' && c.borderWidth > 0, tip:'Only for the Dot type. Outline uses the cursor colour.' },
+    { h:'Compositing' },
+    { k:'blend', t:'select', l:'Blend mode', o:BLENDS.map(b => [b, b]), tip:'mix-blend-mode. “difference” with a white cursor inverts whatever it passes over.' },
+    { h:'Label' },
+    { k:'labelColor', t:'color', l:'Label colour' },
+    R('labelSize','Label size',9,20,1,'px','Font size for text set with data-cursor-text.'),
+    { h:'System' },
+    { k:'hideNative', t:'toggle', l:'Hide native cursor', tip:'Turns the browser cursor off while the custom cursor runs. Per element, data-cursor="hide" brings it back.' },
+  ],
+  trail:[
+    { k:'ring', t:'toggle', l:'Enable trailing cursor', tip:'A second element that follows the dot with its own spring.' },
+    { h:'Appearance' },
+    R('ringSize','Ring size',16,160,1,'px','Resting diameter of the ring.', c => c.ring),
+    { k:'ringColor', t:'color', l:'Ring colour', en:c => c.ring },
+    R('ringOpacity','Ring opacity',0,1,.05,'','', c => c.ring),
+    R('ringBorder','Ring border',0,6,.5,'px','Border thickness. 0 leaves only a faint fill-less shape.', c => c.ring),
+    { h:'Behaviour' },
+    R('trailSpeed','Trail speed',.02,1,.01,'','How fast the ring catches up. 1 locks it to the dot.', c => c.ring),
+    R('trailDelay','Trail delay',0,300,10,'ms','The ring replays the dot’s path this many milliseconds late.', c => c.ring),
+    R('trailSmoothing','Trail smoothing',0,1,.05,'','Higher = heavier damping, less overshoot.', c => c.ring),
+    R('trailScale','Trail scale',.5,3,.05,'×','How much the ring scales on grow / magnetic elements.', c => c.ring),
+    { k:'trailEasing', t:'select', l:'Trail easing', o:Object.keys(EASING).map(e => [e, e]), tip:'Spring character of the ring.', en:c => c.ring },
+  ],
+  motion:[
+    { h:'Cursor spring' },
+    R('follow','Follow speed',.05,1,.01,'','How tightly the cursor follows the pointer. 1 means no lag.'),
+    R('smoothing','Smoothing',0,.9,.01,'','Low-pass filter on pointer input. Adds a glide, at the cost of latency.'),
+    { k:'easing', t:'select', l:'Easing', o:Object.keys(EASING).map(e => [e, e]), tip:'Spring damping. smooth: none, snappy: tiny, spring: bouncy, elastic: very bouncy.' },
+    R('speed','Animation speed',.25,3,.05,'×','Speed of size, shape and radius transitions.'),
+    { h:'Interaction' },
+    R('magnet','Magnetic strength',0,1,.01,'','Default pull for “magnetic”. Override per element with data-cursor-pull.'),
+    R('stretch','Cursor stretch',0,1.5,.05,'','Squash and stretch along the direction of travel.'),
+    R('press','Press scale',.3,1.4,.05,'×','Scale while the mouse button is held.'),
+    R('hover','Hover scale',1,6,.1,'×','Scale for “grow” states.'),
+    R('shrink','Shrink scale',.2,1,.05,'×','Scale for “shrink” states.'),
+  ],
+};
+const STATE_OPTS = [
+  { h:'Behaviour options' },
+  R('framePad','Frame padding',0,40,1,'px','Space between the element and the frame. Override with data-cursor-pad.'),
+  R('lensSize','Lens size',40,320,1,'px','Diameter of the lens. Override with data-cursor-size.'),
+  R('lensBlur','Lens blur',0,20,.5,'px','Backdrop blur inside the lens.'),
+];
+
+const fields = [];            // { def, row, sync() }
+const $ = (s, r = document) => r.querySelector(s);
+let selState = 'link';
+
+function mkRow(def, container) {
+  const id = 'f-' + def.k;
+  const row = document.createElement('div');
+  row.className = 'row' + (def.t === 'range' ? '' : ' line');
+  const head = document.createElement('div'); head.className = 'row-h';
+  const lab = document.createElement('label'); lab.htmlFor = id; lab.textContent = def.l;
+  head.append(lab);
+  if (def.tip) { const i = document.createElement('span'); i.className = 'info'; i.tabIndex = 0; i.setAttribute('role', 'note'); i.setAttribute('aria-label', def.tip); i.dataset.tip = def.tip; i.textContent = '?'; head.append(i); }
+  row.append(head);
+  let sync;
+  const set = (v) => { cfg[def.k] = v; change(); };
+  if (def.t === 'range') {
+    const dec = (String(def.step).split('.')[1] || '').length;
+    const rng = Object.assign(document.createElement('input'), { type:'range', id, min:def.min, max:def.max, step:def.step });
+    const n = Object.assign(document.createElement('input'), { type:'number', className:'num', min:def.min, max:def.max, step:def.step });
+    n.setAttribute('aria-label', def.l + ' value');
+    const u = document.createElement('span'); u.textContent = def.u || '';
+    const val = document.createElement('span'); val.className = 'val'; val.append(n, u);
+    head.append(val); row.append(rng);
+    const paint = () => rng.style.setProperty('--p', ((rng.value - def.min) / (def.max - def.min) * 100) + '%');
+    rng.addEventListener('input', () => { n.value = (+rng.value).toFixed(dec); paint(); set(+rng.value); });
+    n.addEventListener('input', () => { if (n.value === '' || isNaN(+n.value)) return; const v = Math.min(def.max, Math.max(def.min, +n.value)); rng.value = v; paint(); set(v); });
+    n.addEventListener('blur', () => { n.value = (+rng.value).toFixed(dec); });
+    sync = () => { rng.value = cfg[def.k]; n.value = (+cfg[def.k]).toFixed(dec); paint(); };
+    rng.dataset.cursor = 'grow';
+  } else if (def.t === 'select') {
+    const s = document.createElement('select'); s.id = id; s.className = 'sel';
+    def.o.forEach(([v, t]) => s.add(new Option(t, v)));
+    s.addEventListener('change', () => set(s.value)); head.append(s);
+    sync = () => { s.value = cfg[def.k]; };
+  } else if (def.t === 'toggle') {
+    const w = document.createElement('span'); w.className = 'switch';
+    const i = Object.assign(document.createElement('input'), { type:'checkbox', id }); i.setAttribute('role', 'switch');
+    i.addEventListener('change', () => set(i.checked)); w.append(i, document.createElement('i')); head.append(w);
+    sync = () => { i.checked = !!cfg[def.k]; };
+  } else if (def.t === 'color') {
+    const w = document.createElement('div'); w.className = 'inline';
+    const c = Object.assign(document.createElement('input'), { type:'color', id });
+    const h = Object.assign(document.createElement('input'), { type:'text', className:'hex', maxLength:7, spellcheck:false });
+    h.setAttribute('aria-label', def.l + ' hex value');
+    c.addEventListener('input', () => { h.value = c.value; set(c.value); });
+    h.addEventListener('input', () => { if (/^#[0-9a-f]{6}$/i.test(h.value)) { c.value = h.value; set(h.value.toLowerCase()); } });
+    h.addEventListener('blur', () => { h.value = cfg[def.k]; });
+    w.append(c, h); head.append(w);
+    sync = () => { c.value = cfg[def.k]; h.value = cfg[def.k]; };
+    h.dataset.cursor = 'caret';
+  }
+  const f = { def, row, sync };
+  fields.push(f);
+  container.append(row);
+}
+
+function buildPane(id, defs) {
+  const p = $('#' + id);
+  defs.forEach(d => {
+    if (d.h) { const g = document.createElement('div'); g.className = 'grp'; g.textContent = d.h; p.append(g); }
+    else mkRow(d, p);
+  });
+}
+
+function refreshEnabled() {
+  fields.forEach(({ def, row }) => {
+    const on = def.en ? def.en(cfg) : true;
+    row.classList.toggle('off', !on);
+    row.querySelectorAll('input,select').forEach(i => { i.disabled = !on; });
+  });
+}
+
+/* ── hover-states editor ─────────────────────────────────────── */
+function buildStates() {
+  const p = $('#p-states');
+  p.innerHTML = '<div class="grp">Element states</div><div class="st-nav" id="stNav" role="group" aria-label="Element state"></div><div class="st-card" id="stCard"></div>';
+  const nav = $('#stNav');
+  Object.entries(STATE_META).forEach(([k, m]) => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = m.name; b.dataset.k = k;
+    b.addEventListener('click', () => { selState = k; renderState(); });
+    nav.append(b);
+  });
+  const opts = document.createElement('div'); opts.id = 'stOpts'; p.append(opts);
+  buildPane('stOpts', STATE_OPTS);
+  renderState();
+}
+function describeState(s) {
+  const b = new Set(s.b);
+  if (b.has('hide')) return '<b>hide</b> wins: custom cursor is hidden, the native cursor returns.';
+  const parts = [];
+  if (b.has('caret')) parts.push('<b>caret</b> wins: thin text caret (everything else except label is ignored)');
+  else if (b.has('lens')) parts.push('<b>lens</b> wins over frame' + (b.has('frame') ? ' (frame ignored)' : ''));
+  else if (b.has('frame')) parts.push('<b>frame</b> wraps the element');
+  if (b.has('magnetic') && !b.has('caret')) parts.push('<b>magnetic</b> pulls cursor and element');
+  if (b.has('label') && !b.has('caret')) parts.push('<b>label</b> shows ' + (s.text ? '“' + esc(s.text) + '”' : '<i>(set text below)</i>'));
+  if (b.has('grow') && b.has('shrink')) parts.push('<b>grow</b> wins over shrink');
+  else if (b.has('grow')) parts.push('<b>grow</b> ×' + num(cfg.hover));
+  else if (b.has('shrink')) parts.push('<b>shrink</b> ×' + num(cfg.shrink));
+  if (+s.size) parts.push('base size <b>' + num(s.size) + 'px</b>');
+  return parts.length ? parts.join('<br>') : 'Default cursor: no change.';
+}
+function renderState(focusBeh) {
+  const k = selState, m = STATE_META[k], s = cfg.states[k];
+  document.querySelectorAll('#stNav .chip').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.k === k)));
+  const card = $('#stCard');
+  const hide = s.b.includes('hide'), caret = s.b.includes('caret');
+  card.innerHTML = '<h3>' + m.name + ' <code>' + esc(k === 'card' || k === 'custom' ? 'data-cursor-type="' + k + '"' : k) + '</code></h3><p>' + m.desc + '</p>' +
+    '<div class="beh" role="group" aria-label="Behaviours for ' + m.name + '"></div>' +
+    '<div class="row line" id="stText"><div class="row-h"><label for="st-text">Label text</label></div><input class="txt" id="st-text" type="text" maxlength="40" placeholder="e.g. View" data-cursor="caret"></div>' +
+    '<div class="row line" id="stSize"><div class="row-h"><label for="st-size">Custom size</label><span class="info" tabindex="0" role="note" data-tip="Overrides the resting cursor size for this state. 0 keeps the global size." aria-label="Overrides the resting cursor size for this state. 0 keeps the global size.">?</span><span class="val"><input class="num" id="st-size" data-cursor="caret" type="number" min="0" max="320" step="1" aria-label="Custom size value"><span>px</span></span></div></div>' +
+    '<div class="resolve" id="stRes" aria-live="polite"></div>';
+  const beh = $('.beh', card);
+  BEHAVIOURS.forEach(b => {
+    const btn = document.createElement('button'); btn.type = 'button'; btn.textContent = b;
+    btn.setAttribute('aria-pressed', String(s.b.includes(b)));
+    btn.title = ({ grow:'Scale up', shrink:'Scale down', magnetic:'Pulled towards the element', frame:'Wrap the element', lens:'Large magnifying circle', label:'Show text in the cursor', caret:'Text caret', hide:'Restore the native cursor' })[b];
+    btn.addEventListener('click', () => {
+      const i = s.b.indexOf(b);
+      if (i >= 0) s.b.splice(i, 1); else s.b.push(b);
+      s.b.sort((a, c) => BEHAVIOURS.indexOf(a) - BEHAVIOURS.indexOf(c));
+      renderState(b); change();
+    });
+    beh.append(btn);
+    if (b === focusBeh) queueMicrotask(() => btn.focus());
+  });
+  const t = $('#st-text'), sz = $('#st-size');
+  t.value = s.text; sz.value = s.size;
+  const textOn = s.b.includes('label') && !hide && !caret;
+  $('#stText').classList.toggle('off', !textOn); t.disabled = !textOn;
+  t.addEventListener('input', () => { s.text = t.value; $('#stRes').innerHTML = describeState(s); change(); });
+  sz.addEventListener('input', () => { s.size = Math.max(0, +sz.value || 0); $('#stRes').innerHTML = describeState(s); change(); });
+  $('#stRes').innerHTML = describeState(s);
+  card.querySelectorAll('button,.info').forEach(n => { if (n.tagName === 'BUTTON') n.dataset.cursor = 'grow'; });
+}
+
+/* ════════════════════════════════════════════════════════════════
+   5 · Apply pipeline: config → CSS + JS → live cursor + code view
+   ════════════════════════════════════════════════════════════════ */
+const out = { html:'', css:'', js:'' };
+let codeTab = 'html', queued = false, ptr = null;
+const NAMES = { html:'cursor.html', css:'cursor.css', js:'cursor.js' };
+const styleEl = $('#cc-style');
+
+function renderCode() {
+  $('#code').innerHTML = highlight(out[codeTab], codeTab);
+  const bytes = (s) => new TextEncoder().encode(s).length;
+  $('#codeMeta').textContent = NAMES[codeTab] + ' · ' + out[codeTab].split('\n').length + ' lines · ' + (bytes(out[codeTab]) / 1024).toFixed(1) + ' KB';
+}
+function runCursor() {
+  try { new Function(out.js)(); } catch (e) { console.error('Cursor failed to start', e); }
+  if (ptr) {                       // keep the cursor where the pointer is
+    const t = document.elementFromPoint(ptr.x, ptr.y) || document.body;
+    t.dispatchEvent(new PointerEvent('pointermove', { bubbles:true, clientX:ptr.x, clientY:ptr.y, pointerType:'mouse' }));
+  }
+}
+function flush() {
+  queued = false;
+  out.js = genJS(cfg); out.css = genCSS(cfg); out.html = genHTML(cfg);
+  styleEl.textContent = out.css;
+  runCursor();
+  renderCode();
+  refreshEnabled();
+  const preset = Object.keys(PRESETS).find(n => sameCfg(fromPreset(PRESETS[n].o), cfg));
+  document.querySelectorAll('#presetChips .chip').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.k === preset)));
+  $('#customNote').hidden = !!preset;
+}
+function change() { if (!queued) { queued = true; requestAnimationFrame(flush); } }
+function syncAll() { fields.forEach(f => f.sync()); renderState(); change(); }
+
+document.addEventListener('pointermove', (e) => { if (e.isTrusted && e.pointerType !== 'touch') ptr = { x:e.clientX, y:e.clientY }; }, { capture:true, passive:true });
+document.documentElement.addEventListener('pointerleave', () => { ptr = null; });
+
+/* ── presets / reset ─────────────────────────────────────────── */
+const chips = $('#presetChips');
+Object.entries(PRESETS).forEach(([n, p]) => {
+  const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = n; b.dataset.k = n; b.title = p.desc; b.setAttribute('aria-pressed', 'false');
+  b.addEventListener('click', () => { cfg = fromPreset(p.o); syncAll(); say('Preset ' + n + ' applied'); });
+  chips.append(b);
+});
+$('#resetBtn').addEventListener('click', () => { cfg = fromPreset(PRESETS.Smooth.o); syncAll(); say('Configuration reset'); });
+
+/* ── generic tablist with arrow-key support ──────────────────── */
+function tablist(root, onSelect) {
+  const tabs = [...root.querySelectorAll('[role=tab]')];
+  const select = (t, focus) => {
+    tabs.forEach(x => { const on = x === t; x.setAttribute('aria-selected', String(on)); x.tabIndex = on ? 0 : -1; });
+    if (focus) t.focus();
+    onSelect(t);
+  };
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => select(t));
+    t.addEventListener('keydown', (e) => {
+      const d = { ArrowRight:1, ArrowLeft:-1 }[e.key];
+      if (d) { e.preventDefault(); select(tabs[(i + d + tabs.length) % tabs.length], true); }
+      else if (e.key === 'Home') { e.preventDefault(); select(tabs[0], true); }
+      else if (e.key === 'End') { e.preventDefault(); select(tabs[tabs.length - 1], true); }
+    });
+  });
+}
+tablist($('#cfgTabs'), (t) => {
+  document.querySelectorAll('.pane').forEach(p => { p.hidden = p.id !== t.getAttribute('aria-controls'); });
+});
+tablist($('#codeTabs'), (t) => { codeTab = t.id.slice(2); renderCode(); $('#codeView').scrollTop = 0; });
+tablist($('#demoTabs'), () => {});
+
+/* ── copy ────────────────────────────────────────────────────── */
+const live = $('#live');
+function say(msg) { live.textContent = ''; setTimeout(() => { live.textContent = msg; }, 20); }
+async function copyText(text) {
+  try { await navigator.clipboard.writeText(text); return true; }
+  catch {
+    const ta = document.createElement('textarea'); ta.value = text; ta.style.cssText = 'position:fixed;opacity:0'; document.body.append(ta); ta.select();
+    let ok = false; try { ok = document.execCommand('copy'); } catch {} ta.remove(); return ok;
+  }
+}
+let copyTimer;
+function flash(btnLabel, text, ok) {
+  btnLabel.textContent = ok ? text : 'Copy failed';
+  clearTimeout(copyTimer);
+  copyTimer = setTimeout(() => { $('#copyLabel').textContent = 'Copy'; $('#copyAll').textContent = 'Copy all three'; }, 1600);
+  say(ok ? 'Copied to clipboard' : 'Copy failed');
+}
+$('#copyBtn').addEventListener('click', async () => flash($('#copyLabel'), 'Copied ✓', await copyText(out[codeTab])));
+$('#copyAll').addEventListener('click', async () => {
+  const all = '<\!-- cursor.html -->\n' + out.html + '\n/* cursor.css */\n' + out.css + '\n/* cursor.js */\n' + out.js;
+  flash($('#copyAll'), 'Copied ✓', await copyText(all));
+});
+
+/* ── theme ───────────────────────────────────────────────────── */
+$('#themeBtn').addEventListener('click', () => {
+  const r = document.documentElement;
+  const dark = r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme = dark ? 'light' : 'dark';
+});
+
+/* ── live inspector + preview highlight ──────────────────────── */
+const stage = $('#stage');
+let marked = null;
+document.addEventListener('cursorchange', (e) => {
+  const { el, type, behaviours, width, height } = e.detail;
+  if (marked) marked.classList.remove('is-target');
+  marked = el && stage.contains(el) ? el : null;
+  if (marked) marked.classList.add('is-target');
+  $('#i-el').textContent = el ? '<' + el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + '>' : 'none';
+  $('#i-type').textContent = type;
+  $('#i-b').textContent = behaviours.length ? behaviours.join(' + ') : 'none';
+  $('#i-size').textContent = Math.round(width) + '×' + Math.round(height);
+});
+
+/* ════════════════════════════════════════════════════════════════
+   6 · Boot
+   ════════════════════════════════════════════════════════════════ */
+const art = (a, b, c) => 'data:image/svg+xml;utf8,' + encodeURIComponent(
+  "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 260' preserveAspectRatio='xMidYMid slice'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='" + a + "'/><stop offset='1' stop-color='" + b + "'/></linearGradient></defs><rect width='420' height='260' fill='url(#g)'/><circle cx='320' cy='70' r='86' fill='" + c + "' opacity='.4'/><circle cx='80' cy='220' r='120' fill='#fff' opacity='.12'/><path d='M0 200 Q110 140 210 190 T420 160 V260 H0Z' fill='#000' opacity='.12'/></svg>");
+const ARTS = [['#5b5bf0','#22d3ee','#f0abfc'], ['#f97316','#ec4899','#fde68a'], ['#0f766e','#14b8a6','#fef08a'], ['#1e1b4b','#7c3aed','#38bdf8']];
+document.querySelectorAll('img[data-art]').forEach(i => { i.src = art(...ARTS[+i.dataset.art]); });
+
+buildPane('p-cursor', SCHEMA.cursor);
+buildPane('p-trail', SCHEMA.trail);
+buildPane('p-motion', SCHEMA.motion);
+buildStates();
+
+// Builder chrome uses the same cursor system: controls simply opt in to "grow".
+document.querySelectorAll('.top button,.tab,.chip,.switch input,.sel,input[type=color]').forEach(n => { if (!n.dataset.cursor) n.dataset.cursor = 'grow'; });
+document.querySelectorAll('.num,.txt,.hex').forEach(n => { n.dataset.cursor = 'caret'; });
+document.querySelectorAll('.code-h button,.code-f button').forEach(n => { n.dataset.cursor = 'grow'; });
+document.querySelector('.code-wrap').dataset.cursorType = 'text';
+
+const noMouse = matchMedia('(hover: none), (pointer: coarse)');
+const setMouse = () => document.documentElement.classList.toggle('no-mouse', noMouse.matches);
+setMouse(); noMouse.addEventListener('change', setMouse);
+
+syncAll();
+</script>
+</body>
+</html>
