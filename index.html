@@ -3,15 +3,29 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cursor Builder</title>
-<meta name="description" content="Design a custom website cursor visually, then copy the generated HTML, CSS and JavaScript.">
+<title>Custom Cursor Builder: design, preview and copy cursor code</title>
+<meta name="description" content="Free visual builder for custom website cursors. Tune the dot, trailing ring, magnetic, frame, lens and label effects with live preview, then copy ready-to-use HTML, CSS and JavaScript.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://cursor.farhan.app/">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f5f4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Cursor Builder">
+<meta property="og:title" content="Custom Cursor Builder: design, preview and copy cursor code">
+<meta property="og:description" content="Design a custom website cursor visually, then copy the generated HTML, CSS and JavaScript. No dependencies, no build step.">
+<meta property="og:url" content="https://cursor.farhan.app/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Custom Cursor Builder">
+<meta name="twitter:description" content="Design a custom website cursor visually, then copy the generated HTML, CSS and JavaScript.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Cursor Builder","url":"https://cursor.farhan.app/","description":"Visual builder for custom website cursors with live preview and copy-ready HTML, CSS and JavaScript.","applicationCategory":"DeveloperApplication","operatingSystem":"Any (modern browser)","browserRequirements":"Requires JavaScript","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Trailing cursor ring","Magnetic, frame, lens, label and caret effects","Spring-based motion","Presets","Generated HTML, CSS and JavaScript"]}</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%235b5bf0'/%3E%3Cpath d='M10 7l13 7.5-5.6 1.7L15 22z' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
   --bg:#f5f5f4;--panel:#fff;--panel-2:#fafafa;--border:#e4e4e7;--border-strong:#d4d4d8;
-  --text:#18181b;--muted:#71717a;--faint:#a1a1aa;--accent:#5b5bf0;--accent-soft:#eeeefe;--on-accent:#fff;
+  --text:#18181b;--muted:#5f5f69;--faint:#6b6b75;--accent:#4a4adf;--accent-soft:#ececfd;--on-accent:#fff;
   --code-bg:#fbfbfa;--hover:#f4f4f5;--ok:#16a34a;
-  --t-c:#8b8b94;--t-s:#0b7a4b;--t-k:#7c3aed;--t-n:#b45309;--t-f:#0b62c4;--t-p:#0550ae;--t-t:#b91c5c;
+  --t-c:#67676f;--t-s:#0b7a4b;--t-k:#7c3aed;--t-n:#b45309;--t-f:#0b62c4;--t-p:#0550ae;--t-t:#b91c5c;
   --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
   --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   color-scheme:light;
@@ -19,17 +33,17 @@
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
     --bg:#09090b;--panel:#111113;--panel-2:#161618;--border:#27272a;--border-strong:#3f3f46;
-    --text:#fafafa;--muted:#a1a1aa;--faint:#71717a;--accent:#8080ff;--accent-soft:#1e1e3a;--on-accent:#0b0b1a;
+    --text:#fafafa;--muted:#a1a1aa;--faint:#8d8d97;--accent:#8c8cff;--accent-soft:#1e1e3a;--on-accent:#0b0b1a;
     --code-bg:#0c0c0e;--hover:#1c1c1f;
-    --t-c:#71717a;--t-s:#7ee2a8;--t-k:#c4a7ff;--t-n:#ffb86b;--t-f:#79c0ff;--t-p:#9ecbff;--t-t:#ff8fb8;
+    --t-c:#8d8d97;--t-s:#7ee2a8;--t-k:#c4a7ff;--t-n:#ffb86b;--t-f:#79c0ff;--t-p:#9ecbff;--t-t:#ff8fb8;
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
   --bg:#09090b;--panel:#111113;--panel-2:#161618;--border:#27272a;--border-strong:#3f3f46;
-  --text:#fafafa;--muted:#a1a1aa;--faint:#71717a;--accent:#8080ff;--accent-soft:#1e1e3a;--on-accent:#0b0b1a;
+  --text:#fafafa;--muted:#a1a1aa;--faint:#8d8d97;--accent:#8c8cff;--accent-soft:#1e1e3a;--on-accent:#0b0b1a;
   --code-bg:#0c0c0e;--hover:#1c1c1f;
-  --t-c:#71717a;--t-s:#7ee2a8;--t-k:#c4a7ff;--t-n:#ffb86b;--t-f:#79c0ff;--t-p:#9ecbff;--t-t:#ff8fb8;
+  --t-c:#8d8d97;--t-s:#7ee2a8;--t-k:#c4a7ff;--t-n:#ffb86b;--t-f:#79c0ff;--t-p:#9ecbff;--t-t:#ff8fb8;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -47,6 +61,7 @@ code,.mono{font-family:var(--mono)}
 .top{grid-column:1/-1;display:flex;align-items:center;gap:12px;padding:0 14px;background:var(--panel);border-bottom:1px solid var(--border)}
 .brand{display:flex;align-items:center;gap:9px;font-weight:600;letter-spacing:-.01em}
 .brand svg{display:block}
+.brand h1{margin:0;font-size:inherit;font-weight:600;letter-spacing:inherit}
 .brand small{font:500 11px var(--mono);color:var(--muted);border:1px solid var(--border);padding:1px 6px;border-radius:5px}
 .top .sp{flex:1}
 .top .hint{color:var(--muted);font-size:12px}
@@ -169,6 +184,8 @@ input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px color
 .stage-h .sp{flex:1}
 .touch-note{display:none;margin:12px 16px 0;padding:10px 12px;border:1px solid var(--border-strong);background:var(--panel);border-radius:8px;font-size:12.5px}
 .no-mouse .touch-note{display:block}
+.no-mouse .live{display:none}
+.stage-h h2{white-space:nowrap}
 .stage{flex:1;min-height:0;overflow:auto;padding:20px}
 .site{max-width:860px;margin:0 auto;background:var(--panel);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
 .chrome-bar{display:flex;align-items:center;gap:6px;padding:9px 12px;border-bottom:1px solid var(--border);background:var(--panel-2)}
@@ -191,7 +208,7 @@ input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px color
 .ibtn:hover{background:var(--hover)}
 .ibtn svg{width:16px;height:16px}
 .eyebrow{font:500 11px var(--mono);color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin:0 0 10px}
-.hero h1{font-size:40px;line-height:1.05;letter-spacing:-.035em;margin:0 0 12px;max-width:560px}
+.hero .hl{font-size:40px;line-height:1.05;letter-spacing:-.035em;margin:0 0 12px;max-width:560px}
 .hero p{color:var(--muted);font-size:15px;line-height:1.6;max-width:520px;margin:0 0 22px}
 .actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .pbtn,.sbtn{height:38px;padding:0 18px;border-radius:9px;font-weight:600;cursor:pointer;border:1px solid transparent;transition:background .15s,border-color .15s}
@@ -206,7 +223,7 @@ input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px color
 .seg button:hover{color:var(--text)}
 .chk{display:inline-flex;align-items:center;gap:8px;cursor:pointer}
 .chk input{width:16px;height:16px;margin:0;accent-color:var(--accent)}
-.h3{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 14px}
+.h3{display:block;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 14px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .card{border:1px solid var(--border);border-radius:12px;background:var(--panel);position:relative}
 .card img{border-radius:11px 11px 0 0;display:block;width:100%;aspect-ratio:16/10;object-fit:cover}
@@ -222,7 +239,7 @@ input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px color
 .feature{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--border)}
 .feature img{display:block;width:100%;aspect-ratio:21/9;object-fit:cover}
 .feature .cap{position:absolute;left:20px;bottom:16px;color:#fff;pointer-events:none}
-.feature .cap h4{margin:0;font-size:22px;letter-spacing:-.02em}.feature .cap p{margin:2px 0 0;font-size:13px;opacity:.85}
+.feature .cap h3{margin:0;font-size:22px;letter-spacing:-.02em}.feature .cap p{margin:2px 0 0;font-size:13px;opacity:.85}
 .form{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px}
 .form .full{grid-column:1/-1}
 .fld{display:flex;flex-direction:column;gap:5px}
@@ -260,8 +277,9 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
   .top .hint{display:none}
 }
 @media (max-width:640px){
+  .live{display:none}
   .brand{white-space:nowrap}.brand small{display:none}
-  .stage{padding:10px}.sect{padding:20px 16px}.s-nav{padding:12px 16px;gap:12px}.hero h1{font-size:30px}
+  .stage{padding:10px}.sect{padding:20px 16px}.s-nav{padding:12px 16px;gap:12px}.hero .hl{font-size:30px}
   .grid2,.form{grid-template-columns:1fr}
   .s-nav nav{gap:12px;overflow:auto}
 }
@@ -277,7 +295,7 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
 <header class="top">
   <div class="brand">
     <svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M10 7l13 7.5-5.6 1.7L15 22z" fill="#fff"/></svg>
-    Cursor Builder <small>data-cursor</small>
+    <h1>Cursor Builder</h1> <small>data-cursor</small>
   </div>
   <span class="sp"></span>
   <button class="btn" id="themeBtn" type="button" aria-label="Toggle colour theme">
@@ -291,7 +309,8 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
 </header>
 
 <!-- LEFT · configuration -->
-<aside class="col left" aria-label="Cursor configuration">
+<aside class="col left" aria-labelledby="cfg-h">
+  <h2 class="sr" id="cfg-h">Cursor configuration</h2>
   <div class="presets">
     <p class="sec-t"><span>Start from a preset</span><span class="custom-note" id="customNote" hidden>modified</span></p>
     <div class="chips" id="presetChips"></div>
@@ -311,16 +330,16 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
 </aside>
 
 <!-- CENTRE · live preview -->
-<main class="col mid" id="stage-col">
+<main class="col mid" id="stage-col" aria-labelledby="live-h">
   <div class="stage-h">
-    <h2>Live preview</h2>
+    <h2 id="live-h">Live preview</h2>
     <span class="live">move your mouse over the page</span>
     <span class="sp"></span>
     <label class="tog"><span class="switch"><input type="checkbox" id="annToggle" role="switch" checked><i></i></span> Show attributes</label>
   </div>
   <div class="touch-note" role="status"><strong>Mouse or trackpad required.</strong> The live cursor preview is disabled on touch devices. You can still configure the cursor and copy the generated code.</div>
   <div class="stage" id="stage" tabindex="-1">
-    <div class="site">
+    <div class="site" role="region" aria-label="Demo website for testing the cursor">
       <div class="chrome-bar" aria-hidden="true"><i></i><i></i><i></i><span>northwind.studio</span></div>
 
       <div class="s-nav demo">
@@ -331,25 +350,25 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
           <a href="#stage" onclick="return false">Journal</a>
           <a href="#stage" onclick="return false">Contact</a>
         </nav>
-        <button class="ibtn" type="button" aria-label="Search" data-cursor="magnetic" data-cursor-pull="0.6"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg></button>
-        <button class="ibtn" type="button" aria-label="Menu" data-cursor="magnetic" data-cursor-pull="0.6"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 5h12M2 11h12"/></svg></button>
-        <span class="ann">links → <b>type: link</b> · icon buttons → <b>data-cursor="magnetic"</b></span>
+        <button class="ibtn" type="button" aria-label="Search" data-cursor="magnetic" data-cursor-pull="0.6"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg></button>
+        <button class="ibtn" type="button" aria-label="Menu" data-cursor="magnetic" data-cursor-pull="0.6"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M2 5h12M2 11h12"/></svg></button>
+        <span aria-hidden="true" class="ann">links → <b>type: link</b> · icon buttons → <b>data-cursor="magnetic"</b></span>
       </div>
 
       <section class="sect hero demo" aria-label="Hero">
         <p class="eyebrow">Independent design studio</p>
-        <h1>Interfaces that feel as good as they look.</h1>
+        <h3 class="hl">Interfaces that feel as good as they look.</h3>
         <p>Northwind designs brands, products and websites. Hover this paragraph, then the controls below: every element reacts through plain <code class="mono">data-cursor</code> attributes.</p>
         <div class="actions">
           <button class="pbtn" type="button" data-cursor="magnetic grow">Start a project</button>
           <button class="sbtn" type="button">View showreel</button>
           <a class="lnk" href="#stage" onclick="return false">Read the case studies →</a>
         </div>
-        <span class="ann">h1 / p → <b>type: text</b> · primary → <b>data-cursor="magnetic grow"</b> · secondary → <b>type: button</b></span>
+        <span aria-hidden="true" class="ann">headings / p → <b>type: text</b> · primary → <b>data-cursor="magnetic grow"</b> · secondary → <b>type: button</b></span>
       </section>
 
       <section class="sect demo" aria-label="Tabs and toggles">
-        <p class="h3">Controls</p>
+        <h3 class="h3">Controls</h3>
         <div class="row-flex">
           <div class="seg" role="tablist" aria-label="Demo tabs" id="demoTabs">
             <button type="button" role="tab" aria-selected="true">Overview</button>
@@ -358,33 +377,33 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
           </div>
           <label class="chk" data-cursor-type="button"><input type="checkbox" checked> Case studies</label>
           <label class="chk" data-cursor-type="button"><span class="switch"><input type="checkbox" role="switch" aria-label="Email updates" checked><i></i></span> Email updates</label>
-          <button class="ibtn" type="button" aria-label="Like" data-cursor="magnetic grow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 13.5S2 10 2 6a3 3 0 0 1 6-1 3 3 0 0 1 6 1c0 4-6 7.500-6 7.500z"/></svg></button>
+          <button class="ibtn" type="button" aria-label="Like" data-cursor="magnetic grow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M8 13.5S2 10 2 6a3 3 0 0 1 6-1 3 3 0 0 1 6 1c0 4-6 7.500-6 7.500z"/></svg></button>
         </div>
-        <span class="ann">tabs, checkbox, switch → <b>type: button</b> · icon → <b>data-cursor="magnetic grow"</b></span>
+        <span aria-hidden="true" class="ann">tabs, checkbox, switch → <b>type: button</b> · icon → <b>data-cursor="magnetic grow"</b></span>
       </section>
 
       <section class="sect demo" aria-label="Projects">
-        <p class="h3">Selected work</p>
+        <h3 class="h3">Selected work</h3>
         <div class="grid2">
           <article class="card demo" data-cursor-text="View project">
             <img data-art="0" alt="Abstract gradient artwork for project Aurora">
             <div class="body"><h4>Aurora Bank</h4><p>Mobile banking redesign</p></div>
-            <span class="ann"><b>data-cursor-text="View project"</b></span>
+            <span aria-hidden="true" class="ann"><b>data-cursor-text="View project"</b></span>
           </article>
           <article class="card demo" data-cursor-type="card">
             <img data-art="1" alt="Abstract gradient artwork for project Fieldnotes">
             <div class="body"><h4>Fieldnotes</h4><p>Editorial platform</p></div>
-            <span class="ann"><b>data-cursor-type="card"</b></span>
+            <span aria-hidden="true" class="ann"><b>data-cursor-type="card"</b></span>
           </article>
           <div class="drag demo" data-cursor="frame magnetic" data-cursor-text="Drag" data-cursor-pull="0.5">
             <strong>Drag to reorder</strong><span>Frame + magnetic + label</span>
-            <span class="ann"><b>data-cursor="frame magnetic"</b> data-cursor-text="Drag"</span>
+            <span aria-hidden="true" class="ann"><b>data-cursor="frame magnetic"</b> data-cursor-text="Drag"</span>
           </div>
           <div class="lens-zone demo" data-cursor="lens">
             <img data-art="2" alt="Abstract gradient artwork for the lens demo">
             <span class="tiny">Small print, sharp detail</span>
             <span class="over">Move here to magnify</span>
-            <span class="ann inside"><b>data-cursor="lens"</b></span>
+            <span aria-hidden="true" class="ann inside"><b>data-cursor="lens"</b></span>
           </div>
         </div>
       </section>
@@ -392,27 +411,27 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
       <section class="sect demo" aria-label="Featured project">
         <div class="feature" data-cursor-text="Explore" data-cursor-size="96">
           <img data-art="3" alt="Large abstract gradient artwork for the featured project">
-          <div class="cap"><h4>Meridian Atlas</h4><p>Interactive map of the world's shipping lanes</p></div>
+          <div class="cap"><h3>Meridian Atlas</h3><p>Interactive map of the world's shipping lanes</p></div>
         </div>
-        <span class="ann"><b>data-cursor-text="Explore"</b> data-cursor-size="96"</span>
+        <span aria-hidden="true" class="ann"><b>data-cursor-text="Explore"</b> data-cursor-size="96"</span>
       </section>
 
       <section class="sect demo" aria-label="Form">
-        <p class="h3">Say hello</p>
+        <h3 class="h3">Say hello</h3>
         <form class="form" onsubmit="return false">
           <div class="fld"><label for="f-name">Name</label><input class="in" id="f-name" type="text" placeholder="Ada Lovelace" autocomplete="off"></div>
           <div class="fld"><label for="f-mail">Email</label><input class="in" id="f-mail" type="email" placeholder="ada@example.com" autocomplete="off"></div>
           <div class="fld"><label for="f-sel">Budget</label><select class="in" id="f-sel"><option>€10k – €25k</option><option>€25k – €50k</option><option>€50k+</option></select></div>
           <div class="fld"><label for="f-url">Project link</label><input class="in" id="f-url" type="url" placeholder="https://" autocomplete="off"></div>
           <div class="fld full"><label for="f-msg">Message</label><textarea class="in" id="f-msg" placeholder="Tell us about the project…"></textarea></div>
-          <div class="fld full"><div class="native demo" data-cursor="hide"><span>Native cursor zone: the custom cursor steps aside here.</span><span class="ann"><b>data-cursor="hide"</b></span></div></div>
+          <div class="fld full"><div class="native demo" data-cursor="hide"><span>Native cursor zone: the custom cursor steps aside here.</span><span aria-hidden="true" class="ann"><b>data-cursor="hide"</b></span></div></div>
           <div class="full actions"><button class="pbtn" type="submit">Send message</button><button class="sbtn" type="reset">Clear</button></div>
         </form>
-        <span class="ann">inputs / textarea → <b>type: input</b> · select → <b>type: button</b></span>
+        <span aria-hidden="true" class="ann">inputs / textarea → <b>type: input</b> · select → <b>type: button</b></span>
       </section>
 
       <section class="sect" aria-label="Text">
-        <p class="h3">Reading</p>
+        <h3 class="h3">Reading</h3>
         <p class="lede">Good cursors are <mark>quiet until they matter</mark>. They confirm what is clickable, tell you what will happen next, and never get in the way of reading. Select this text: the cursor shrinks to stay out of the way.</p>
       </section>
     </div>
@@ -426,7 +445,8 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
 </main>
 
 <!-- RIGHT · generated code -->
-<aside class="col right" aria-label="Generated code">
+<aside class="col right" aria-labelledby="code-hh">
+  <h2 class="sr" id="code-hh">Generated code</h2>
   <div class="code-h">
     <div class="tabs" role="tablist" aria-label="Generated files" id="codeTabs" style="border:0;padding:0;flex:1">
       <button class="tab" role="tab" id="c-html" aria-selected="true" aria-controls="codeView">HTML</button>
@@ -438,10 +458,11 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
       <span id="copyLabel">Copy</span>
     </button>
   </div>
-  <div class="code-wrap" id="codeView" role="tabpanel" tabindex="0" aria-label="Generated code"><pre><code id="code"></code></pre></div>
+  <div class="code-wrap" id="codeView" role="tabpanel" tabindex="0" aria-labelledby="c-html"><pre><code id="code"></code></pre></div>
   <div class="code-f"><span id="codeMeta">–</span><button class="btn" id="copyAll" type="button" style="height:22px;font-size:11px">Copy all three</button></div>
 </aside>
 </div>
+<noscript><p style="padding:24px;font:14px system-ui">Cursor Builder needs JavaScript to design and preview a custom cursor.</p></noscript>
 <div class="sr" role="status" aria-live="polite" id="live"></div>
 
 <script>
@@ -1043,6 +1064,7 @@ function mkRow(def, container) {
   head.append(lab);
   row.append(head);
   if (def.tip) { const t = document.createElement('div'); t.className = 'hint'; t.id = id + '-hint'; t.textContent = def.tip; row.append(t); }
+  const describe = (n) => { if (def.tip) n.setAttribute('aria-describedby', id + '-hint'); };
   let sync;
   const set = (v) => { cfg[def.k] = v; change(); };
   if (def.t === 'range') {
@@ -1058,16 +1080,16 @@ function mkRow(def, container) {
     n.addEventListener('input', () => { if (n.value === '' || isNaN(+n.value)) return; const v = Math.min(def.max, Math.max(def.min, +n.value)); rng.value = v; paint(); set(v); });
     n.addEventListener('blur', () => { n.value = (+rng.value).toFixed(dec); });
     sync = () => { rng.value = cfg[def.k]; n.value = (+cfg[def.k]).toFixed(dec); paint(); };
-    rng.dataset.cursor = 'grow';
+    rng.dataset.cursor = 'grow'; describe(rng);
   } else if (def.t === 'select') {
     const s = document.createElement('select'); s.id = id; s.className = 'sel';
     def.o.forEach(([v, t]) => s.add(new Option(t, v)));
-    s.addEventListener('change', () => set(s.value)); head.append(s);
+    s.addEventListener('change', () => set(s.value)); head.append(s); describe(s);
     sync = () => { s.value = cfg[def.k]; };
   } else if (def.t === 'toggle') {
     const w = document.createElement('span'); w.className = 'switch';
     const i = Object.assign(document.createElement('input'), { type:'checkbox', id }); i.setAttribute('role', 'switch');
-    i.addEventListener('change', () => set(i.checked)); w.append(i, document.createElement('i')); head.append(w);
+    i.addEventListener('change', () => set(i.checked)); w.append(i, document.createElement('i')); head.append(w); describe(i);
     sync = () => { i.checked = !!cfg[def.k]; };
   } else if (def.t === 'color') {
     const w = document.createElement('div'); w.className = 'inline';
@@ -1214,7 +1236,7 @@ function tablist(root, onSelect) {
 tablist($('#cfgTabs'), (t) => {
   document.querySelectorAll('.pane').forEach(p => { p.hidden = p.id !== t.getAttribute('aria-controls'); });
 });
-tablist($('#codeTabs'), (t) => { codeTab = t.id.slice(2); renderCode(); $('#codeView').scrollTop = 0; });
+tablist($('#codeTabs'), (t) => { codeTab = t.id.slice(2); $('#codeView').setAttribute('aria-labelledby', t.id); renderCode(); $('#codeView').scrollTop = 0; });
 tablist($('#demoTabs'), () => {});
 
 /* ── copy ────────────────────────────────────────────────────── */
