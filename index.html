@@ -57,7 +57,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 code,.mono{font-family:var(--mono)}
 
 /* ── app shell ─────────────────────────── */
-.app{display:grid;grid-template-columns:316px minmax(0,1fr) minmax(360px,420px);grid-template-rows:48px minmax(0,1fr);height:100vh}
+.app{display:grid;grid-template-columns:316px minmax(0,1fr);grid-template-rows:48px minmax(0,1fr);height:100vh}
 .top{grid-column:1/-1;display:flex;align-items:center;gap:12px;padding:0 14px;background:var(--panel);border-bottom:1px solid var(--border)}
 .brand{display:flex;align-items:center;gap:9px;font-weight:600;letter-spacing:-.01em}
 .brand svg{display:block}
@@ -67,9 +67,8 @@ code,.mono{font-family:var(--mono)}
 .top .hint{color:var(--muted);font-size:12px}
 .col{background:var(--panel);min-height:0;display:flex;flex-direction:column}
 .left{border-right:1px solid var(--border)}
-.right{border-left:1px solid var(--border)}
+.main{display:flex;flex-direction:column;min-width:0;min-height:0;background:var(--bg)}
 .scroll{overflow:auto;flex:1;min-height:0}
-.mid{background:var(--bg);min-width:0}
 
 .btn{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border:1px solid var(--border-strong);background:var(--panel);border-radius:7px;cursor:pointer;font-weight:500;font-size:12px;transition:background .12s,border-color .12s,color .12s}
 .btn:hover{background:var(--hover);border-color:var(--faint)}
@@ -177,49 +176,45 @@ input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px color
 .tog{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);cursor:pointer}
 
 /* ── centre: preview ───────────────────── */
-.stage-h{display:flex;align-items:center;gap:10px;padding:0 16px;height:44px;flex:none;border-bottom:1px solid var(--border);background:var(--panel)}
-.stage-h h2{margin:0;font-size:13px;font-weight:600}
 .live{display:inline-flex;align-items:center;gap:6px;font:11px var(--mono);color:var(--muted)}
 .live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px color-mix(in srgb,var(--ok) 20%,transparent)}
-.stage-h .sp{flex:1}
-.touch-note{display:none;margin:12px 16px 0;padding:10px 12px;border:1px solid var(--border-strong);background:var(--panel);border-radius:8px;font-size:12.5px}
-.no-mouse .touch-note{display:block}
 .no-mouse .live{display:none}
-.stage-h h2{white-space:nowrap}
-.box-wrap{flex:1;min-height:0;padding:16px;display:flex}
-.box{position:relative;flex:1;min-height:360px;overflow:hidden;border:1px solid var(--border-strong);border-radius:14px;background:var(--panel-2);background-image:radial-gradient(var(--border) 1px,transparent 1px);background-size:16px 16px}
-.box:hover{border-color:var(--faint)}
-.scene{position:absolute;inset:0;overflow:auto;padding:16px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-content:start}
-.tile{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:34px 14px 14px;border:1px solid var(--border);border-radius:12px;background:var(--panel);transition:border-color .15s,box-shadow .15s}
-.tile.is-edit{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
-.tl{position:absolute;left:12px;top:9px;right:12px;font:11px var(--mono);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tile.is-edit .tl{color:var(--accent)}
-.span3{grid-column:1/-1}.span2{grid-column:span 2}
-.open-msg{width:100%;min-height:64px;display:grid;place-items:center;text-align:center;color:var(--muted);font-size:13px;line-height:1.5}
-.tile p.sm{margin:0;font-size:14px;line-height:1.6;color:var(--text)}
+.pv-row{display:flex;gap:20px;align-items:stretch;padding:16px;flex:none;background:var(--bg);border-bottom:1px solid var(--border)}
+.pv-main{flex:none;width:min(440px,100%)}
+.pv-h{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.pv-h h2{margin:0;font-size:13px;font-weight:600}
+.box{position:relative;width:100%;height:290px;overflow:hidden;border:1px solid var(--border-strong);border-radius:14px;background:var(--panel);background-image:radial-gradient(var(--border) 1px,transparent 1px);background-size:16px 16px;box-shadow:var(--shadow);transition:border-color .15s,box-shadow .15s}
+.box:hover{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 16%,transparent)}
+.stage{position:absolute;inset:0}
+.subj{position:absolute;inset:0;display:grid;place-items:center}
+.subj[hidden]{display:none}
+.subj>*{max-width:86%}
+.boxcap{position:absolute;left:12px;top:10px;right:12px;font:11px var(--mono);color:var(--muted);pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.boxcap b{color:var(--accent);font-weight:500}
 .is-target{outline:1.5px dashed var(--accent);outline-offset:3px}
-.lnk{color:var(--text);text-decoration:none;font-weight:600;font-size:15px;border-bottom:1px solid var(--border-strong);padding:1px 0;transition:border-color .12s,color .12s}
+.pv-side{flex:1;min-width:0;display:flex;flex-direction:column;gap:14px;padding-top:2px}
+.pv-side h3{margin:0 0 8px;font:600 11px var(--sans);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.state{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0;font:12px var(--mono)}
+.state dt{color:var(--faint)}.state dd{margin:0;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tips{margin:0;padding-left:18px;color:var(--muted);font-size:12.5px;line-height:1.6}
+.touch-note{display:none;margin-bottom:10px;padding:10px 12px;border:1px solid var(--border-strong);background:var(--panel);border-radius:8px;font-size:12.5px}
+.no-mouse .touch-note{display:block}
+.lnk{color:var(--text);text-decoration:none;font-weight:600;font-size:18px;border-bottom:1px solid var(--border-strong);padding:1px 0;transition:border-color .12s,color .12s}
 .lnk:hover{color:var(--accent);border-color:var(--accent)}
-.btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .ibtn{width:34px;height:34px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--border-strong);background:var(--panel);cursor:pointer;transition:background .12s}
-.ibtn:hover{background:var(--hover)}
-.ibtn svg{width:16px;height:16px}
-.pbtn,.sbtn{height:36px;padding:0 16px;border-radius:9px;font-weight:600;cursor:pointer;border:1px solid transparent;transition:background .15s,border-color .15s}
-.pbtn{background:var(--text);color:var(--bg)}
+.pbtn{height:42px;padding:0 22px;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;border:1px solid transparent;background:var(--text);color:var(--bg);transition:background .15s}
 .pbtn:hover{background:color-mix(in srgb,var(--text) 82%,var(--bg))}
-.sbtn{background:var(--panel);border-color:var(--border-strong);color:var(--text)}
-.sbtn:hover{background:var(--hover)}
-.tile img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:8px}
-.card{width:100%;border:1px solid var(--border);border-radius:10px;background:var(--panel-2);padding:14px}
-.card .ct{display:block;font-size:15px;letter-spacing:-.01em}
-.card p{margin:3px 0 0;color:var(--muted);font-size:13px}
-.in{height:36px;border:1px solid var(--border-strong);background:var(--panel);border-radius:8px;padding:0 12px;font-size:14px;width:100%;transition:border-color .12s,box-shadow .12s}
-textarea.in{height:64px;padding:8px 12px;resize:none;line-height:1.5}
+.subj img{display:block;width:230px;aspect-ratio:16/10;object-fit:cover;border-radius:10px}
+.sm{margin:0;width:260px;font-size:14px;line-height:1.6}
+.card{width:260px;border:1px solid var(--border);border-radius:12px;background:var(--panel);padding:18px;box-shadow:var(--shadow)}
+.card .ct{display:block;font-size:16px;letter-spacing:-.01em}
+.card p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.in{height:38px;border:1px solid var(--border-strong);background:var(--panel);border-radius:8px;padding:0 12px;font-size:14px;width:250px;transition:border-color .12s,box-shadow .12s}
 .in:hover{border-color:var(--faint)}
 .in:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent)}
-.custom{width:100%;min-height:96px;display:grid;place-items:center;text-align:center;border-radius:10px;padding:12px;font-size:13px;color:#fff;background:linear-gradient(135deg,#5b5bf0,#ec4899);font-weight:600}
+.custom{width:240px;min-height:100px;display:grid;place-items:center;text-align:center;border-radius:12px;padding:12px;font-size:13px;color:#fff;background:linear-gradient(135deg,#5b5bf0,#ec4899);font-weight:600}
 .custom code{font-weight:400;opacity:.85}
-.idx{list-style:none;margin:0;padding:0;width:100%}
+.idx{list-style:none;margin:0;padding:0;width:340px}
 .idx a{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:12px 0;border-bottom:1px solid var(--border);color:var(--text);text-decoration:none;font-size:19px;font-weight:600;letter-spacing:-.02em;transition:color .15s,padding .2s}
 .idx li:first-child a{border-top:1px solid var(--border)}
 .idx a:hover{color:var(--accent);padding-left:8px}
@@ -243,16 +238,16 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
   .app{display:flex;flex-direction:column;height:auto}
   .top{position:sticky;top:0;z-index:50;min-height:48px}
   .col{overflow:visible}
-  .mid{order:1}.left{order:2;border-right:0;border-top:1px solid var(--border)}.right{order:3;border-left:0;border-top:1px solid var(--border)}
+  .main{display:contents}
+  .pv-row{order:1}.left{order:2;border-right:0;border-top:1px solid var(--border)}.codepanel{order:3;border-top:1px solid var(--border)}
   .scroll{overflow:visible}
-  .box{min-height:640px}
   .code-wrap{max-height:70vh}
   .top .hint{display:none}
 }
 @media (max-width:640px){
   .live{display:none}
   .brand{white-space:nowrap}.brand small{display:none}
-  .box-wrap{padding:10px}.scene{grid-template-columns:1fr}.span2{grid-column:auto}
+  .pv-row{flex-direction:column;padding:10px}.pv-main{width:100%}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 /* the cursor lives inside the preview box only */
@@ -306,84 +301,45 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
 </aside>
 
 <!-- CENTRE · live preview -->
-<main class="col mid" id="stage-col" aria-labelledby="live-h">
-  <div class="stage-h">
-    <h2 id="live-h">Live preview</h2>
-    <span class="live">move your mouse inside the box</span>
-  </div>
-  <div class="touch-note" role="status"><strong>Mouse or trackpad required.</strong> The live cursor preview is disabled on touch devices. You can still configure the cursor and copy the generated code.</div>
-  <div class="box-wrap">
-    <div class="box" id="box">
-      <div class="scene" id="stage" tabindex="-1" role="region" aria-label="Cursor test area">
-
-        <div class="tile span3" data-kind="open">
-          <span class="tl">Open area</span>
-          <div class="open-msg">Move around in here to feel the cursor, the trailing ring and the motion.<br>Pick an element below to see what happens when you hover it.</div>
-        </div>
-
-        <div class="tile" data-kind="link">
-          <span class="tl">Links · a[href]</span>
-          <a class="lnk" href="#stage" onclick="return false">Read the case study →</a>
-          <a class="lnk" href="#stage" onclick="return false">Visit the journal</a>
-        </div>
-
-        <div class="tile" data-kind="button">
-          <span class="tl">Buttons</span>
-          <div class="btns">
-            <button class="pbtn" type="button">Get started</button>
-            <button class="sbtn" type="button">Learn more</button>
-            <button class="ibtn" type="button" aria-label="Search"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg></button>
+<main class="main">
+  <section class="pv-row" aria-labelledby="live-h">
+    <div class="pv-main">
+      <div class="pv-h"><h2 id="live-h">Live preview</h2><span class="live">hover the box</span></div>
+      <div class="touch-note" role="status"><strong>Mouse or trackpad required.</strong> The live cursor preview is disabled on touch devices. You can still configure the cursor and copy the generated code.</div>
+      <div class="box" id="box">
+        <div class="stage" id="stage" role="region" aria-label="Cursor test area" tabindex="-1">
+          <div class="subj" data-subject="open"></div>
+          <div class="subj" data-subject="link" hidden><a class="lnk" href="#stage" onclick="return false">Read the case study →</a></div>
+          <div class="subj" data-subject="button" hidden><button class="pbtn" type="button">Get started</button></div>
+          <div class="subj" data-subject="text" hidden><p class="sm">Good cursors are quiet until they matter. Hover this paragraph to see how text is treated.</p></div>
+          <div class="subj" data-subject="image" hidden><img data-art="0" alt="Abstract gradient artwork"></div>
+          <div class="subj" data-subject="card" hidden><article class="card" data-cursor-type="card"><strong class="ct">Aurora Bank</strong><p>Mobile banking redesign</p></article></div>
+          <div class="subj" data-subject="input" hidden><input class="in" type="text" aria-label="Your name" placeholder="Type here…" autocomplete="off"></div>
+          <div class="subj" data-subject="custom" hidden><div class="custom" data-cursor-type="custom">Anything you tag<br><code>data-cursor-type="custom"</code></div></div>
+          <div class="subj" data-subject="preview" hidden>
+            <ul class="idx">
+              <li><a href="#stage" onclick="return false" data-art="1"><span>Fieldnotes</span><span class="m">Editorial</span></a></li>
+              <li><a href="#stage" onclick="return false" data-art="2"><span>Evergreen</span><span class="m">Brand</span></a></li>
+              <li><a href="#stage" onclick="return false" data-art="3"><span>Meridian Atlas</span><span class="m">Data viz</span></a></li>
+            </ul>
           </div>
         </div>
-
-        <div class="tile" data-kind="text">
-          <span class="tl">Text · p, h1–h6</span>
-          <p class="sm">Good cursors are quiet until they matter. Hover this paragraph to see how text is treated.</p>
-        </div>
-
-        <div class="tile" data-kind="image">
-          <span class="tl">Images · img</span>
-          <img data-art="0" alt="Abstract gradient artwork">
-        </div>
-
-        <div class="tile" data-kind="card">
-          <span class="tl">Cards · data-cursor-type="card"</span>
-          <article class="card" data-cursor-type="card"><strong class="ct">Aurora Bank</strong><p>Mobile banking redesign</p></article>
-        </div>
-
-        <div class="tile" data-kind="input">
-          <span class="tl">Fields · input, textarea</span>
-          <input class="in" type="text" aria-label="Your name" placeholder="Type here…" autocomplete="off">
-          <textarea class="in" aria-label="Your message" placeholder="A longer message…"></textarea>
-        </div>
-
-        <div class="tile" data-kind="custom">
-          <span class="tl">Custom · data-cursor-type="custom"</span>
-          <div class="custom" data-cursor-type="custom">Anything you tag<br><code>data-cursor-type="custom"</code></div>
-        </div>
-
-        <div class="tile span2" data-kind="preview">
-          <span class="tl">Image preview · data-cursor-image</span>
-          <ul class="idx">
-            <li><a href="#stage" onclick="return false" data-art="1"><span>Fieldnotes</span><span class="m">Editorial</span></a></li>
-            <li><a href="#stage" onclick="return false" data-art="2"><span>Evergreen</span><span class="m">Brand</span></a></li>
-            <li><a href="#stage" onclick="return false" data-art="3"><span>Meridian Atlas</span><span class="m">Data viz</span></a></li>
-          </ul>
-        </div>
-
+        <div class="boxcap" id="boxcap" aria-hidden="true"></div>
       </div>
     </div>
-  </div>
-  <div class="inspect" id="inspect" aria-label="Resolved cursor state" aria-live="off">
-    <span><span class="k">hovering</span> <b id="i-el">none</b></span>
-    <span><span class="k">treated as</span> <b id="i-type">default</b></span>
-    <span><span class="k">effect</span> <b id="i-b">none</b></span>
-    <span><span class="k">size</span> <b id="i-size">–</b></span>
-  </div>
-</main>
-
-<!-- RIGHT · generated code -->
-<aside class="col right" aria-labelledby="code-hh">
+    <div class="pv-side">
+      <div>
+        <h3>Cursor right now</h3>
+        <dl class="state" id="inspect" aria-label="Resolved cursor state">
+          <dt>hovering</dt><dd id="i-el">none</dd>
+          <dt>treated as</dt><dd id="i-type">default</dd>
+          <dt>effect</dt><dd id="i-b">none</dd>
+          <dt>size</dt><dd id="i-size">–</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+  <section class="col codepanel" aria-labelledby="code-hh">
   <h2 class="sr" id="code-hh">Generated code</h2>
   <div class="code-h">
     <div class="tabs" role="tablist" aria-label="Generated files" id="codeTabs" style="border:0;padding:0;flex:1">
@@ -398,7 +354,8 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
   </div>
   <div class="code-wrap" id="codeView" role="tabpanel" tabindex="0" aria-labelledby="c-html"><pre><code id="code"></code></pre></div>
   <div class="code-f"><span id="codeMeta">–</span><button class="btn" id="copyAll" type="button" style="height:22px;font-size:11px">Copy all three</button></div>
-</aside>
+</section>
+</main>
 </div>
 <noscript><p style="padding:24px;font:14px system-ui">Cursor Builder needs JavaScript to design and preview a custom cursor.</p></noscript>
 <div class="sr" role="status" aria-live="polite" id="live"></div>
@@ -427,6 +384,8 @@ const ENGINE = String.raw`/* Custom cursor · generated by Cursor Builder
  *
  * Optional: set root: '#box' in the config to keep the cursor inside one element
  * (give it position:relative; overflow:hidden and make .cc-dot/.cc-ring position:absolute).
+ * A scoped cursor rests in the centre of the box when the pointer leaves;
+ * window.CustomCursor.park() sends it back there on demand.
  *
  * Conflicts resolve as: hide > caret > lens > frame.
  * label and magnetic combine with whatever wins.
@@ -698,33 +657,45 @@ const ENGINE = String.raw`/* Custom cursor · generated by Cursor Builder
     };
     const wake = () => { if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick); } };
 
-    // ── events (delegated on document, nothing per element) ──────
+    // First appearance: show in place with no fly-in.
+    const appear = () => {
+      shown = true; px = mx; py = my;
+      for (const s of all) { s.x = s.t; s.v = 0; }
+      X.x = X.t = mx; Y.x = Y.t = my;
+      //[ring
+      RX.x = RX.t = mx; RY.x = RY.t = my;
+      //]ring
+      //[preview
+      PX.x = PX.t = mx; PY.x = PY.t = my;
+      //]preview
+      vis(); cancelAnimationFrame(raf); last = performance.now(); tick(last);
+    };
+    // Scoped mode: rest in the centre of the box, reacting to whatever sits there.
+    const park = (snap) => {
+      const q = scoped.getBoundingClientRect();
+      mx = q.left + q.width / 2; my = q.top + q.height / 2;
+      pick(document.elementFromPoint(mx, my));
+      if (snap || !shown) appear(); else { rescan = true; dirty = true; wake(); }
+    };
+    window.CustomCursor.park = park;
+
+    // ── events (delegated on the page or scoped box, nothing per element) ──
     on(root, 'pointermove', (e) => {
       if (e.pointerType === 'touch') return;
       mx = e.clientX; my = e.clientY;
       pick(e.target);
-      if (!shown) {                                            // first move: appear in place, no fly-in
-        shown = true; px = mx; py = my;
-        for (const s of all) { s.x = s.t; s.v = 0; }
-        X.x = X.t = mx; Y.x = Y.t = my;
-        //[ring
-        RX.x = RX.t = mx; RY.x = RY.t = my;
-        //]ring
-        //[preview
-        PX.x = PX.t = mx; PY.x = PY.t = my;
-        //]preview
-        vis(); cancelAnimationFrame(raf); last = performance.now(); tick(last);
-      } else wake();
+      if (!shown) appear(); else wake();
     });
     on(root, 'pointerdown', (e) => { if (e.button === 0) { pressed = true; dirty = true; wake(); } });
     on(window, 'pointerup', () => { if (pressed) { pressed = false; dirty = true; wake(); } });
     on(window, 'blur', () => { pressed = false; dirty = true; wake(); });
     on(window, 'scroll', () => { rescan = true; dirty = true; wake(); }, { capture: true });
     on(window, 'resize', () => { dirty = true; wake(); });
-    on(root, 'pointerleave', () => { shown = false; vis(); });
+    on(root, 'pointerleave', () => { if (scoped) park(); else { shown = false; vis(); } });
     on(rm, 'change', wake);
 
     root.classList.add('cc-on');
+    if (scoped) park(true);
   };
   document.body ? start() : on(document, 'DOMContentLoaded', start, { once: true });
 })();
@@ -1031,12 +1002,14 @@ const SCHEMA = {
 
 const fields = [];            // { def, row, sync() }
 const $ = (s, r = document) => r.querySelector(s);
+const box = $('#box');
 
 function mkRow(def, container) {
   if (def.t === 'feel') return mkFeel(def, container);
   const id = 'f-' + def.k;
   const row = document.createElement('div');
   row.className = 'row' + (def.t === 'range' ? '' : ' line');
+  row.dataset.key = def.k;
   const head = document.createElement('div'); head.className = 'row-h';
   const lab = document.createElement('label'); lab.htmlFor = id; lab.textContent = def.l;
   head.append(lab);
@@ -1044,7 +1017,7 @@ function mkRow(def, container) {
   if (def.tip) { const t = document.createElement('div'); t.className = 'hint'; t.id = id + '-hint'; t.textContent = def.tip; row.append(t); }
   const describe = (n) => { if (def.tip) n.setAttribute('aria-describedby', id + '-hint'); };
   let sync;
-  const set = (v) => { cfg[def.k] = v; change(); };
+  const set = (v) => { cfg[def.k] = v; change(); if (DEMO_KEYS[def.k]) demo(DEMO_KEYS[def.k]); };
   if (def.t === 'range') {
     const dec = (String(def.step).split('.')[1] || '').length;
     const rng = Object.assign(document.createElement('input'), { type:'range', id, min:def.min, max:def.max, step:def.step });
@@ -1086,12 +1059,12 @@ function mkRow(def, container) {
 }
 
 function mkFeel(def, container) {
-  const row = document.createElement('div'); row.className = 'row';
+  const row = document.createElement('div'); row.className = 'row'; row.dataset.key = 'feel';
   row.innerHTML = '<div class="row-h"><span class="lbl" id="feel-l">' + def.l + '</span></div><div class="hint">' + def.tip + '</div>';
   const grp = document.createElement('div'); grp.className = 'chips feel'; grp.setAttribute('role', 'group'); grp.setAttribute('aria-labelledby', 'feel-l');
   const btns = Object.keys(FEELS).map(n => {
     const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = n;
-    b.addEventListener('click', () => { Object.assign(cfg, FEELS[n]); fields.forEach(f => f.sync()); change(); });
+    b.addEventListener('click', () => { Object.assign(cfg, FEELS[n]); fields.forEach(f => f.sync()); change(); demo('move'); });
     grp.append(b); return b;
   });
   row.append(grp);
@@ -1168,7 +1141,7 @@ function buildHover() {
   function sync() {
     const s = S(), f = fxOf(s), [, name, sub] = KINDS.find(x => x[0] === kind);
     chips.forEach(c => c.setAttribute('aria-pressed', String(c.dataset.k === kind)));
-    markTile();
+    if (activeTab() === 'states') setSubject(kind);
     $('#hv-t').textContent = name; $('#hv-s').innerHTML = 'Applies to <code>' + esc(sub) + '</code>';
     fx.value = f; mag.checked = s.b.includes('magnetic');
     const noMag = f === 'caret' || f === 'hide';
@@ -1247,22 +1220,73 @@ function tablist(root, onSelect) {
     });
   });
 }
+
+/* ── what the preview box shows follows the setting you are editing ── */
+const SUBJECT_BY_KEY = { magnet:'button' };
+const TAB_SUBJECT = { cursor:'open', trail:'open', motion:'open', preview:'preview' };
+const activeTab = () => $('#cfgTabs [aria-selected=true]').id.slice(2);
+const tabSubject = () => activeTab() === 'states' ? kind : TAB_SUBJECT[activeTab()];
+let subject = 'open', inside = false;
+const SUBJECT_NAME = { open:'cursor', link:'links', button:'buttons', text:'text', image:'images', card:'cards', input:'fields', custom:'custom', preview:'image list' };
+function caption(row) {
+  const lab = row ? (row.querySelector('label,.lbl') || {}).textContent : { cursor:'Look', trail:'Trail', motion:'Feel', states:'Hover', preview:'Preview' }[activeTab()];
+  $('#boxcap').innerHTML = (lab ? '<b>' + esc(lab) + '</b> on ' : '') + SUBJECT_NAME[subject];
+}
+function setSubject(k) {
+  if (k === subject) { caption($('.row:focus-within') || null); return; }
+  subject = k;
+  document.querySelectorAll('.subj').forEach(e => { e.hidden = e.dataset.subject !== k; });
+  caption($('.row:focus-within') || null);
+  requestAnimationFrame(repick);
+}
+function repick() {                       // re-evaluate what sits under the cursor
+  if (inside && ptr) {
+    const t = document.elementFromPoint(ptr.x, ptr.y);
+    if (t && box.contains(t)) { t.dispatchEvent(new PointerEvent('pointermove', { bubbles:true, clientX:ptr.x, clientY:ptr.y, pointerType:'mouse' })); return; }
+  }
+  window.CustomCursor?.park?.();
+}
+/* Short automatic demos so motion settings are visible without touching the box. */
+let demoRaf = 0, demoWait = 0;
+function demo(kind) {
+  cancelAnimationFrame(demoRaf); clearTimeout(demoWait);
+  if (inside) return;
+  demoWait = setTimeout(() => {
+    const r = box.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    const fire = (type, x, y, target) => (target || document.elementFromPoint(x, y) || box).dispatchEvent(new PointerEvent(type, { bubbles:true, clientX:x, clientY:y, pointerType:'mouse' }));
+    if (kind === 'press') {
+      fire('pointerdown', cx, cy);
+      setTimeout(() => { fire('pointerup', cx, cy); }, 450);
+      return;
+    }
+    const t0 = performance.now(), dur = 1700;
+    const step = (now) => {
+      const t = (now - t0) / dur;
+      if (t >= 1 || inside) { if (!inside) window.CustomCursor?.park?.(); return; }
+      const a = t * Math.PI * 4, ease = Math.sin(t * Math.PI);
+      fire('pointermove', cx + Math.cos(a) * r.width * .3 * ease, cy + Math.sin(a * 2) * r.height * .26 * ease);
+      demoRaf = requestAnimationFrame(step);
+    };
+    demoRaf = requestAnimationFrame(step);
+  }, 220);
+}
+const DEMO_KEYS = { follow:'move', trailSpeed:'move', stretch:'move', ringSize:'move', press:'press' };
+box.addEventListener('pointerenter', () => { inside = true; cancelAnimationFrame(demoRaf); clearTimeout(demoWait); });
+box.addEventListener('pointerleave', () => { inside = false; });
+$('.left').addEventListener('focusin', (e) => {
+  const row = e.target.closest('.row[data-key]');
+  setSubject((row && SUBJECT_BY_KEY[row.dataset.key]) || tabSubject());
+  caption(row);
+});
+$('.left').addEventListener('pointerdown', (e) => {
+  const row = e.target.closest('.row[data-key]');
+  if (row) { setSubject(SUBJECT_BY_KEY[row.dataset.key] || tabSubject()); caption(row); }
+});
+
 tablist($('#cfgTabs'), (t) => {
   document.querySelectorAll('.pane').forEach(p => { p.hidden = p.id !== t.getAttribute('aria-controls'); });
-  markTile();
+  setSubject(tabSubject());
 });
-/* Highlight (and scroll to) the part of the preview that the open settings affect. */
-function markTile() {
-  const tab = $('#cfgTabs [aria-selected=true]').id.slice(2);
-  const key = tab === 'states' ? kind : tab === 'preview' ? 'preview' : 'open';
-  let hit = null;
-  document.querySelectorAll('.tile').forEach(t => { const on = t.dataset.kind === key; t.classList.toggle('is-edit', on); if (on) hit = t; });
-  const sc = $('#stage');
-  if (hit && sc.scrollHeight > sc.clientHeight) {
-    const r = hit.getBoundingClientRect(), q = sc.getBoundingClientRect();
-    if (r.top < q.top) sc.scrollTop -= q.top - r.top + 16; else if (r.bottom > q.bottom) sc.scrollTop += r.bottom - q.bottom + 16;
-  }
-}
 tablist($('#codeTabs'), (t) => { codeTab = t.id.slice(2); $('#codeView').setAttribute('aria-labelledby', t.id); renderCode(); $('#codeView').scrollTop = 0; });
 
 /* ── copy ────────────────────────────────────────────────────── */
@@ -1296,7 +1320,6 @@ $('#themeBtn').addEventListener('click', () => {
 });
 
 /* ── live inspector + preview highlight ──────────────────────── */
-const box = $('#box');
 let marked = null;
 document.addEventListener('cursorchange', (e) => {
   const { el, type, behaviours, width, height } = e.detail;
@@ -1316,7 +1339,7 @@ const art = (a, b, c) => 'data:image/svg+xml;utf8,' + encodeURIComponent(
   "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 260' preserveAspectRatio='xMidYMid slice'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='" + a + "'/><stop offset='1' stop-color='" + b + "'/></linearGradient></defs><rect width='420' height='260' fill='url(#g)'/><circle cx='320' cy='70' r='86' fill='" + c + "' opacity='.4'/><circle cx='80' cy='220' r='120' fill='#fff' opacity='.12'/><path d='M0 200 Q110 140 210 190 T420 160 V260 H0Z' fill='#000' opacity='.12'/></svg>");
 const ARTS = [['#5b5bf0','#22d3ee','#f0abfc'], ['#f97316','#ec4899','#fde68a'], ['#0f766e','#14b8a6','#fef08a'], ['#1e1b4b','#7c3aed','#38bdf8']];
 document.querySelectorAll('img[data-art]').forEach(i => { i.src = art(...ARTS[+i.dataset.art]); });
-document.querySelectorAll('.tile a[data-art]').forEach(a => { a.dataset.cursorImage = art(...ARTS[+a.dataset.art]); });
+document.querySelectorAll('.subj a[data-art]').forEach(a => { a.dataset.cursorImage = art(...ARTS[+a.dataset.art]); });
 
 buildPane('p-cursor', SCHEMA.cursor);
 buildPane('p-trail', SCHEMA.trail);
@@ -1331,6 +1354,7 @@ const setMouse = () => document.documentElement.classList.toggle('no-mouse', noM
 setMouse(); noMouse.addEventListener('change', setMouse);
 
 syncAll();
+caption(null);
 </script>
 </body>
 </html>
