@@ -49,78 +49,59 @@
 *{box-sizing:border-box}
 html,body{margin:0}
 body{background:var(--bg);color:var(--text);font:13px/1.45 var(--sans);-webkit-font-smoothing:antialiased}
-button,input,select,textarea{font:inherit;color:inherit}
+button,input,select,textarea,dialog{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .skip{position:absolute;left:8px;top:-40px;background:var(--accent);color:var(--on-accent);padding:6px 10px;border-radius:6px;z-index:100}
 .skip:focus{top:8px}
 code,.mono{font-family:var(--mono)}
 
-/* ── app shell ─────────────────────────── */
-.app{display:grid;grid-template-columns:316px minmax(0,1fr);grid-template-rows:48px minmax(0,1fr);height:100vh}
-.top{grid-column:1/-1;display:flex;align-items:center;gap:12px;padding:0 14px;background:var(--panel);border-bottom:1px solid var(--border)}
-.brand{display:flex;align-items:center;gap:9px;font-weight:600;letter-spacing:-.01em}
-.brand svg{display:block}
-.brand h1{margin:0;font-size:inherit;font-weight:600;letter-spacing:inherit}
-.brand small{font:500 11px var(--mono);color:var(--muted);border:1px solid var(--border);padding:1px 6px;border-radius:5px}
-.top .sp{flex:1}
-.top .hint{color:var(--muted);font-size:12px}
-.col{background:var(--panel);min-height:0;display:flex;flex-direction:column}
-.left{border-right:1px solid var(--border)}
-.main{display:flex;flex-direction:column;min-width:0;min-height:0;background:var(--bg)}
-.scroll{overflow:auto;flex:1;min-height:0}
-
-.btn{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border:1px solid var(--border-strong);background:var(--panel);border-radius:7px;cursor:pointer;font-weight:500;font-size:12px;transition:background .12s,border-color .12s,color .12s}
+/* header */
+.top{position:sticky;top:0;z-index:20;height:52px;display:flex;align-items:center;gap:10px;padding:0 16px;background:var(--panel);border-bottom:1px solid var(--border)}
+.brand{display:flex;align-items:center;gap:9px;margin:0;font-size:14px;font-weight:600;letter-spacing:-.01em}
+.sp{flex:1}
+.btn{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border:1px solid var(--border-strong);background:var(--panel);border-radius:8px;cursor:pointer;font-weight:500;font-size:12.5px;transition:background .12s,border-color .12s}
 .btn:hover{background:var(--hover);border-color:var(--faint)}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 .btn.primary:hover{filter:brightness(1.08);background:var(--accent)}
-.btn.lg{height:30px;padding:0 14px}
-.btn svg{width:14px;height:14px;flex:none}
-.btn.icon{width:28px;padding:0;justify-content:center}
+.btn.sm{height:24px;padding:0 9px;font-size:11.5px}
+.btn svg{width:14px;height:14px}
+.psel{height:30px;border:1px solid var(--border-strong);background:var(--panel);border-radius:8px;padding:0 8px;cursor:pointer;font-size:12.5px;font-weight:500}
+.psel:hover{border-color:var(--faint)}
 
-/* tabs */
-.tabs{display:flex;gap:2px;padding:0 8px;border-bottom:1px solid var(--border);background:var(--panel);flex:none}
-.tab{position:relative;height:36px;padding:0 10px;border:0;background:none;color:var(--muted);cursor:pointer;font-weight:500;font-size:12.5px;border-radius:6px 6px 0 0;transition:color .12s,background .12s}
-.tab:hover{color:var(--text);background:var(--hover)}
-.tab[aria-selected="true"]{color:var(--text)}
-.tab[aria-selected="true"]::after{content:"";position:absolute;left:8px;right:8px;bottom:-1px;height:2px;background:var(--accent);border-radius:2px}
-.tab .n{font:11px var(--mono);color:var(--faint);margin-left:5px}
+/* layout */
+.app{display:grid;grid-template-columns:340px minmax(0,1fr);min-height:calc(100vh - 52px)}
+.settings{position:sticky;top:52px;height:calc(100vh - 52px);overflow:auto;background:var(--panel);border-right:1px solid var(--border)}
+.stage-col{display:flex;align-items:center;justify-content:center;padding:28px;min-width:0}
+.stage-in{width:min(640px,100%)}
 
-/* presets */
-.presets{padding:12px 14px;border-bottom:1px solid var(--border);flex:none}
-.sec-t{display:flex;align-items:center;justify-content:space-between;font:600 11px var(--sans);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 8px}
-.chips{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.chip{height:28px;border:1px solid var(--border);background:var(--panel-2);border-radius:7px;cursor:pointer;font-size:12px;font-weight:500;transition:background .12s,border-color .12s}
-.chip:hover{border-color:var(--faint);background:var(--hover)}
-.chip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
-.custom-note{font:11px var(--mono);color:var(--faint)}
+/* accordion */
+.sec{border-bottom:1px solid var(--border)}
+.sec>h2{margin:0}
+.sec-h{width:100%;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border:0;background:none;cursor:pointer;font-size:13px;font-weight:600;text-align:left;transition:background .12s}
+.sec-h:hover{background:var(--hover)}
+.sec-h::after{content:"";width:7px;height:7px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:rotate(-45deg);transition:transform .15s;margin-right:4px}
+.sec-h[aria-expanded="true"]::after{transform:rotate(45deg)}
+.sec-b{display:grid;gap:11px;padding:2px 16px 18px}
+.sec-b[hidden]{display:none}
 
-/* control rows */
-.pane{padding:4px 14px 24px}
-.pane[hidden]{display:none}
-.grp{margin:16px 0 4px;font:600 11px var(--sans);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);display:flex;align-items:center;gap:8px}
-.grp::after{content:"";flex:1;height:1px;background:var(--border)}
-.row{position:relative;padding:7px 0}
-.row-h{display:flex;align-items:center;gap:6px;min-height:24px}
-.row-h label{font-size:12.5px;cursor:pointer;flex:1}
-.row.off{opacity:.42}
-.row.off *{cursor:not-allowed}
-.info{width:14px;height:14px;border-radius:50%;border:1px solid var(--border-strong);color:var(--faint);font:600 9px/12px var(--sans);text-align:center;cursor:help;flex:none}
-.info:hover,.info:focus-visible{color:var(--text);border-color:var(--faint)}
-.info::after{content:attr(data-tip);display:none;position:absolute;left:0;right:0;top:100%;z-index:20;margin-top:2px;padding:8px 10px;background:var(--text);color:var(--bg);border-radius:7px;font:400 11.5px/1.4 var(--sans);text-align:left;box-shadow:0 6px 20px rgba(0,0,0,.2)}
-.info:hover::after,.info:focus-visible::after{display:block}
-.val{display:flex;align-items:center;gap:4px;font:12px var(--mono);color:var(--muted)}
-.num,.txt,.sel,.hex{height:26px;border:1px solid var(--border-strong);background:var(--panel);border-radius:6px;padding:0 7px;font:12px var(--mono);transition:border-color .12s,box-shadow .12s}
-.num{width:62px;text-align:right}
-.num::-webkit-inner-spin-button{opacity:.5}
-.txt{width:100%;font-family:var(--sans);font-size:12.5px}
-.sel{font-family:var(--sans);font-size:12.5px;padding-right:4px;cursor:pointer;max-width:150px}
-.hex{width:78px}
-.num:hover,.txt:hover,.sel:hover,.hex:hover{border-color:var(--faint)}
-.num:focus-visible,.txt:focus-visible,.hex:focus-visible,.sel:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
-input[type=color]{width:28px;height:26px;padding:2px;border:1px solid var(--border-strong);background:var(--panel);border-radius:6px;cursor:pointer}
-.inline{display:flex;gap:6px;align-items:center}
-input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:18px;background:transparent;margin:4px 0 0;cursor:pointer}
+/* rows */
+.row{display:grid;grid-template-columns:98px minmax(0,1fr);align-items:center;gap:10px;min-height:28px}
+.row>label,.row>.lbl{color:var(--muted);font-size:12.5px}
+.row.full{grid-template-columns:1fr;gap:6px}
+.row.off{opacity:.4}
+.row[hidden]{display:none}
+.ctl{display:flex;align-items:center;gap:8px;min-width:0}
+.ctl.end{justify-content:flex-end}
+.sel,.txt{height:28px;border:1px solid var(--border-strong);background:var(--panel);border-radius:7px;padding:0 8px;font-size:12.5px;width:100%;transition:border-color .12s,box-shadow .12s}
+.sel{cursor:pointer}
+.sel:hover,.txt:hover{border-color:var(--faint)}
+.sel:focus-visible,.txt:focus-visible,.num:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
+.num{flex:none;width:48px;height:24px;border:1px solid transparent;background:transparent;border-radius:6px;padding:0 2px;text-align:right;font:12px var(--mono);color:var(--muted);-moz-appearance:textfield}
+.num::-webkit-inner-spin-button,.num::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.num:hover{border-color:var(--border-strong)}
+input[type=color]{flex:none;width:28px;height:28px;padding:2px;border:1px solid var(--border-strong);background:var(--panel);border-radius:7px;cursor:pointer}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;min-width:0;height:18px;background:transparent;margin:0;cursor:pointer}
 input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:4px;background:linear-gradient(to right,var(--accent) var(--p,0%),var(--border) var(--p,0%))}
 input[type=range]::-moz-range-track{height:4px;border-radius:4px;background:var(--border)}
 input[type=range]::-moz-range-progress{height:4px;border-radius:4px;background:var(--accent)}
@@ -129,7 +110,6 @@ input[type=range]::-moz-range-thumb{width:10px;height:10px;border-radius:50%;bac
 input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.15)}
 input[type=range]:focus-visible{outline:none}
 input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 30%,transparent)}
-.row.line .row-h{min-height:28px}
 .switch{position:relative;width:32px;height:18px;flex:none}
 .switch input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;z-index:1}
 .switch i{position:absolute;inset:0;background:var(--border-strong);border-radius:99px;transition:background .15s;pointer-events:none}
@@ -137,79 +117,38 @@ input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px color
 .switch input:checked+i{background:var(--accent)}
 .switch input:checked+i::after{transform:translateX(14px)}
 .switch input:focus-visible+i{outline:2px solid var(--accent);outline-offset:2px}
+.chips{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.chip{height:28px;border:1px solid var(--border);background:var(--panel-2);border-radius:7px;cursor:pointer;font-size:12px;font-weight:500;transition:background .12s,border-color .12s}
+.chip:hover{border-color:var(--faint);background:var(--hover)}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
 
-/* states editor */
-.st-nav{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0}
-.st-nav .chip{height:30px;font-size:12px}
-.st-card{border:1px solid var(--border);border-radius:9px;background:var(--panel-2);padding:12px}
-.st-card h3{margin:0 0 2px;font-size:13px;display:flex;justify-content:space-between;align-items:center}
-.st-card h3 code{font-size:11px;color:var(--muted);font-weight:400}
-.st-card p{margin:0 0 10px;color:var(--muted);font-size:12px}
-.beh{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
-.beh button{height:26px;padding:0 9px;border:1px solid var(--border-strong);background:var(--panel);border-radius:99px;font:12px var(--mono);cursor:pointer;transition:background .12s,border-color .12s}
-.beh button:hover{border-color:var(--faint)}
-.beh button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
-.beh button:disabled{opacity:.4;cursor:not-allowed}
-.resolve{font:11.5px/1.5 var(--mono);color:var(--muted);background:var(--panel);border:1px dashed var(--border-strong);border-radius:7px;padding:7px 9px;margin-top:8px}
-.resolve b{color:var(--text);font-weight:600}
-
-
-/* simplified inspector */
-.hint{color:var(--muted);font-size:11.5px;line-height:1.4;margin-top:1px}
-.hint code{font-size:11px}
-.row-h .lbl{font-size:12.5px;flex:1;font-weight:500}
-.chips.kinds{grid-template-columns:repeat(4,1fr);margin:12px 0}
-.chips.feel{grid-template-columns:repeat(3,1fr);margin-top:8px}
-.row.line .hint{padding-right:0}
-.adv{margin:14px 0 0;border-top:1px solid var(--border)}
-.adv>summary{list-style:none;cursor:pointer;padding:10px 0;font-size:12px;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:6px;border-radius:6px}
-.adv>summary::-webkit-details-marker{display:none}
-.adv>summary::before{content:"";width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(-45deg);transition:transform .15s;margin:0 3px 0 2px}
-.adv[open]>summary::before{transform:rotate(45deg)}
-.adv>summary:hover{color:var(--text)}
-.intro{color:var(--muted);font-size:12px;margin:12px 0 4px;line-height:1.5}
-.hv{padding:9px 0;border-bottom:1px solid var(--border)}
-.hv-h{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.hv-h label{font-weight:500;font-size:12.5px}
-.hv-h .sel{max-width:158px;flex:none}
-.hv-t{margin-top:7px}
-.tog{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);cursor:pointer}
-
-/* ── centre: preview ───────────────────── */
-.live{display:inline-flex;align-items:center;gap:6px;font:11px var(--mono);color:var(--muted)}
-.live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px color-mix(in srgb,var(--ok) 20%,transparent)}
-.no-mouse .live{display:none}
-.pv-row{display:flex;gap:20px;align-items:stretch;padding:16px;flex:none;background:var(--bg);border-bottom:1px solid var(--border)}
-.pv-main{flex:none;width:min(440px,100%)}
-.pv-h{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.pv-h h2{margin:0;font-size:13px;font-weight:600}
-.box{position:relative;width:100%;height:290px;overflow:hidden;border:1px solid var(--border-strong);border-radius:14px;background:var(--panel);background-image:radial-gradient(var(--border) 1px,transparent 1px);background-size:16px 16px;box-shadow:var(--shadow);transition:border-color .15s,box-shadow .15s}
+/* preview stage */
+.capbar{display:flex;justify-content:space-between;gap:12px;margin-bottom:10px;font:12px var(--mono);color:var(--muted)}
+.capbar b{color:var(--accent);font-weight:500}
+.box{position:relative;width:100%;height:min(380px,58vh);overflow:hidden;border:1px solid var(--border-strong);border-radius:16px;background:var(--panel);background-image:radial-gradient(var(--border) 1px,transparent 1px);background-size:16px 16px;box-shadow:var(--shadow);transition:border-color .15s,box-shadow .15s}
 .box:hover{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 16%,transparent)}
+#box.cc-on{cursor:none}
+#box .cc-dot,#box .cc-ring,#box .cc-pv{position:absolute}
 .stage{position:absolute;inset:0}
 .subj{position:absolute;inset:0;display:grid;place-items:center}
 .subj[hidden]{display:none}
 .subj>*{max-width:86%}
-.boxcap{position:absolute;left:12px;top:10px;right:12px;font:11px var(--mono);color:var(--muted);pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.boxcap b{color:var(--accent);font-weight:500}
-.is-target{outline:1.5px dashed var(--accent);outline-offset:3px}
-.pv-side{flex:1;min-width:0;display:flex;flex-direction:column;gap:14px;padding-top:2px}
-.pv-side h3{margin:0 0 8px;font:600 11px var(--sans);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
-.state{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0;font:12px var(--mono)}
-.state dt{color:var(--faint)}.state dd{margin:0;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.mk{min-width:0}
-.mkpre{margin:0;padding:10px 12px;border:1px solid var(--border);border-radius:9px;background:var(--code-bg);font:11.5px/1.6 var(--mono);max-height:132px;overflow:auto;white-space:pre}
-.mk-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px}
-.mk-bar .tog{color:var(--text);font-size:12px}
-.tips{margin:0;padding-left:18px;color:var(--muted);font-size:12.5px;line-height:1.6}
-.touch-note{display:none;margin-bottom:10px;padding:10px 12px;border:1px solid var(--border-strong);background:var(--panel);border-radius:8px;font-size:12.5px}
+.attrs{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:44px;margin-top:12px;padding:6px 8px 6px 14px;border:1px solid var(--border);border-radius:10px;background:var(--code-bg);font:12px var(--mono)}
+.attrs code{flex:1;min-width:0;overflow:auto;white-space:nowrap}
+.attrs .btn{flex:none}
+.attrs .none{color:var(--muted);font-family:var(--sans)}
+.attrs[hidden]{display:none}
+.touch-note{display:none;margin-bottom:12px;padding:10px 12px;border:1px solid var(--border-strong);background:var(--panel);border-radius:8px;font-size:12.5px}
 .no-mouse .touch-note{display:block}
+.is-target{outline:1.5px dashed var(--accent);outline-offset:3px}
+
+/* demo elements inside the box */
 .lnk{color:var(--text);text-decoration:none;font-weight:600;font-size:18px;border-bottom:1px solid var(--border-strong);padding:1px 0;transition:border-color .12s,color .12s}
 .lnk:hover{color:var(--accent);border-color:var(--accent)}
-.ibtn{width:34px;height:34px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--border-strong);background:var(--panel);cursor:pointer;transition:background .12s}
 .pbtn{height:42px;padding:0 22px;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;border:1px solid transparent;background:var(--text);color:var(--bg);transition:background .15s}
 .pbtn:hover{background:color-mix(in srgb,var(--text) 82%,var(--bg))}
 .subj img{display:block;width:230px;aspect-ratio:16/10;object-fit:cover;border-radius:10px}
-.sm{margin:0;width:260px;font-size:14px;line-height:1.6}
+.para{margin:0;width:260px;font-size:14px;line-height:1.6}
 .card{width:260px;border:1px solid var(--border);border-radius:12px;background:var(--panel);padding:18px;box-shadow:var(--shadow)}
 .card .ct{display:block;font-size:16px;letter-spacing:-.01em}
 .card p{margin:4px 0 0;color:var(--muted);font-size:13px}
@@ -224,98 +163,66 @@ input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px color
 .idx a:hover{color:var(--accent);padding-left:8px}
 .idx .m{font:12px var(--mono);color:var(--muted);letter-spacing:0;font-weight:400}
 
-/* inspector bar */
-.inspect{flex:none;display:flex;gap:6px 14px;flex-wrap:wrap;align-items:center;padding:8px 16px;border-top:1px solid var(--border);background:var(--panel);font:11.5px var(--mono);color:var(--muted);min-height:38px}
-.inspect b{color:var(--text);font-weight:500}
-.inspect .k{color:var(--faint)}
-
-/* ── right: code ───────────────────────── */
-.code-h{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--border);flex:none}
-.code-h .sp{flex:1}
+/* code dialog */
+dialog{width:min(820px,calc(100vw - 24px));height:min(640px,calc(100vh - 32px));padding:0;border:1px solid var(--border-strong);border-radius:16px;background:var(--panel);box-shadow:0 24px 80px rgba(0,0,0,.35)}
+dialog[open]{display:flex;flex-direction:column}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+.dlg-h{display:flex;align-items:center;gap:8px;padding:10px 12px 0 8px;border-bottom:1px solid var(--border);flex:none}
+.tabs{display:flex;gap:2px;flex:1}
+.tab{position:relative;height:38px;padding:0 12px;border:0;background:none;color:var(--muted);cursor:pointer;font-weight:500;font-size:12.5px;border-radius:6px 6px 0 0;transition:color .12s,background .12s}
+.tab:hover{color:var(--text);background:var(--hover)}
+.tab[aria-selected="true"]{color:var(--text)}
+.tab[aria-selected="true"]::after{content:"";position:absolute;left:10px;right:10px;bottom:-1px;height:2px;background:var(--accent);border-radius:2px}
+.dlg-h .btn{margin-bottom:8px}
 .code-wrap{flex:1;min-height:0;overflow:auto;background:var(--code-bg)}
 pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-space:pre;color:var(--text)}
+.dlg-f{flex:none;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;border-top:1px solid var(--border);font:11px var(--mono);color:var(--muted)}
 .t-c{color:var(--t-c);font-style:italic}.t-s{color:var(--t-s)}.t-k{color:var(--t-k)}.t-n{color:var(--t-n)}.t-f{color:var(--t-f)}.t-p{color:var(--t-p)}.t-t{color:var(--t-t)}
-.code-f{flex:none;display:flex;justify-content:space-between;gap:10px;padding:7px 12px;border-top:1px solid var(--border);font:11px var(--mono);color:var(--muted);background:var(--panel)}
 
-/* ── responsive ────────────────────────── */
-@media (max-width:1180px){
-  .app{display:flex;flex-direction:column;height:auto}
-  .top{position:sticky;top:0;z-index:50;min-height:48px}
-  .col{overflow:visible}
-  .main{display:contents}
-  .pv-row{order:1}.left{order:2;border-right:0;border-top:1px solid var(--border)}.codepanel{order:3;border-top:1px solid var(--border)}
-  .scroll{overflow:visible}
-  .code-wrap{max-height:70vh}
-  .top .hint{display:none}
+@media (max-width:900px){
+  .app{display:flex;flex-direction:column}
+  .stage-col{order:1;padding:14px}
+  .settings{order:2;position:static;height:auto;border-right:0;border-top:1px solid var(--border)}
+  .box{height:300px}
+  .row{grid-template-columns:80px minmax(0,1fr)}
 }
-@media (max-width:640px){
-  .live{display:none}
-  .brand{white-space:nowrap}.brand small{display:none}
-  .pv-row{flex-direction:column;padding:10px}.pv-main{width:100%}
+@media (max-width:560px){
+  .brand span{display:none}
+  .top{gap:6px;padding:0 10px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
-/* the cursor lives inside the preview box only */
-#box.cc-on{cursor:none}
-#box .cc-dot,#box .cc-ring,#box .cc-pv{position:absolute}
 </style>
 <style id="cc-style"></style>
 <script defer src="https://mochi.farhan.app/script.js" data-website-id="15e53223-2206-4b9a-99d2-28dc855a10b0"></script>
 </head>
 <body>
-<a class="skip" href="#stage">Skip to preview</a>
-<div class="app">
+<a class="skip" href="#box">Skip to preview</a>
 
 <header class="top">
-  <div class="brand">
+  <h1 class="brand">
     <svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M10 7l13 7.5-5.6 1.7L15 22z" fill="#fff"/></svg>
-    <h1>Cursor Builder</h1> <small>data-cursor</small>
-  </div>
+    <span>Cursor Builder</span>
+  </h1>
   <span class="sp"></span>
-  <button class="btn" id="themeBtn" type="button" aria-label="Toggle colour theme">
-    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"/></svg>
-    Theme
-  </button>
-  <button class="btn" id="resetBtn" type="button">
-    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2.5 8a5.5 5.5 0 1 0 1.8-4.1M2.5 2.5v3h3"/></svg>
-    Reset
-  </button>
+  <label class="sr" for="preset">Preset</label>
+  <select class="psel" id="preset"></select>
+  <button class="btn" id="resetBtn" type="button">Reset</button>
+  <button class="btn primary" id="codeBtn" type="button">Get code</button>
 </header>
 
-<!-- LEFT · configuration -->
-<aside class="col left" aria-labelledby="cfg-h">
-  <h2 class="sr" id="cfg-h">Cursor configuration</h2>
-  <div class="presets">
-    <p class="sec-t"><span>Start from a preset</span><span class="custom-note" id="customNote" hidden>modified</span></p>
-    <div class="chips" id="presetChips"></div>
-  </div>
-  <div class="tabs" role="tablist" aria-label="Configuration sections" id="cfgTabs">
-    <button class="tab" role="tab" id="t-cursor" aria-controls="p-cursor" aria-selected="true">Look</button>
-    <button class="tab" role="tab" id="t-trail" aria-controls="p-trail" aria-selected="false" tabindex="-1">Trail</button>
-    <button class="tab" role="tab" id="t-motion" aria-controls="p-motion" aria-selected="false" tabindex="-1">Feel</button>
-    <button class="tab" role="tab" id="t-states" aria-controls="p-states" aria-selected="false" tabindex="-1">Hover</button>
-    <button class="tab" role="tab" id="t-preview" aria-controls="p-preview" aria-selected="false" tabindex="-1">Preview</button>
-  </div>
-  <div class="scroll">
-    <div class="pane" id="p-cursor" role="tabpanel" aria-labelledby="t-cursor"></div>
-    <div class="pane" id="p-trail" role="tabpanel" aria-labelledby="t-trail" hidden></div>
-    <div class="pane" id="p-motion" role="tabpanel" aria-labelledby="t-motion" hidden></div>
-    <div class="pane" id="p-states" role="tabpanel" aria-labelledby="t-states" hidden></div>
-    <div class="pane" id="p-preview" role="tabpanel" aria-labelledby="t-preview" hidden></div>
-  </div>
-</aside>
+<div class="app">
+  <aside class="settings" aria-label="Settings"><div id="acc"></div></aside>
 
-<!-- CENTRE · live preview -->
-<main class="main">
-  <section class="pv-row" aria-labelledby="live-h">
-    <div class="pv-main">
-      <div class="pv-h"><h2 id="live-h">Live preview</h2><span class="live">hover the box</span></div>
-      <div class="touch-note" role="status"><strong>Mouse or trackpad required.</strong> The live cursor preview is disabled on touch devices. You can still configure the cursor and copy the generated code.</div>
+  <main class="stage-col">
+    <div class="stage-in">
+      <div class="touch-note" role="status"><strong>Mouse or trackpad required.</strong> The live preview is disabled on touch devices. You can still adjust the settings and copy the code.</div>
+      <div class="capbar"><span id="boxcap"></span><span>hover the box to try it</span></div>
       <div class="box" id="box">
-        <div class="stage" id="stage" role="region" aria-label="Cursor test area" tabindex="-1">
+<div class="stage" id="stage" role="region" aria-label="Cursor test area" tabindex="-1">
           <div class="subj" data-subject="open"></div>
           <div class="subj" data-subject="link" hidden><a class="lnk" href="#stage" onclick="return false">Read the case study →</a></div>
           <div class="subj" data-subject="button" hidden><button class="pbtn" type="button">Get started</button></div>
-          <div class="subj" data-subject="text" hidden><p class="sm">Good cursors are quiet until they matter. Hover this paragraph to see how text is treated.</p></div>
+          <div class="subj" data-subject="text" hidden><p class="para">Good cursors are quiet until they matter. Hover this paragraph to see how text is treated.</p></div>
           <div class="subj" data-subject="image" hidden><img data-art="0" alt="Abstract gradient artwork"></div>
           <div class="subj" data-subject="card" hidden><article class="card" data-cursor-type="card"><strong class="ct">Aurora Bank</strong><p>Mobile banking redesign</p></article></div>
           <div class="subj" data-subject="input" hidden><input class="in" type="text" aria-label="Your name" placeholder="Type here…" autocomplete="off"></div>
@@ -328,47 +235,30 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
             </ul>
           </div>
         </div>
-        <div class="boxcap" id="boxcap" aria-hidden="true"></div>
+      </div>
+      <div class="attrs" id="attrs" hidden>
+        <code id="attr-code"></code>
+        <button class="btn sm" id="attrCopy" type="button">Copy</button>
       </div>
     </div>
-    <div class="pv-side">
-      <div>
-        <h3>Cursor right now</h3>
-        <dl class="state" id="inspect" aria-label="Resolved cursor state">
-          <dt>hovering</dt><dd id="i-el">none</dd>
-          <dt>treated as</dt><dd id="i-type">default</dd>
-          <dt>effect</dt><dd id="i-b">none</dd>
-          <dt>size</dt><dd id="i-size">–</dd>
-        </dl>
-      </div>
-      <div class="mk">
-        <h3>Markup for this element</h3>
-        <pre class="mkpre" tabindex="0" aria-label="Markup for the previewed element"><code id="mk-code"></code></pre>
-        <div class="mk-bar">
-          <label class="tog"><span class="switch"><input type="checkbox" role="switch" id="mkTest"><i></i></span> Test with these attributes</label>
-          <button class="btn" id="mkCopy" type="button" style="height:24px;font-size:11px">Copy</button>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="col codepanel" aria-labelledby="code-hh">
-  <h2 class="sr" id="code-hh">Generated code</h2>
-  <div class="code-h">
-    <div class="tabs" role="tablist" aria-label="Generated files" id="codeTabs" style="border:0;padding:0;flex:1">
+  </main>
+</div>
+
+<dialog id="codeDlg" aria-labelledby="dlg-t">
+  <h2 class="sr" id="dlg-t">Generated code</h2>
+  <div class="dlg-h">
+    <div class="tabs" role="tablist" aria-label="Generated files" id="codeTabs">
       <button class="tab" role="tab" id="c-html" aria-selected="true" aria-controls="codeView">HTML</button>
       <button class="tab" role="tab" id="c-css" aria-selected="false" tabindex="-1" aria-controls="codeView">CSS</button>
       <button class="tab" role="tab" id="c-js" aria-selected="false" tabindex="-1" aria-controls="codeView">JavaScript</button>
     </div>
-    <button class="btn lg primary" id="copyBtn" type="button">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="5" y="5" width="8.500" height="8.500" rx="1.500"/><path d="M3 10.500V3.500A1 1 0 0 1 4 2.500h7"/></svg>
-      <span id="copyLabel">Copy</span>
-    </button>
+    <button class="btn primary" id="copyBtn" type="button"><span id="copyLabel">Copy</span></button>
+    <button class="btn" id="closeDlg" type="button" aria-label="Close">Close</button>
   </div>
   <div class="code-wrap" id="codeView" role="tabpanel" tabindex="0" aria-labelledby="c-html"><pre><code id="code"></code></pre></div>
-  <div class="code-f"><span id="codeMeta">–</span><button class="btn" id="copyAll" type="button" style="height:22px;font-size:11px">Copy all three</button></div>
-</section>
-</main>
-</div>
+  <div class="dlg-f"><span id="codeMeta">–</span><button class="btn sm" id="copyAll" type="button">Copy all three</button></div>
+</dialog>
+
 <noscript><p style="padding:24px;font:14px system-ui">Cursor Builder needs JavaScript to design and preview a custom cursor.</p></noscript>
 <div class="sr" role="status" aria-live="polite" id="live"></div>
 
@@ -612,13 +502,15 @@ const ENGINE = String.raw`/* Custom cursor · generated by Cursor Builder
 
       // Magnetic elements drift towards the pointer, then settle back.
       if (shift && !still && !mags.has(el)) mags.set(el, { x: spring(0), y: spring(0) });
+      let magBusy = false;
       for (const [n, m] of mags) {
         const on = n === el && shift;
         m.x.t = on ? clamp((px - cx) * pull * 0.5, 12) : 0;
         m.y.t = on ? clamp((py - cy) * pull * 0.5, 12) : 0;
         if (still) { m.x.x = m.y.x = 0; m.x.v = m.y.v = 0; } else { advance(m.x, 14, 0.7, dt); advance(m.y, 14, 0.7, dt); }
         n.style.translate = m.x.x.toFixed(2) + 'px ' + m.y.x.toFixed(2) + 'px';
-        if (!on && rest(m.x) && rest(m.y)) { n.style.translate = ''; mags.delete(n); }
+        if (!rest(m.x) || !rest(m.y)) magBusy = true;
+        else if (!on) { n.style.translate = ''; mags.delete(n); }
       }
 
       let sq = '';
@@ -663,7 +555,7 @@ const ENGINE = String.raw`/* Custom cursor · generated by Cursor Builder
       }
       //]preview
 
-      let busy = mx !== px || my !== py || mags.size > 0 || dirty || rescan;
+      let busy = mx !== px || my !== py || magBusy || dirty || rescan;
       for (const s of all) if (!rest(s)) busy = true;
       if (busy) raf = requestAnimationFrame(tick);
     };
@@ -975,9 +867,10 @@ function highlight(src, lang) {
 }
 
 /* ════════════════════════════════════════════════════════════════
-   4 · Control schema → inspector UI
+   4 · Settings UI
    ════════════════════════════════════════════════════════════════ */
-const R = (k, l, min, max, step, u, tip, en) => ({ k, t:'range', l, min, max, step, u, tip, en });
+const $ = (s, r = document) => r.querySelector(s);
+const box = $('#box');
 const FEELS = {
   Crisp:{ follow:1, smoothing:0, easing:'smooth', speed:1 },
   Smooth:{ follow:.85, smoothing:0, easing:'smooth', speed:1 },
@@ -985,214 +878,289 @@ const FEELS = {
   Elastic:{ follow:.7, smoothing:0, easing:'elastic', speed:1.2 },
   Floaty:{ follow:.3, smoothing:.3, easing:'smooth', speed:.7 },
 };
-const SCHEMA = {
-  cursor:[
-    { k:'type', t:'select', l:'Shape', o:[['circle','Circle'],['rounded','Rounded square'],['square','Square'],['crosshair','Crosshair']], tip:'The shape of the cursor when idle.' },
-    R('size','Size',4,80,1,'px','Diameter when idle.'),
-    { k:'color', t:'color', l:'Fill colour', tip:'Also the colour of labels, frames and the lens.' },
-    R('fillOpacity','Fill opacity',0,1,.05,'','0 = see-through, so only the border shows.', c => c.type !== 'crosshair'),
-    R('borderWidth','Border width',0,8,.5,'px','', c => c.type !== 'crosshair'),
-    { k:'borderColor', t:'color', l:'Border colour', en:c => c.type !== 'crosshair' && c.borderWidth > 0 },
-    { k:'invert', t:'toggle', l:'Invert colours', tip:'Inverts whatever is under the cursor. Works best with a white cursor.' },
-    { k:'hideNative', t:'toggle', l:'Hide system cursor', tip:'Hides the normal arrow while this cursor is running.' },
-  ],
-  trail:[
-    { k:'ring', t:'toggle', l:'Trailing ring', tip:'A ring that follows the dot a moment later.' },
-    R('ringSize','Size',16,160,1,'px','', c => c.ring),
-    { k:'ringShape', t:'select', l:'Shape', o:[['circle','Circle'],['rounded','Rounded square'],['square','Square']], en:c => c.ring },
-    { k:'ringFill', t:'color', l:'Fill colour', en:c => c.ring },
-    R('ringFillOpacity','Fill opacity',0,1,.05,'','0 = see-through.', c => c.ring),
-    R('ringBorderWidth','Border width',0,8,.5,'px','', c => c.ring),
-    { k:'ringBorder', t:'color', l:'Border colour', en:c => c.ring && c.ringBorderWidth > 0 },
-    R('ringOpacity','Opacity',0,1,.05,'','Overall see-through-ness of the ring.', c => c.ring),
-    R('trailSpeed','Follow speed',.02,1,.01,'','Low = lazy and laggy, high = sticks to the dot.', c => c.ring),
-  ],
-  motion:[
-    { k:'feel', t:'feel', l:'Feel', tip:'How the cursor moves, from instant to springy.' },
-    R('magnet','Magnetic pull',0,1,.01,'','How strongly “magnetic” elements attract the cursor.'),
-    R('stretch','Squash & stretch',0,1.5,.05,'','Stretches the cursor in the direction it moves.'),
-    R('press','Click squeeze',.3,1.4,.05,'×','Cursor size while the mouse button is held.'),
-  ],
-  preview:[
-    { k:'preview', t:'toggle', l:'Image preview', tip:'Show a thumbnail that follows the cursor over elements with data-cursor-image.' },
-    R('previewSize','Width',60,360,2,'px','', c => c.preview),
-    { k:'previewRatio', t:'select', l:'Shape', o:[['4/3','Landscape 4:3'],['16/9','Wide 16:9'],['1/1','Square'],['3/4','Portrait 3:4'],['circle','Circle']], en:c => c.preview },
-    { k:'previewPos', t:'select', l:'Position', o:[['beside','Beside the cursor'],['center','Centred on the cursor']], en:c => c.preview },
-  ],
-};
-
-const fields = [];            // { def, row, sync() }
-const $ = (s, r = document) => r.querySelector(s);
-const box = $('#box');
-
-function mkRow(def, container) {
-  if (def.t === 'feel') return mkFeel(def, container);
-  const id = 'f-' + def.k;
-  const row = document.createElement('div');
-  row.className = 'row' + (def.t === 'range' ? '' : ' line');
-  row.dataset.key = def.k;
-  const head = document.createElement('div'); head.className = 'row-h';
-  const lab = document.createElement('label'); lab.htmlFor = id; lab.textContent = def.l;
-  head.append(lab);
-  row.append(head);
-  if (def.tip) { const t = document.createElement('div'); t.className = 'hint'; t.id = id + '-hint'; t.textContent = def.tip; row.append(t); }
-  const describe = (n) => { if (def.tip) n.setAttribute('aria-describedby', id + '-hint'); };
-  let sync;
-  const set = (v) => { cfg[def.k] = v; change(); if (DEMO_KEYS[def.k]) demo(DEMO_KEYS[def.k]); };
-  if (def.t === 'range') {
-    const dec = (String(def.step).split('.')[1] || '').length;
-    const rng = Object.assign(document.createElement('input'), { type:'range', id, min:def.min, max:def.max, step:def.step });
-    const n = Object.assign(document.createElement('input'), { type:'number', className:'num', min:def.min, max:def.max, step:def.step });
-    n.setAttribute('aria-label', def.l + ' value');
-    const u = document.createElement('span'); u.textContent = def.u || '';
-    const val = document.createElement('span'); val.className = 'val'; val.append(n, u);
-    head.append(val); row.append(rng);
-    const paint = () => rng.style.setProperty('--p', ((rng.value - def.min) / (def.max - def.min) * 100) + '%');
-    rng.addEventListener('input', () => { n.value = (+rng.value).toFixed(dec); paint(); set(+rng.value); });
-    n.addEventListener('input', () => { if (n.value === '' || isNaN(+n.value)) return; const v = Math.min(def.max, Math.max(def.min, +n.value)); rng.value = v; paint(); set(v); });
-    n.addEventListener('blur', () => { n.value = (+rng.value).toFixed(dec); });
-    sync = () => { rng.value = cfg[def.k]; n.value = (+cfg[def.k]).toFixed(dec); paint(); }; describe(rng);
-  } else if (def.t === 'select') {
-    const s = document.createElement('select'); s.id = id; s.className = 'sel';
-    def.o.forEach(([v, t]) => s.add(new Option(t, v)));
-    s.addEventListener('change', () => set(s.value)); head.append(s); describe(s);
-    sync = () => { s.value = cfg[def.k]; };
-  } else if (def.t === 'toggle') {
-    const w = document.createElement('span'); w.className = 'switch';
-    const i = Object.assign(document.createElement('input'), { type:'checkbox', id }); i.setAttribute('role', 'switch');
-    i.addEventListener('change', () => set(i.checked)); w.append(i, document.createElement('i')); head.append(w); describe(i);
-    sync = () => { i.checked = !!cfg[def.k]; };
-  } else if (def.t === 'color') {
-    const w = document.createElement('div'); w.className = 'inline';
-    const c = Object.assign(document.createElement('input'), { type:'color', id });
-    const h = Object.assign(document.createElement('input'), { type:'text', className:'hex', maxLength:7, spellcheck:false });
-    h.setAttribute('aria-label', def.l + ' hex value');
-    c.addEventListener('input', () => { h.value = c.value; set(c.value); });
-    h.addEventListener('input', () => { if (/^#[0-9a-f]{6}$/i.test(h.value)) { c.value = h.value; set(h.value.toLowerCase()); } });
-    h.addEventListener('blur', () => { h.value = cfg[def.k]; });
-    w.append(c, h); head.append(w);
-    sync = () => { c.value = cfg[def.k]; h.value = cfg[def.k]; };
-   
-  }
-  const f = { def, row, sync };
-  fields.push(f);
-  container.append(row);
-}
-
-function mkFeel(def, container) {
-  const row = document.createElement('div'); row.className = 'row'; row.dataset.key = 'feel';
-  row.innerHTML = '<div class="row-h"><span class="lbl" id="feel-l">' + def.l + '</span></div><div class="hint">' + def.tip + '</div>';
-  const grp = document.createElement('div'); grp.className = 'chips feel'; grp.setAttribute('role', 'group'); grp.setAttribute('aria-labelledby', 'feel-l');
-  const btns = Object.keys(FEELS).map(n => {
-    const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = n;
-    b.addEventListener('click', () => { Object.assign(cfg, FEELS[n]); fields.forEach(f => f.sync()); change(); demo('move'); });
-    grp.append(b); return b;
-  });
-  row.append(grp);
-  const sync = () => { const cur = Object.keys(FEELS).find(n => Object.entries(FEELS[n]).every(([k, v]) => cfg[k] === v)); btns.forEach(b => b.setAttribute('aria-pressed', String(b.textContent === cur))); };
-  fields.push({ def, row, sync }); container.append(row);
-}
-
-function buildPane(id, defs) {
-  const p = $('#' + id); let box = p;
-  defs.forEach(d => {
-    if (d.adv) {
-      box = document.createElement('details'); box.className = 'adv';
-      const sm = document.createElement('summary'); sm.textContent = d.adv; box.append(sm); p.append(box);
-    } else mkRow(d, box);
-  });
-}
-
-function refreshEnabled() {
-  fields.forEach(({ def, row }) => {
-    const on = def.en ? def.en(cfg) : true;
-    row.classList.toggle('off', !on);
-    row.querySelectorAll('input,select').forEach(i => { i.disabled = !on; });
-  });
-}
-
-/* ── hover: pick an element kind, then set what the cursor does over it ── */
-const KINDS = [
-  ['link','Links','a[href]'], ['button','Buttons','buttons, tabs, checkboxes, selects'], ['text','Text','paragraphs, headings, lists'],
-  ['image','Images','img, video'], ['card','Cards','data-cursor-type="card"'], ['input','Fields','inputs, textareas'], ['custom','Custom','data-cursor-type="custom"'],
-];
-const FX = [['none','Nothing extra'], ['frame','Frame the element'], ['lens','Magnifying lens'], ['label','Show a label'], ['caret','Text caret'], ['hide','Hide custom cursor']];
+const KINDS = [['link','Links'], ['button','Buttons'], ['text','Text'], ['image','Images'], ['card','Cards'], ['input','Text fields'], ['custom','Custom']];
+const FX = [['none','Nothing extra'], ['frame','Frame the element'], ['lens','Magnifying lens'], ['label','Text in cursor'], ['caret','Text caret'], ['hide','Hide custom cursor']];
 const fxOf = (s) => ['hide','caret','lens','frame','label'].find(x => s.b.includes(x)) || 'none';
+
+let uid = 0;
+const fields = [];                       // { sync(), apply() } for rows bound to cfg
+const make = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
+
+function rangeCtl(d, label, onInput) {
+  const dec = (String(d.step).split('.')[1] || '').length;
+  const wrap = make('div', 'ctl');
+  const rng = Object.assign(document.createElement('input'), { type:'range', min:d.min, max:d.max, step:d.step, id:'c' + (++uid) });
+  const num = Object.assign(document.createElement('input'), { type:'number', className:'num', min:d.min, max:d.max, step:d.step });
+  rng.setAttribute('aria-label', label); num.setAttribute('aria-label', label + ' value');
+  const paint = () => rng.style.setProperty('--p', ((rng.value - d.min) / (d.max - d.min) * 100) + '%');
+  rng.addEventListener('input', () => { num.value = (+rng.value).toFixed(dec); paint(); onInput(+rng.value); });
+  num.addEventListener('input', () => { if (num.value === '' || isNaN(+num.value)) return; const v = Math.min(d.max, Math.max(d.min, +num.value)); rng.value = v; paint(); onInput(v); });
+  num.addEventListener('blur', () => { num.value = (+rng.value).toFixed(dec); });
+  wrap.append(rng, num);
+  return { wrap, rng, num, inputs:[rng, num], set(v) { rng.value = v; num.value = (+v).toFixed(dec); paint(); } };
+}
+function colorCtl(label, onInput) {
+  const c = Object.assign(document.createElement('input'), { type:'color', id:'c' + (++uid) });
+  c.setAttribute('aria-label', label);
+  c.addEventListener('input', () => onInput(c.value));
+  return c;
+}
+function newRow(def, ctl, forId) {
+  const r = make('div', 'row' + (def.full ? ' full' : '')); r.dataset.key = def.k;
+  const l = document.createElement(forId ? 'label' : 'span'); if (forId) l.htmlFor = forId; else l.className = 'lbl';
+  l.textContent = def.l; if (def.tip) { l.title = def.tip; ctl.title = def.tip; }
+  r.append(l, ctl); return r;
+}
+function bindRow(def, row, inputs, sync) {
+  const f = {
+    sync,
+    apply() { const on = def.en ? def.en(cfg) : true; row.classList.toggle('off', !on); inputs.forEach(i => { i.disabled = !on; }); },
+  };
+  fields.push(f); return f;
+}
+const set = (k, v) => { cfg[k] = v; change(); if (DEMO_KEYS[k]) demo(DEMO_KEYS[k]); };
+
+function addRow(parent, def) {
+  let row, sync, inputs;
+  if (def.t === 'select') {
+    const s = make('select', 'sel'); s.id = 'c' + (++uid); def.o.forEach(([v, t]) => s.add(new Option(t, v)));
+    s.addEventListener('change', () => set(def.k, s.value));
+    row = newRow(def, s, s.id); inputs = [s]; sync = () => { s.value = cfg[def.k]; };
+  } else if (def.t === 'range') {
+    const rc = rangeCtl(def, def.l, v => set(def.k, v));
+    row = newRow(def, rc.wrap, rc.rng.id); inputs = rc.inputs; sync = () => rc.set(cfg[def.k]);
+  } else if (def.t === 'pair') {                       // colour swatch + a slider
+    const col = colorCtl(def.l + ' colour', v => set(def.color, v));
+    const rc = rangeCtl(def.range, def.l + ' ' + def.range.name, v => set(def.range.k, v));
+    const wrap = make('div', 'ctl'); wrap.append(col, rc.wrap); rc.wrap.style.flex = '1';
+    row = newRow(def, wrap, col.id); inputs = [col, ...rc.inputs];
+    sync = () => { col.value = cfg[def.color]; rc.set(cfg[def.range.k]); };
+  } else if (def.t === 'toggle') {
+    const w = make('span', 'switch'), i = Object.assign(document.createElement('input'), { type:'checkbox', id:'c' + (++uid) });
+    i.setAttribute('role', 'switch'); i.addEventListener('change', () => set(def.k, i.checked)); w.append(i, make('i'));
+    const ctl = make('div', 'ctl end'); ctl.append(w);
+    row = newRow(def, ctl, i.id); inputs = [i]; sync = () => { i.checked = !!cfg[def.k]; };
+  } else if (def.t === 'feel') {
+    const grp = make('div', 'chips'); grp.setAttribute('role', 'group'); grp.setAttribute('aria-label', 'Feel');
+    const btns = Object.keys(FEELS).map(n => {
+      const b = make('button', 'chip', n); b.type = 'button';
+      b.addEventListener('click', () => { Object.assign(cfg, FEELS[n]); fields.forEach(f => f.sync()); change(); demo('move'); });
+      grp.append(b); return b;
+    });
+    def.full = true; row = newRow({ ...def, k:'feel' }, grp); inputs = btns;
+    sync = () => { const cur = Object.keys(FEELS).find(n => Object.entries(FEELS[n]).every(([k, v]) => cfg[k] === v)); btns.forEach(b => b.setAttribute('aria-pressed', String(b.textContent === cur))); };
+  }
+  bindRow(def, row, inputs, sync); parent.append(row);
+}
+
+/* ── sections ────────────────────────────────────────────────── */
+const SECTIONS = [
+  { id:'cursor', title:'Cursor', rows:[
+    { t:'select', k:'type', l:'Shape', o:[['circle','Circle'],['rounded','Rounded square'],['square','Square'],['crosshair','Crosshair']] },
+    { t:'range', k:'size', l:'Size', min:4, max:80, step:1 },
+    { t:'pair', k:'fill', l:'Fill', color:'color', range:{ k:'fillOpacity', name:'opacity', min:0, max:1, step:.05 }, en:c => c.type !== 'crosshair', tip:'Colour and opacity. The colour is also used for labels, frames and the lens.' },
+    { t:'pair', k:'border', l:'Border', color:'borderColor', range:{ k:'borderWidth', name:'width', min:0, max:8, step:.5 }, en:c => c.type !== 'crosshair' },
+    { t:'toggle', k:'invert', l:'Invert colours', tip:'Inverts whatever is under the cursor. Works best with a white cursor.' },
+    { t:'toggle', k:'hideNative', l:'Hide system cursor' },
+  ] },
+  { id:'trail', title:'Trailing ring', rows:[
+    { t:'toggle', k:'ring', l:'Show ring' },
+    { t:'range', k:'ringSize', l:'Size', min:16, max:160, step:1, en:c => c.ring },
+    { t:'select', k:'ringShape', l:'Shape', o:[['circle','Circle'],['rounded','Rounded square'],['square','Square']], en:c => c.ring },
+    { t:'pair', k:'rfill', l:'Fill', color:'ringFill', range:{ k:'ringFillOpacity', name:'opacity', min:0, max:1, step:.05 }, en:c => c.ring },
+    { t:'pair', k:'rborder', l:'Border', color:'ringBorder', range:{ k:'ringBorderWidth', name:'width', min:0, max:8, step:.5 }, en:c => c.ring },
+    { t:'range', k:'ringOpacity', l:'Opacity', min:0, max:1, step:.05, en:c => c.ring },
+    { t:'range', k:'trailSpeed', l:'Follow speed', min:.02, max:1, step:.01, en:c => c.ring, tip:'Low = lazy and laggy, high = sticks to the dot.' },
+  ] },
+  { id:'motion', title:'Motion', rows:[
+    { t:'feel', k:'feel', l:'Feel' },
+    { t:'range', k:'magnet', l:'Magnetic pull', min:0, max:1, step:.01, tip:'How strongly “magnetic” elements attract the cursor.' },
+    { t:'range', k:'stretch', l:'Stretch', min:0, max:1.5, step:.05, tip:'Squash and stretch along the direction of travel.' },
+    { t:'range', k:'press', l:'Click squeeze', min:.3, max:1.4, step:.05, tip:'Cursor size while the mouse button is held.' },
+  ] },
+  { id:'hover', title:'Hover effects', custom:'hover' },
+  { id:'image', title:'Image preview', rows:[
+    { t:'toggle', k:'preview', l:'Show image', tip:'A thumbnail follows the cursor over elements with data-cursor-image.' },
+    { t:'range', k:'previewSize', l:'Width', min:60, max:360, step:2, en:c => c.preview },
+    { t:'select', k:'previewRatio', l:'Shape', o:[['4/3','Landscape 4:3'],['16/9','Wide 16:9'],['1/1','Square'],['3/4','Portrait 3:4'],['circle','Circle']], en:c => c.preview },
+    { t:'select', k:'previewPos', l:'Position', o:[['beside','Beside the cursor'],['center','Centred on the cursor']], en:c => c.preview },
+  ] },
+];
+
+/* ── hover effects: pick an element, then what happens over it ── */
 let kind = 'link';
 const hoverSync = [];
-
-function stateRange(id, label, min, max, step, onInput) {
-  const row = document.createElement('div'); row.className = 'row';
-  row.innerHTML = '<div class="row-h"><label for="' + id + '">' + label + '</label><span class="val"><input class="num" type="number" step="' + step + '" min="' + min + '" max="' + max + '" aria-label="' + label + ' value"><span>×</span></span></div><div class="hint"></div><input type="range" id="' + id + '" min="' + min + '" max="' + max + '" step="' + step + '">';
-  const rng = $('input[type=range]', row), n = $('.num', row), hint = $('.hint', row);
-  rng.setAttribute('aria-describedby', id + '-h'); hint.id = id + '-h';
-  const paint = () => rng.style.setProperty('--p', ((rng.value - min) / (max - min) * 100) + '%');
-  rng.addEventListener('input', () => { n.value = (+rng.value).toFixed(2); paint(); onInput(+rng.value); });
-  n.addEventListener('input', () => { if (n.value === '' || isNaN(+n.value)) return; const v = Math.min(max, Math.max(min, +n.value)); rng.value = v; paint(); onInput(v); });
-  n.addEventListener('blur', () => { n.value = (+rng.value).toFixed(2); });
-  return { row, rng, n, hint, set(v) { rng.value = v; n.value = (+v).toFixed(2); paint(); }, enable(on, why) { row.classList.toggle('off', !on); rng.disabled = n.disabled = !on; if (why) hint.textContent = why; } };
-}
-
-function buildHover() {
-  const p = $('#p-states');
-  p.innerHTML = '<p class="intro">Pick a kind of element, then choose what the cursor and trailing ring do while hovering it. This works automatically, with no attributes needed.</p>' +
-    '<div class="chips kinds" role="group" aria-label="Kind of element"></div>' +
-    '<div class="st-card"><h3 id="hv-t"></h3><p class="hint" id="hv-s"></p>' +
-    '<div class="row line"><div class="row-h"><label for="hv-fx">Effect</label><select class="sel" id="hv-fx"></select></div></div>' +
-    '<div class="row line" id="hv-mg"><div class="row-h"><label for="hv-m">Magnetic</label><span class="switch"><input type="checkbox" role="switch" id="hv-m"><i></i></span></div><div class="hint">Cursor and element pull towards each other.</div></div>' +
-    '<div class="row line" id="hv-tx" hidden><div class="row-h"><label for="hv-txt">Label text</label></div><input class="txt" id="hv-txt" type="text" maxlength="40" placeholder="e.g. View"></div>' +
-    '<div id="hv-ranges"></div></div>';
-  const box = $('.kinds', p), fx = $('#hv-fx'), mag = $('#hv-m'), txt = $('#hv-txt');
-  FX.forEach(([v, t]) => fx.add(new Option(t, v)));
-  const chips = KINDS.map(([k, name]) => {
-    const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = name; b.dataset.cursorScale = '2'; b.dataset.k = k;
-    b.addEventListener('click', () => { kind = k; sync(); }); box.append(b); return b;
-  });
+function buildHover(body) {
+  const kindSel = make('select', 'sel'); kindSel.id = 'hv-kind'; KINDS.forEach(([v, t]) => kindSel.add(new Option(t, v)));
+  const fx = make('select', 'sel'); fx.id = 'hv-fx'; FX.forEach(([v, t]) => fx.add(new Option(t, v)));
+  const txt = make('input', 'txt'); txt.id = 'hv-txt'; txt.type = 'text'; txt.maxLength = 40; txt.placeholder = 'e.g. View';
+  const mag = Object.assign(document.createElement('input'), { type:'checkbox', id:'hv-mag' }); mag.setAttribute('role', 'switch');
   const S = () => cfg.states[kind];
-  const sc = stateRange('hv-sc', 'Cursor size on hover', .25, 4, .05, v => { S().scale = v; change(); });
-  const rs = stateRange('hv-rs', 'Trail size on hover', .25, 4, .05, v => { S().ringScale = v; change(); });
-  $('#hv-ranges').append(sc.row, rs.row);
+  const sc = rangeCtl({ min:.25, max:4, step:.05 }, 'Cursor size', v => { S().scale = v; change(); });
+  const rs = rangeCtl({ min:.25, max:4, step:.05 }, 'Trail size', v => { S().ringScale = v; change(); });
+  const mk = (label, ctl, id, key) => { const r = newRow({ l:label, k:key || 'hover' }, ctl, id); return r; };
+  const swWrap = make('div', 'ctl end'); const sw = make('span', 'switch'); sw.append(mag, make('i')); swWrap.append(sw);
+  const rows = {
+    kind: mk('Element', kindSel, kindSel.id, 'hover'), fx: mk('Effect', fx, fx.id),
+    txt: mk('Text', txt, txt.id), mag: mk('Magnetic', swWrap, mag.id, 'hovermag'),
+    sc: mk('Cursor size', sc.wrap, sc.rng.id), rs: mk('Trail size', rs.wrap, rs.rng.id),
+  };
+  rows.sc.title = 'Cursor size while hovering this element, relative to its resting size.';
+  rows.rs.title = 'Trailing ring size while hovering this element.';
+  Object.values(rows).forEach(r => body.append(r));
   const write = () => {
     const f = fx.value, b = f === 'none' ? [] : [f];
-    if (mag.checked && f !== 'caret' && f !== 'hide') b.push('magnetic');
+    if (f !== 'caret' && f !== 'hide' && mag.checked) b.push('magnetic');
     S().b = b.sort((a, c) => BEHAVIOURS.indexOf(a) - BEHAVIOURS.indexOf(c)); sync(); change();
   };
+  kindSel.addEventListener('change', () => { kind = kindSel.value; sync(); });
   fx.addEventListener('change', write); mag.addEventListener('change', write);
   txt.addEventListener('input', () => { S().text = txt.value; change(); });
+  const off = (row, inputs, on) => { row.classList.toggle('off', !on); inputs.forEach(i => { i.disabled = !on; }); };
   function sync() {
-    const s = S(), f = fxOf(s), [, name, sub] = KINDS.find(x => x[0] === kind);
-    chips.forEach(c => c.setAttribute('aria-pressed', String(c.dataset.k === kind)));
-    if (activeTab() === 'states') setSubject(kind);
-    $('#hv-t').textContent = name; $('#hv-s').innerHTML = 'Applies to <code>' + esc(sub) + '</code>';
-    fx.value = f; mag.checked = s.b.includes('magnetic');
-    const noMag = f === 'caret' || f === 'hide';
-    $('#hv-mg').classList.toggle('off', noMag); mag.disabled = noMag;
-    $('#hv-tx').hidden = f !== 'label'; txt.value = s.text;
+    const s = S(), f = fxOf(s);
+    kindSel.value = kind; fx.value = f; mag.checked = s.b.includes('magnetic'); txt.value = s.text;
     sc.set(s.scale); rs.set(s.ringScale);
-    sc.enable(f === 'none' || f === 'lens', f === 'lens' ? 'Size of the magnifying lens (1 = 120px).' : f === 'none' ? '1 = resting size, 2 = twice as big, 0.5 = half.' : 'This effect sizes itself to the element.');
-    rs.enable(cfg.ring && f === 'none', !cfg.ring ? 'Turn on the trailing ring in the Trail tab first.' : f === 'none' ? '1 = resting ring size.' : 'The ring hides during this effect.');
+    rows.txt.hidden = f !== 'label';
+    const solo = f === 'caret' || f === 'hide', plain = f === 'none';
+    off(rows.mag, [mag], !solo);
+    off(rows.sc, sc.inputs, plain || f === 'lens');
+    off(rows.rs, rs.inputs, cfg.ring && plain);
+    rows.sc.title = f === 'lens' ? 'Lens size (1 = 120px).' : plain ? 'Cursor size while hovering this element, relative to its resting size.' : 'This effect sizes itself to fit.';
+    rows.rs.title = !cfg.ring ? 'Turn the trailing ring on first.' : plain ? 'Trailing ring size while hovering this element.' : 'The ring hides during this effect.';
+    if (activeSection === 'hover') setSubject(kind);
   }
   hoverSync.push(sync);
 }
 
+/* ── accordion ───────────────────────────────────────────────── */
+let activeSection = 'cursor';
+function openSection(id) {
+  activeSection = id;
+  document.querySelectorAll('.sec').forEach(sec => {
+    const on = sec.dataset.id === id;
+    $('.sec-h', sec).setAttribute('aria-expanded', String(on)); $('.sec-b', sec).hidden = !on;
+  });
+  setSubject(sectionSubject());
+}
+const sectionSubject = () => activeSection === 'hover' ? kind : activeSection === 'image' ? 'preview' : 'open';
+SECTIONS.forEach(sec => {
+  const wrap = make('section', 'sec'); wrap.dataset.id = sec.id;
+  const h = make('h2'); const btn = make('button', 'sec-h', sec.title); btn.type = 'button';
+  btn.id = 'h-' + sec.id; btn.setAttribute('aria-controls', 'b-' + sec.id);
+  btn.addEventListener('click', () => openSection(sec.id)); h.append(btn);
+  const body = make('div', 'sec-b'); body.id = 'b-' + sec.id; body.setAttribute('role', 'group'); body.setAttribute('aria-labelledby', btn.id);
+  if (sec.custom) buildHover(body); else sec.rows.forEach(r => addRow(body, r));
+  wrap.append(h, body); $('#acc').append(wrap);
+});
+
 /* ════════════════════════════════════════════════════════════════
-   5 · Apply pipeline: config → CSS + JS → live cursor + code view
+   5 · Preview: subject, caption, attributes, demos
+   ════════════════════════════════════════════════════════════════ */
+const SUBJECT_BY_KEY = { magnet:'button' };
+const SUBJECT_NAME = { open:'cursor', link:'links', button:'buttons', text:'text', image:'images', card:'cards', input:'text fields', custom:'custom elements', preview:'image list' };
+let subject = 'open', inside = false, ptr = null;
+
+let lastLabel = '';
+function caption(label) {
+  lastLabel = label;
+  $('#boxcap').innerHTML = subject === 'open' ? '<b>' + esc(label || 'Cursor') + '</b>' : (label ? '<b>' + esc(label) + '</b> · ' : '') + SUBJECT_NAME[subject];
+}
+const TAGS = { link:'a', button:'button', text:'p', image:'img', card:'article', input:'input', custom:'div' };
+const TYPE_ATTR = { card:'data-cursor-type="card"', custom:'data-cursor-type="custom"' };
+function stateAttrs(k) {
+  const s = cfg.states[k], a = [];
+  if (s.b.length) a.push('data-cursor="' + s.b.join(' ') + '"');
+  if (s.b.includes('label') && s.text) a.push('data-cursor-text="' + s.text.replace(/"/g, '&quot;') + '"');
+  if (+s.scale !== 1) a.push('data-cursor-scale="' + num(s.scale) + '"');
+  if (cfg.ring && +s.ringScale !== 1) a.push('data-cursor-ring-scale="' + num(s.ringScale) + '"');
+  return a;
+}
+let attrsText = '';
+function refreshAttrs() {
+  const el = $('#attrs'), code = $('#attr-code'), btn = $('#attrCopy');
+  attrsText = '';
+  if (subject === 'open') { el.hidden = true; return; }
+  el.hidden = false;
+  if (subject === 'preview') attrsText = '<a href="/work" data-cursor-image="photo.jpg">';
+  else {
+    const a = stateAttrs(subject), all = [TYPE_ATTR[subject], ...a].filter(Boolean);
+    if (all.length) attrsText = '<' + TAGS[subject] + ' ' + all.join(' ') + '>';
+  }
+  btn.hidden = !attrsText;
+  code.innerHTML = attrsText ? highlight(attrsText, 'html') : '<span class="none">Reacts automatically. No attributes needed.</span>';
+}
+function setSubject(k) {
+  if (k !== subject) {
+    subject = k;
+    document.querySelectorAll('.subj').forEach(e => { e.hidden = e.dataset.subject !== k; });
+    requestAnimationFrame(repick);
+    caption(lastLabel);
+  }
+  refreshAttrs();
+}
+function repick() {                       // re-evaluate what sits under the cursor
+  if (inside && ptr) {
+    const t = document.elementFromPoint(ptr.x, ptr.y);
+    if (t && box.contains(t)) { t.dispatchEvent(new PointerEvent('pointermove', { bubbles:true, clientX:ptr.x, clientY:ptr.y, pointerType:'mouse' })); return; }
+  }
+  window.CustomCursor?.park?.();
+}
+/* Short automatic demos so motion settings can be judged without touching the box. */
+let demoRaf = 0, demoWait = 0;
+function demo(kindOfDemo) {
+  cancelAnimationFrame(demoRaf); clearTimeout(demoWait);
+  if (inside) return;
+  demoWait = setTimeout(() => {
+    const r = box.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    const fire = (type, x, y) => (document.elementFromPoint(x, y) || box).dispatchEvent(new PointerEvent(type, { bubbles:true, clientX:x, clientY:y, pointerType:'mouse' }));
+    if (kindOfDemo === 'press') { fire('pointerdown', cx, cy); setTimeout(() => fire('pointerup', cx, cy), 450); return; }
+    const t0 = performance.now(), dur = 1700;
+    const step = (now) => {
+      const t = (now - t0) / dur;
+      if (t >= 1 || inside) { if (!inside) window.CustomCursor?.park?.(); return; }
+      const a = t * Math.PI * 4, ease = Math.sin(t * Math.PI);
+      fire('pointermove', cx + Math.cos(a) * r.width * .3 * ease, cy + Math.sin(a * 2) * r.height * .26 * ease);
+      demoRaf = requestAnimationFrame(step);
+    };
+    demoRaf = requestAnimationFrame(step);
+  }, 220);
+}
+const DEMO_KEYS = { follow:'move', trailSpeed:'move', stretch:'move', ringSize:'move', press:'press' };
+box.addEventListener('pointerenter', () => { inside = true; cancelAnimationFrame(demoRaf); clearTimeout(demoWait); });
+box.addEventListener('pointerleave', () => { inside = false; ptr = null; });
+document.addEventListener('pointermove', (e) => { if (e.isTrusted && e.pointerType !== 'touch') ptr = { x:e.clientX, y:e.clientY }; }, { capture:true, passive:true });
+
+/* Focusing a setting shows the element it affects, and names it in the caption. */
+const settings = $('.settings');
+const onFocusRow = (e) => {
+  const row = e.target.closest('.row[data-key]');
+  setSubject(row && SUBJECT_BY_KEY[row.dataset.key] || sectionSubject());
+  caption(row ? (row.querySelector('label,.lbl') || {}).textContent : $('.sec-h[aria-expanded=true]').textContent);
+};
+settings.addEventListener('focusin', onFocusRow);
+settings.addEventListener('pointerdown', onFocusRow);
+settings.addEventListener('click', (e) => { if (e.target.closest('.sec-h')) caption($('.sec-h[aria-expanded=true]').textContent); });
+
+/* ════════════════════════════════════════════════════════════════
+   6 · Apply pipeline and code dialog
    ════════════════════════════════════════════════════════════════ */
 const out = { html:'', css:'', js:'' };
-let codeTab = 'html', queued = false, ptr = null;
+let codeTab = 'html', queued = false;
 const NAMES = { html:'cursor.html', css:'cursor.css', js:'cursor.js' };
 const styleEl = $('#cc-style');
+const dlg = $('#codeDlg');
 
 function renderCode() {
   $('#code').innerHTML = highlight(out[codeTab], codeTab);
-  const bytes = (s) => new TextEncoder().encode(s).length;
-  $('#codeMeta').textContent = NAMES[codeTab] + ' · ' + out[codeTab].split('\n').length + ' lines · ' + (bytes(out[codeTab]) / 1024).toFixed(1) + ' KB';
+  const bytes = new TextEncoder().encode(out[codeTab]).length;
+  $('#codeMeta').textContent = NAMES[codeTab] + ' · ' + out[codeTab].split('\n').length + ' lines · ' + (bytes / 1024).toFixed(1) + ' KB';
 }
 function runCursor() {
   try { new Function(out.js.replace('const C = {', "const C = {\n    root: '#box',"))(); } catch (e) { console.error('Cursor failed to start', e); }
   if (ptr) {                       // keep the cursor where the pointer is
     const t = document.elementFromPoint(ptr.x, ptr.y);
-    if (t && $('#box').contains(t)) t.dispatchEvent(new PointerEvent('pointermove', { bubbles:true, clientX:ptr.x, clientY:ptr.y, pointerType:'mouse' }));
+    if (t && box.contains(t)) t.dispatchEvent(new PointerEvent('pointermove', { bubbles:true, clientX:ptr.x, clientY:ptr.y, pointerType:'mouse' }));
   }
 }
 function flush() {
@@ -1200,31 +1168,24 @@ function flush() {
   out.js = genJS(cfg); out.css = genCSS(cfg); out.html = genHTML(cfg);
   styleEl.textContent = out.css;
   runCursor();
-  renderCode();
-  refreshEnabled();
-  if (typeof refreshMarkup === 'function' && $('#mk-code')) refreshMarkup();
+  if (dlg.open) renderCode();
+  fields.forEach(f => f.apply());
   hoverSync.forEach(f => f());
-  fields.forEach(f => f.def.t === 'feel' && f.sync());
+  refreshAttrs();
   const preset = Object.keys(PRESETS).find(n => sameCfg(fromPreset(PRESETS[n].o), cfg));
-  document.querySelectorAll('#presetChips .chip').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.k === preset)));
-  $('#customNote').hidden = !!preset;
+  $('#preset').value = preset || '';
 }
 function change() { if (!queued) { queued = true; requestAnimationFrame(flush); } }
 function syncAll() { fields.forEach(f => f.sync()); hoverSync.forEach(f => f()); change(); }
 
-document.addEventListener('pointermove', (e) => { if (e.isTrusted && e.pointerType !== 'touch') ptr = { x:e.clientX, y:e.clientY }; }, { capture:true, passive:true });
-$('#box').addEventListener('pointerleave', () => { ptr = null; });
+/* preset + reset */
+const presetSel = $('#preset');
+presetSel.add(Object.assign(new Option('Custom', ''), { disabled:true }));
+Object.entries(PRESETS).forEach(([n, p]) => { const o = new Option(n, n); o.title = p.desc; presetSel.add(o); });
+presetSel.addEventListener('change', () => { if (!presetSel.value) return; cfg = fromPreset(PRESETS[presetSel.value].o); syncAll(); say('Preset ' + presetSel.value + ' applied'); });
+$('#resetBtn').addEventListener('click', () => { cfg = fromPreset(PRESETS.Smooth.o); syncAll(); say('Settings reset'); });
 
-/* ── presets / reset ─────────────────────────────────────────── */
-const chips = $('#presetChips');
-Object.entries(PRESETS).forEach(([n, p]) => {
-  const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = n; b.dataset.k = n; b.title = p.desc; b.setAttribute('aria-pressed', 'false');
-  b.addEventListener('click', () => { cfg = fromPreset(p.o); syncAll(); say('Preset ' + n + ' applied'); });
-  chips.append(b);
-});
-$('#resetBtn').addEventListener('click', () => { cfg = fromPreset(PRESETS.Smooth.o); syncAll(); say('Configuration reset'); });
-
-/* ── generic tablist with arrow-key support ──────────────────── */
+/* tablist with arrow keys */
 function tablist(root, onSelect) {
   const tabs = [...root.querySelectorAll('[role=tab]')];
   const select = (t, focus) => {
@@ -1242,166 +1203,37 @@ function tablist(root, onSelect) {
     });
   });
 }
-
-/* ── what the preview box shows follows the setting you are editing ── */
-const SUBJECT_BY_KEY = { magnet:'button' };
-const TAB_SUBJECT = { cursor:'open', trail:'open', motion:'open', preview:'preview' };
-const activeTab = () => $('#cfgTabs [aria-selected=true]').id.slice(2);
-const tabSubject = () => activeTab() === 'states' ? kind : TAB_SUBJECT[activeTab()];
-let subject = 'open', inside = false;
-const SUBJECT_NAME = { open:'cursor', link:'links', button:'buttons', text:'text', image:'images', card:'cards', input:'fields', custom:'custom', preview:'image list' };
-function caption(row) {
-  const lab = row ? (row.querySelector('label,.lbl') || {}).textContent : { cursor:'Look', trail:'Trail', motion:'Feel', states:'Hover', preview:'Preview' }[activeTab()];
-  $('#boxcap').innerHTML = (lab ? '<b>' + esc(lab) + '</b> on ' : '') + SUBJECT_NAME[subject] + (applied.length ? ' · <b>using attributes</b>' : '');
-}
-/* ── markup for the element being previewed, and a way to prove it works ── */
-const TAGS = {
-  link:['a','href="/work"','Read more'], button:['button','type="button"','Get started'], text:['p','','Good cursors are quiet…'],
-  image:['img','src="photo.jpg" alt=""',''], card:['article','data-cursor-type="card"','Aurora Bank'], input:['input','type="text"',''],
-  custom:['div','data-cursor-type="custom"','Anything you tag'],
-};
-function stateAttrs(k) {
-  const s = cfg.states[k], a = [], b = s.b;
-  if (b.length) a.push(['data-cursor', b.join(' ')]);
-  if (b.includes('label') && s.text) a.push(['data-cursor-text', s.text]);
-  if (+s.scale !== 1) a.push(['data-cursor-scale', num(s.scale)]);
-  if (cfg.ring && +s.ringScale !== 1) a.push(['data-cursor-ring-scale', num(s.ringScale)]);
-  return a;
-}
-const tagText = (k, attrs, pretty) => {
-  const [tag, base, inner] = TAGS[k], all = [base, ...attrs.map(([n, v]) => n + '="' + v.replace(/"/g, '&quot;') + '"')].filter(Boolean);
-  const open = pretty && all.length > 2 ? '<' + tag + '\n  ' + all.join('\n  ') + '>' : '<' + tag + (all.length ? ' ' + all.join(' ') : '') + '>';
-  return /^(img|input)$/.test(tag) ? open : open + inner + '</' + tag + '>';
-};
-function markupText() {
-  if (subject === 'preview') return '<!-- Any element can show a floating thumbnail -->\n<a href="/work/aurora" data-cursor-image="aurora.jpg">Aurora Bank</a>';
-  if (!TAGS[subject]) return '<!-- These settings apply to the whole cursor: no attributes needed. -->\n<!-- To change one element, add attributes to it: -->\n<button data-cursor="magnetic" data-cursor-scale="2">Hover me</button>';
-  const at = stateAttrs(subject), auto = tagText(subject, [], false);
-  return '<!-- Automatic: already reacts, nothing to add -->\n' + auto + '\n\n' + (at.length ? '<!-- Same result, set on one element -->\n' + tagText(subject, at, true) : '<!-- Nothing to override: this is the default -->');
-}
-let applied = [];
-function applyAttrs() {
-  applied.forEach(([el, n, old]) => { if (old == null) el.removeAttribute(n); else el.setAttribute(n, old); });
-  applied = [];
-  const on = $('#mkTest').checked && TAGS[subject];
-  if (on) {
-    const el = $('.subj[data-subject=' + subject + '] > *');
-    stateAttrs(subject).forEach(([n, v]) => { applied.push([el, n, el.getAttribute(n)]); el.setAttribute(n, v); });
-    if (!applied.length) applied.push([el, 'data-x-none', null]);   // nothing to set, still counts as "on"
-  }
-  requestAnimationFrame(repick);
-}
-function refreshMarkup() {
-  const t = markupText();
-  $('#mk-code').innerHTML = highlight(t, 'html');
-  const t2 = $('#mkTest'), ok = !!TAGS[subject];
-  t2.disabled = !ok; t2.closest('.tog').style.opacity = ok ? 1 : .45;
-  applyAttrs(); caption($('.row:focus-within') || null);
-}
-function setSubject(k) {
-  if (k === subject) { caption($('.row:focus-within') || null); return; }
-  subject = k;
-  document.querySelectorAll('.subj').forEach(e => { e.hidden = e.dataset.subject !== k; });
-  refreshMarkup();
-  requestAnimationFrame(repick);
-}
-function repick() {                       // re-evaluate what sits under the cursor
-  if (inside && ptr) {
-    const t = document.elementFromPoint(ptr.x, ptr.y);
-    if (t && box.contains(t)) { t.dispatchEvent(new PointerEvent('pointermove', { bubbles:true, clientX:ptr.x, clientY:ptr.y, pointerType:'mouse' })); return; }
-  }
-  window.CustomCursor?.park?.();
-}
-/* Short automatic demos so motion settings are visible without touching the box. */
-let demoRaf = 0, demoWait = 0;
-function demo(kind) {
-  cancelAnimationFrame(demoRaf); clearTimeout(demoWait);
-  if (inside) return;
-  demoWait = setTimeout(() => {
-    const r = box.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-    const fire = (type, x, y, target) => (target || document.elementFromPoint(x, y) || box).dispatchEvent(new PointerEvent(type, { bubbles:true, clientX:x, clientY:y, pointerType:'mouse' }));
-    if (kind === 'press') {
-      fire('pointerdown', cx, cy);
-      setTimeout(() => { fire('pointerup', cx, cy); }, 450);
-      return;
-    }
-    const t0 = performance.now(), dur = 1700;
-    const step = (now) => {
-      const t = (now - t0) / dur;
-      if (t >= 1 || inside) { if (!inside) window.CustomCursor?.park?.(); return; }
-      const a = t * Math.PI * 4, ease = Math.sin(t * Math.PI);
-      fire('pointermove', cx + Math.cos(a) * r.width * .3 * ease, cy + Math.sin(a * 2) * r.height * .26 * ease);
-      demoRaf = requestAnimationFrame(step);
-    };
-    demoRaf = requestAnimationFrame(step);
-  }, 220);
-}
-const DEMO_KEYS = { follow:'move', trailSpeed:'move', stretch:'move', ringSize:'move', press:'press' };
-$('#mkTest').addEventListener('change', () => refreshMarkup());
-$('#mkCopy').addEventListener('click', async () => { const ok = await copyText($('#mk-code').textContent); $('#mkCopy').textContent = ok ? 'Copied ✓' : 'Copy failed'; say(ok ? 'Markup copied' : 'Copy failed'); setTimeout(() => { $('#mkCopy').textContent = 'Copy'; }, 1500); });
-box.addEventListener('pointerenter', () => { inside = true; cancelAnimationFrame(demoRaf); clearTimeout(demoWait); });
-box.addEventListener('pointerleave', () => { inside = false; });
-$('.left').addEventListener('focusin', (e) => {
-  const row = e.target.closest('.row[data-key]');
-  setSubject((row && SUBJECT_BY_KEY[row.dataset.key]) || tabSubject());
-  caption(row);
-});
-$('.left').addEventListener('pointerdown', (e) => {
-  const row = e.target.closest('.row[data-key]');
-  if (row) { setSubject(SUBJECT_BY_KEY[row.dataset.key] || tabSubject()); caption(row); }
-});
-
-tablist($('#cfgTabs'), (t) => {
-  document.querySelectorAll('.pane').forEach(p => { p.hidden = p.id !== t.getAttribute('aria-controls'); });
-  setSubject(tabSubject());
-});
 tablist($('#codeTabs'), (t) => { codeTab = t.id.slice(2); $('#codeView').setAttribute('aria-labelledby', t.id); renderCode(); $('#codeView').scrollTop = 0; });
+$('#codeBtn').addEventListener('click', () => { renderCode(); dlg.showModal(); });
+$('#closeDlg').addEventListener('click', () => dlg.close());
+dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });     // click on the backdrop
 
-/* ── copy ────────────────────────────────────────────────────── */
+/* copy */
 const live = $('#live');
 function say(msg) { live.textContent = ''; setTimeout(() => { live.textContent = msg; }, 20); }
 async function copyText(text) {
   try { await navigator.clipboard.writeText(text); return true; }
   catch {
-    const ta = document.createElement('textarea'); ta.value = text; ta.style.cssText = 'position:fixed;opacity:0'; document.body.append(ta); ta.select();
+    const ta = document.createElement('textarea'); ta.value = text; ta.style.cssText = 'position:fixed;opacity:0'; (dlg.open ? dlg : document.body).append(ta); ta.select();
     let ok = false; try { ok = document.execCommand('copy'); } catch {} ta.remove(); return ok;
   }
 }
-let copyTimer;
-function flash(btnLabel, text, ok) {
-  btnLabel.textContent = ok ? text : 'Copy failed';
-  clearTimeout(copyTimer);
-  copyTimer = setTimeout(() => { $('#copyLabel').textContent = 'Copy'; $('#copyAll').textContent = 'Copy all three'; }, 1600);
-  say(ok ? 'Copied to clipboard' : 'Copy failed');
-}
-$('#copyBtn').addEventListener('click', async () => flash($('#copyLabel'), 'Copied ✓', await copyText(out[codeTab])));
-$('#copyAll').addEventListener('click', async () => {
-  const all = '<\!-- cursor.html -->\n' + out.html + '\n/* cursor.css */\n' + out.css + '\n/* cursor.js */\n' + out.js;
-  flash($('#copyAll'), 'Copied ✓', await copyText(all));
-});
+const flash = (btn, label, ok, reset) => { btn.textContent = ok ? 'Copied ✓' : 'Copy failed'; say(ok ? 'Copied to clipboard' : 'Copy failed'); setTimeout(() => { btn.textContent = reset; }, 1600); };
+$('#copyBtn').addEventListener('click', async () => flash($('#copyLabel'), 'Copy', await copyText(out[codeTab]), 'Copy'));
+$('#copyAll').addEventListener('click', async () => flash($('#copyAll'), 'Copy', await copyText('<!-- cursor.html -->\n' + out.html + '\n/* cursor.css */\n' + out.css + '\n/* cursor.js */\n' + out.js), 'Copy all three'));
+$('#attrCopy').addEventListener('click', async () => flash($('#attrCopy'), 'Copy', await copyText(attrsText), 'Copy'));
 
-/* ── theme ───────────────────────────────────────────────────── */
-$('#themeBtn').addEventListener('click', () => {
-  const r = document.documentElement;
-  const dark = r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
-  r.dataset.theme = dark ? 'light' : 'dark';
-});
-
-/* ── live inspector + preview highlight ──────────────────────── */
+/* what the box reports about the element under the cursor (for highlighting) */
 let marked = null;
 document.addEventListener('cursorchange', (e) => {
-  const { el, type, behaviours, width, height } = e.detail;
+  const { el } = e.detail;
   if (marked) marked.classList.remove('is-target');
   marked = el && box.contains(el) ? el : null;
   if (marked) marked.classList.add('is-target');
-  $('#i-el').textContent = el ? '<' + el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + '>' : 'none';
-  $('#i-type').textContent = type;
-  $('#i-b').textContent = behaviours.length ? behaviours.join(' + ') : 'none';
-  $('#i-size').textContent = Math.round(width) + '×' + Math.round(height);
 });
 
 /* ════════════════════════════════════════════════════════════════
-   6 · Boot
+   7 · Boot
    ════════════════════════════════════════════════════════════════ */
 const art = (a, b, c) => 'data:image/svg+xml;utf8,' + encodeURIComponent(
   "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 260' preserveAspectRatio='xMidYMid slice'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='" + a + "'/><stop offset='1' stop-color='" + b + "'/></linearGradient></defs><rect width='420' height='260' fill='url(#g)'/><circle cx='320' cy='70' r='86' fill='" + c + "' opacity='.4'/><circle cx='80' cy='220' r='120' fill='#fff' opacity='.12'/><path d='M0 200 Q110 140 210 190 T420 160 V260 H0Z' fill='#000' opacity='.12'/></svg>");
@@ -1409,20 +1241,13 @@ const ARTS = [['#5b5bf0','#22d3ee','#f0abfc'], ['#f97316','#ec4899','#fde68a'], 
 document.querySelectorAll('img[data-art]').forEach(i => { i.src = art(...ARTS[+i.dataset.art]); });
 document.querySelectorAll('.subj a[data-art]').forEach(a => { a.dataset.cursorImage = art(...ARTS[+a.dataset.art]); });
 
-buildPane('p-cursor', SCHEMA.cursor);
-buildPane('p-trail', SCHEMA.trail);
-buildPane('p-motion', SCHEMA.motion);
-buildPane('p-preview', SCHEMA.preview);
-$('#p-preview').insertAdjacentHTML('afterbegin', '<p class="intro">Show a thumbnail that follows the cursor. Add <code>data-cursor-image="photo.jpg"</code> to any element, such as the project list in the preview.</p>');
-buildHover();
-
-
 const noMouse = matchMedia('(hover: none), (pointer: coarse)');
 const setMouse = () => document.documentElement.classList.toggle('no-mouse', noMouse.matches);
 setMouse(); noMouse.addEventListener('change', setMouse);
 
+openSection('cursor');
 syncAll();
-caption(null);
+caption('Cursor');
 </script>
 </body>
 </html>
