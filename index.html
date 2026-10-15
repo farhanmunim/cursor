@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Custom Cursor Builder: design, preview and copy cursor code</title>
-<meta name="description" content="Free visual builder for custom website cursors. Tune the dot, trailing ring, magnetic, frame, lens and label effects with live preview, then copy ready-to-use HTML, CSS and JavaScript.">
+<title>Cursor Builder — farhan.app</title>
+<meta name="description" content="Design a custom website cursor visually — dot, trailing ring, magnetic, frame, lens and label effects — then copy dependency-free HTML, CSS and JavaScript. Built by Farhan — farhan.app">
+<meta name="author" content="farhan.app">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://cursor.farhan.app/">
 <meta name="color-scheme" content="light dark">
@@ -12,20 +13,20 @@
 <script>try{document.documentElement.dataset.theme=localStorage.getItem("cb-theme")==="dark"?"dark":"light"}catch(e){document.documentElement.dataset.theme="light"}</script>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Cursor Builder">
-<meta property="og:title" content="Custom Cursor Builder: design, preview and copy cursor code">
-<meta property="og:description" content="Design a custom website cursor visually, then copy the generated HTML, CSS and JavaScript. No dependencies, no build step.">
+<meta property="og:title" content="Cursor Builder — farhan.app">
+<meta property="og:description" content="Design a custom website cursor with a live preview, then copy dependency-free HTML, CSS and JavaScript.">
 <meta property="og:url" content="https://cursor.farhan.app/">
 <meta property="og:image" content="https://cursor.farhan.app/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Cursor Builder: a custom cursor with a trailing ring and a View label over a card">
 <meta property="og:locale" content="en_GB">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Custom Cursor Builder">
-<meta name="twitter:description" content="Design a custom website cursor visually, then copy the generated HTML, CSS and JavaScript.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cursor Builder — farhan.app">
+<meta name="twitter:description" content="Design a custom website cursor visually, then copy dependency-free HTML, CSS and JavaScript. Built by Farhan — farhan.app">
 <meta name="twitter:image" content="https://cursor.farhan.app/og.png">
 <meta name="twitter:image:alt" content="Cursor Builder: a custom cursor with a trailing ring and a View label over a card">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Cursor Builder","url":"https://cursor.farhan.app/","description":"Visual builder for custom website cursors with live preview and copy-ready HTML, CSS and JavaScript.","applicationCategory":"DeveloperApplication","operatingSystem":"Any (modern browser)","image":"https://cursor.farhan.app/og.png","inLanguage":"en-GB","isAccessibleForFree":true,"browserRequirements":"Requires JavaScript","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Trailing cursor ring","Magnetic, frame, lens, label and caret effects","Spring-based motion","Presets","Generated HTML, CSS and JavaScript"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Cursor Builder","url":"https://cursor.farhan.app/","description":"Visual builder for custom website cursors with live preview and copy-ready HTML, CSS and JavaScript.","applicationCategory":"DeveloperApplication","operatingSystem":"Any (modern browser)","image":"https://cursor.farhan.app/og.png","inLanguage":"en-GB","isAccessibleForFree":true,"author":{"@type":"Person","name":"Farhan Munim","url":"https://farhan.app/"},"license":"https://opensource.org/license/mit/","codeRepository":"https://github.com/farhanmunim/cursor","browserRequirements":"Requires JavaScript","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Trailing cursor ring","Magnetic, frame, lens, label and caret effects","Spring-based motion","Presets","Generated HTML, CSS and JavaScript"]}</script>
 <link rel="apple-touch-icon" sizes="180x180" href="/icon.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%235b5bf0'/%3E%3Cpath d='M10 7l13 7.5-5.6 1.7L15 22z' fill='%23fff'/%3E%3C/svg%3E">
 <style>
@@ -78,7 +79,8 @@ code,.mono{font-family:var(--mono)}
 /* layout */
 .app{display:grid;grid-template-columns:340px minmax(0,1fr);min-height:calc(100vh - 52px)}
 .settings{position:sticky;top:52px;height:calc(100vh - 52px);overflow:auto;background:var(--panel);border-right:1px solid var(--border)}
-.stage-col{display:flex;align-items:center;justify-content:center;padding:28px;min-width:0}
+.stage-col{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 28px 20px;min-width:0}
+.stage-col .stage-in{margin:auto 0}
 .stage-in{width:min(640px,100%)}
 
 /* accordion */
@@ -175,10 +177,27 @@ input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px color
 .attrs .btn{flex:none}
 .attrs .none{color:var(--muted);font-family:var(--sans)}
 .attrs[hidden]{display:none}
-.foot{margin-top:28px;color:var(--muted);font-size:12px;line-height:1.6;max-width:640px}
-.foot p{margin:0}
-.foot a{color:var(--text)}
-.foot code{font-size:11.5px}
+.foot{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;width:min(640px,100%);margin-top:24px;padding-top:12px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.5}
+.foot-link{border:0;background:none;padding:0;font:inherit;color:var(--muted);text-decoration:none;cursor:pointer;border-radius:4px}
+.foot-link:hover{color:var(--text);text-decoration:underline}
+.foot-sep{width:3px;height:3px;border-radius:50%;background:var(--border-strong)}
+.foot-sp{flex:1}
+.foot-meta a{color:var(--muted)}
+.foot-meta a:hover{color:var(--text)}
+/* about dialog */
+.dlg-about{width:min(540px,calc(100vw - 24px));height:fit-content;max-height:calc(100vh - 32px)}
+.about-h{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 20px 0}
+.about-h h2{margin:0;font-size:17px;letter-spacing:-.01em}
+.about-h p{margin:3px 0 0;color:var(--muted);font-size:13px}
+.about-b{padding:8px 20px 20px;overflow:auto;font-size:13px;line-height:1.55}
+.about-b p{margin:8px 0 0}
+.about-b h3{margin:18px 0 4px;font:600 11px var(--sans);text-transform:uppercase;letter-spacing:.06em;color:var(--faint)}
+.about-b h3:focus-visible{outline-offset:4px}
+.about-b a{color:var(--text)}
+.about-row{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;margin-top:6px}
+.about-row .mt{color:var(--muted)}
+.support{margin-top:18px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--panel-2)}
+.support p{margin:0 0 8px}
 .touch-note{display:none;margin-bottom:12px;padding:10px 12px;border:1px solid var(--border-strong);background:var(--panel);border-radius:8px;font-size:12.5px}
 .no-mouse .touch-note{display:block}
 .is-target{outline:1.5px dashed var(--accent);outline-offset:3px}
@@ -222,7 +241,9 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
 
 @media (max-width:900px){
   .app{display:flex;flex-direction:column}
-  .stage-col{order:1;padding:14px}
+  .stage-col{order:1;padding:14px;display:contents}
+  .stage-col .stage-in{order:1;margin:0}
+  .foot{order:3;width:auto;margin:0;padding:12px 14px 16px;border-top:1px solid var(--border)}
   .settings{order:2;position:static;height:auto;border-right:0;border-top:1px solid var(--border)}
   .box{height:300px}
   .row{grid-template-columns:80px minmax(0,1fr)}
@@ -288,10 +309,18 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
         <code id="attr-code"></code>
         <button class="btn sm" id="attrCopy" type="button">Copy</button>
       </div>
-      <footer class="foot">
-        <p>Cursor Builder is a free tool for designing a custom website cursor: a dot or arrow, a trailing ring, magnetic, frame, lens and label effects, separate light and dark looks, and an image preview that follows the pointer. It generates dependency-free HTML, CSS and JavaScript you can paste into any site, and elements are targeted with plain <code>data-cursor</code> attributes or CSS selectors. The live preview needs a mouse or trackpad. Made by <a href="https://farhan.app/">Farhan</a>.</p>
-      </footer>
     </div>
+    <footer class="foot">
+        <button class="foot-link" id="openAbout" type="button">About</button>
+        <span class="foot-sep" aria-hidden="true"></span>
+        <button class="foot-link" id="openPrivacy" type="button">Privacy</button>
+        <span class="foot-sep" aria-hidden="true"></span>
+        <a class="foot-link" href="https://github.com/farhanmunim/cursor" target="_blank" rel="noopener">Source</a>
+        <span class="foot-sp"></span>
+        <span class="foot-meta">Runs entirely in your browser</span>
+        <span class="foot-sep" aria-hidden="true"></span>
+        <span class="foot-meta">Built by <a href="https://farhan.app" target="_blank" rel="noopener">Farhan</a></span>
+    </footer>
   </main>
 </div>
 
@@ -308,6 +337,23 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
   </div>
   <div class="code-wrap" id="codeView" role="tabpanel" tabindex="0" aria-labelledby="c-html"><pre><code id="code"></code></pre></div>
   <div class="dlg-f"><span id="codeMeta">–</span><button class="btn sm" id="copyAll" type="button">Copy all three</button></div>
+</dialog>
+
+<dialog id="aboutDlg" class="dlg-about" aria-labelledby="about-title">
+  <div class="about-h">
+    <div><h2 id="about-title">About Cursor Builder</h2><p>Design a custom cursor, copy the code</p></div>
+    <button class="btn" id="closeAbout" type="button" aria-label="Close dialog">Close</button>
+  </div>
+  <div class="about-b">
+    <p>A visual builder for custom website cursors, for designers and front-end developers. Pick a shape, a trailing ring, motion and per-element hover effects, see it live in light and dark, then copy dependency-free HTML, CSS and JavaScript into any site.</p>
+    <h3 id="about-privacy" tabindex="-1">Privacy</h3>
+    <p>Everything runs in your browser. Your cursor settings are not stored or sent anywhere; the only thing saved is your light/dark choice, in <code>localStorage</code> on your device. No accounts, no servers. The site uses <a href="https://umami.is/" target="_blank" rel="noopener">Umami</a> for aggregate, cookieless page-view statistics only — no personal data is collected.</p>
+    <h3>Source</h3>
+    <div class="about-row"><a href="https://github.com/farhanmunim/cursor" target="_blank" rel="noopener">github.com/farhanmunim/cursor</a><span class="mt">open source · MIT</span></div>
+    <h3>Developer</h3>
+    <div class="about-row"><a href="https://farhan.app" target="_blank" rel="noopener">Farhan Munim</a><span class="mt">farhan.app</span></div>
+    <div class="support"><p>Support the development of this free tool.</p><a class="btn" href="https://buymeacoffee.com/farhan.app" target="_blank" rel="noopener">☕ Buy me a coffee</a></div>
+  </div>
 </dialog>
 
 <noscript><p style="padding:24px;font:14px system-ui">Cursor Builder needs JavaScript to design and preview a custom cursor.</p></noscript>
@@ -1520,6 +1566,30 @@ tablist($('#codeTabs'), (t) => { codeTab = t.id.slice(2); $('#codeView').setAttr
 $('#codeBtn').addEventListener('click', () => { renderCode(); dlg.showModal(); });
 $('#closeDlg').addEventListener('click', () => dlg.close());
 dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });     // click on the backdrop
+
+/* keep Tab inside an open modal dialog (native <dialog> makes the page inert, but does not wrap at the edges) */
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Tab') return;
+  const d = document.querySelector('dialog[open]'); if (!d) return;
+  const f = [...d.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])')].filter(x => x.offsetParent !== null || x === document.activeElement);
+  if (!f.length) return;
+  const first = f[0], last = f[f.length - 1];
+  if (e.shiftKey && (document.activeElement === first || !d.contains(document.activeElement))) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && (document.activeElement === last || !d.contains(document.activeElement))) { e.preventDefault(); first.focus(); }
+});
+
+/* about / privacy dialog */
+const about = $('#aboutDlg');
+let aboutTrigger = null;
+function openAbout(trigger, section) {
+  aboutTrigger = trigger; about.showModal();
+  if (section) { const h = $(section); h.scrollIntoView({ block:'start' }); h.focus(); } else $('.about-b', about).scrollTop = 0;
+}
+$('#openAbout').addEventListener('click', (e) => openAbout(e.currentTarget));
+$('#openPrivacy').addEventListener('click', (e) => openAbout(e.currentTarget, '#about-privacy'));
+$('#closeAbout').addEventListener('click', () => about.close());
+about.addEventListener('click', (e) => { if (e.target === about) about.close(); });        // backdrop
+about.addEventListener('close', () => { aboutTrigger?.focus(); aboutTrigger = null; });
 
 /* copy */
 const live = $('#live');
