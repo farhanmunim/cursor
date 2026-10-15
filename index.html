@@ -1,5 +1,5 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en-GB">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,10 +15,18 @@
 <meta property="og:title" content="Custom Cursor Builder: design, preview and copy cursor code">
 <meta property="og:description" content="Design a custom website cursor visually, then copy the generated HTML, CSS and JavaScript. No dependencies, no build step.">
 <meta property="og:url" content="https://cursor.farhan.app/">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://cursor.farhan.app/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Cursor Builder: a custom cursor with a trailing ring and a View label over a card">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Custom Cursor Builder">
 <meta name="twitter:description" content="Design a custom website cursor visually, then copy the generated HTML, CSS and JavaScript.">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Cursor Builder","url":"https://cursor.farhan.app/","description":"Visual builder for custom website cursors with live preview and copy-ready HTML, CSS and JavaScript.","applicationCategory":"DeveloperApplication","operatingSystem":"Any (modern browser)","browserRequirements":"Requires JavaScript","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Trailing cursor ring","Magnetic, frame, lens, label and caret effects","Spring-based motion","Presets","Generated HTML, CSS and JavaScript"]}</script>
+<meta name="twitter:image" content="https://cursor.farhan.app/og.png">
+<meta name="twitter:image:alt" content="Cursor Builder: a custom cursor with a trailing ring and a View label over a card">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Cursor Builder","url":"https://cursor.farhan.app/","description":"Visual builder for custom website cursors with live preview and copy-ready HTML, CSS and JavaScript.","applicationCategory":"DeveloperApplication","operatingSystem":"Any (modern browser)","image":"https://cursor.farhan.app/og.png","inLanguage":"en-GB","isAccessibleForFree":true,"browserRequirements":"Requires JavaScript","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Trailing cursor ring","Magnetic, frame, lens, label and caret effects","Spring-based motion","Presets","Generated HTML, CSS and JavaScript"]}</script>
+<link rel="apple-touch-icon" sizes="180x180" href="/icon.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%235b5bf0'/%3E%3Cpath d='M10 7l13 7.5-5.6 1.7L15 22z' fill='%23fff'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -167,6 +175,10 @@ input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px color
 .attrs .btn{flex:none}
 .attrs .none{color:var(--muted);font-family:var(--sans)}
 .attrs[hidden]{display:none}
+.foot{margin-top:28px;color:var(--muted);font-size:12px;line-height:1.6;max-width:640px}
+.foot p{margin:0}
+.foot a{color:var(--text)}
+.foot code{font-size:11.5px}
 .touch-note{display:none;margin-bottom:12px;padding:10px 12px;border:1px solid var(--border-strong);background:var(--panel);border-radius:8px;font-size:12.5px}
 .no-mouse .touch-note{display:block}
 .is-target{outline:1.5px dashed var(--accent);outline-offset:3px}
@@ -254,12 +266,12 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
       <div class="touch-note" role="status"><strong>Mouse or trackpad required.</strong> The live preview is disabled on touch devices. You can still adjust the settings and copy the code.</div>
       <div class="capbar"><span id="boxcap"></span><span>hover the box to try it</span></div>
       <div class="box" id="box">
-<div class="stage" id="stage" role="region" aria-label="Cursor test area" tabindex="-1">
+<section class="stage" id="stage" aria-label="Cursor test area" tabindex="-1">
           <div class="subj" data-subject="open"></div>
           <div class="subj" data-subject="link" hidden><a class="lnk" data-cursor-type="link" href="#stage" onclick="return false">Read the case study →</a></div>
           <div class="subj" data-subject="button" hidden><button class="pbtn" data-cursor-type="button" type="button">Get started</button></div>
           <div class="subj" data-subject="text" hidden><p class="para" data-cursor-type="text">Good cursors are quiet until they matter. Hover this paragraph to see how text is treated.</p></div>
-          <div class="subj" data-subject="image" hidden><img data-cursor-type="image" data-art="0" alt="Abstract gradient artwork"></div>
+          <div class="subj" data-subject="image" hidden><img data-cursor-type="image" data-art="0" width="230" height="144" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="Abstract gradient artwork"></div>
           <div class="subj" data-subject="card" hidden><article class="card" data-cursor-type="card"><strong class="ct">Aurora Bank</strong><p>Mobile banking redesign</p></article></div>
           <div class="subj" data-subject="input" hidden><input class="in" data-cursor-type="input" type="text" aria-label="Your name" placeholder="Type here…" autocomplete="off"></div>
           <div class="subj" data-subject="custom" hidden><div class="custom" data-cursor-type="custom">Anything you tag<br><code>data-cursor-type="custom"</code></div></div>
@@ -270,12 +282,15 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
               <li><a href="#stage" onclick="return false" data-cursor="" data-art="3"><span>Meridian Atlas</span><span class="m">Data viz</span></a></li>
             </ul>
           </div>
-        </div>
+        </section>
       </div>
       <div class="attrs" id="attrs" hidden>
         <code id="attr-code"></code>
         <button class="btn sm" id="attrCopy" type="button">Copy</button>
       </div>
+      <footer class="foot">
+        <p>Cursor Builder is a free tool for designing a custom website cursor: a dot or arrow, a trailing ring, magnetic, frame, lens and label effects, separate light and dark looks, and an image preview that follows the pointer. It generates dependency-free HTML, CSS and JavaScript you can paste into any site, and elements are targeted with plain <code>data-cursor</code> attributes or CSS selectors. The live preview needs a mouse or trackpad. Made by <a href="https://farhan.app/">Farhan</a>.</p>
+      </footer>
     </div>
   </main>
 </div>
@@ -284,9 +299,9 @@ pre{margin:0;padding:14px 16px 28px;font:12px/1.65 var(--mono);tab-size:2;white-
   <h2 class="sr" id="dlg-t">Generated code</h2>
   <div class="dlg-h">
     <div class="tabs" role="tablist" aria-label="Generated files" id="codeTabs">
-      <button class="tab" role="tab" id="c-html" aria-selected="true" aria-controls="codeView">HTML</button>
-      <button class="tab" role="tab" id="c-css" aria-selected="false" tabindex="-1" aria-controls="codeView">CSS</button>
-      <button class="tab" role="tab" id="c-js" aria-selected="false" tabindex="-1" aria-controls="codeView">JavaScript</button>
+      <button class="tab" type="button" role="tab" id="c-html" aria-selected="true" aria-controls="codeView">HTML</button>
+      <button class="tab" type="button" role="tab" id="c-css" aria-selected="false" tabindex="-1" aria-controls="codeView">CSS</button>
+      <button class="tab" type="button" role="tab" id="c-js" aria-selected="false" tabindex="-1" aria-controls="codeView">JavaScript</button>
     </div>
     <button class="btn primary" id="copyBtn" type="button"><span id="copyLabel">Copy</span></button>
     <button class="btn" id="closeDlg" type="button" aria-label="Close">Close</button>
